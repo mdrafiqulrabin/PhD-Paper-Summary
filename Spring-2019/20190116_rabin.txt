@@ -1,0 +1,123 @@
+
+Title: A Snowballing Literature Study on Test Amplification
+
+Authors: Benjamin, Oscar, Zhongxing, Andy, Martin, Benoit.
+
+Published in: arXiv 2018.
+
+Keywords: test amplification; test augmentation; test optimization; test regeneration; test repair; automatic testing.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The agile developments put an increased flow on developer testing resulting numerous test suites in software projects.
+This test suites includes large number of test cases, input data, expected oracles and various meaningful properties.
+Various approaches have been taken by various researchers to achieve an engineering goals with those test cases.
+Engineering goal means improve coverage, find bugs, increase efficiency, etc.
+The wide presence of this valuable manually written tests has triggered a new thread of research called ‘Test Amplification’.
+Test amplification aims to leverage the value of this existing manually-written tests to achieve a specific engineering goal.
+Authors draw a comprehensive picture of the different engineering goals proposed in the literature for test amplification.
+This survey will help researchers to understand and familiar with test amplification very quickly.
+
+[2] Solution:
+
+The reviewing methodology:
+- Look on DBLP for all papers containing “test” and “amplification” in their title.
+- Search results return 70 papers at the date of the search (March 27, 2018).
+- Review 70 papers one by one and mark the papers that fit in the scope of test amplification.
+- Very low portion papers [4/70] are about test amplification (mostly about hardware or signal/sound amplification).
+- Select this 4 papers and apply backward snowballing search and forward literature search amplification.
+  - Backward snowballing search: Look at references and go backward in the citation graph.
+  - Forward literature search: Find most recents contribution in the target area.
+- Select all the papers that fit into the scope and distinguish 4 key approaches to amplification.
+  - (A) Amplification by Adding New Tests as Variants of Existing Ones 
+  - (B) Amplification by Modifying Test Execution 
+  - (C) Amplification by Synthesizing New Tests with Respect to Changes
+  - (D) Amplification by Modifying Existing Test Code
+- Literature review based on test amplification key approaches.
+
+[3] Evaluation:
+
+Literature review based on test amplification key approaches.
+
+[A] Amplification by Adding New Tests as Variants of Existing Ones:
+
+  1. Coverage or Mutation Score Improvement:
+    - [4,5] Generating variants from existing tests through transformations to improve mutation score.
+    - [52,31] Refactoring existing concrete unit tests into parameterized unit tests to increase code coverage.
+    - [50] Generating tests to only kill specific mutants on increasing mutation score.
+    - [51] Producing new tests from mutation tool and operators to increase line and branch coverage.
+    - [57] Augmenting the input space coverage with shifting/scaling to improve the cost efficiency.
+    - [8] Creating new test by covering a previously uncovered branch to maximize code coverage.
+    - [47] Define several seeding strategies for the test generation tool to improve code coverage.
+    - [42] Generate new test inputs from run-time test execution information to achieve higher mutation score.
+    - [68] Incremental generation of unit tests by minimal augmentation of existing tests for uncovered targets.
+  2. Fault Detection Capability Improvement:
+    - [22] Produce new or modified invariants to detect faults.
+    - [44] Observe object creation and initialization to reveal new interaction faults.
+    - [34] Extract event sequences and assertions to improve fault detection rate.
+  3. Oracle Improvement:
+    - [39] Infer an operational model from the execution of some available correct runs to generate new test inputs that are most likely to reveal faults.
+    - [20] From sequences of method calls, generate parametrized unit tests containing pre/post-conditions which achieves a higher code coverage.
+  4. Debugging Effectiveness Improvement:
+    - [6] Identify Dynamic Basic Block (DBB) to characterize the test-for-diagnosis criterion (TfD) to evaluate the fault localization power of a test suite.
+    - [46] Captured ranked facts between passing and failing test to isolate failure causes.
+    - [69] Propose a mutation-oriented test case augmentation technique for better fault localization.
+    - [65] Use predefined mutation operators on the stack trace to reproduce the crash.
+  5. Summary of the Section Main:
+    - Main achievements: Achieve multiple engineering goals with more cost-effectively.
+    - Main challenges: Large number of test cases and invalid test cases.
+
+[B] Amplification by Synthesizing New Tests with Respect to Changes:
+
+  1. Search-based vs. Concolic Approaches:
+    - [61] Use concolic testing method with constraint solver calls to find new test cases for uncovered branches.
+    - [57] Use genetic algorithm to target a branch of the new program that is not yet covered.
+    - [60] Both benefit from reusing existing test cases and combination of new and existing test cases is an important factor.
+    - [59] Hybrid approach (incremental concolic and genetic methods) outperforms both in terms of branch coverage.
+  2. Finding Test Conditions in the Presence of Changes:
+    - [3] Find new testing conditions for separate generation process by checking two versions of the same program.
+    - [48] Continue and extend previous work by addressing changes to multiple statements and considering effects on each other.
+    - [49] Address the problems in terms of efficiency of applying symbolic execution.
+  3. Test Case Repair:
+    - [16] Modify test cases, that fail due to a change, by extracting failure exception in the stack trace.
+    - [35,36] Repair or evolve test cases in front of signature changes by detecting and searching changes .
+  4. Other Approaches:
+    - [45] Test suite augmentation with propagation-based approaches consist of 2-step symbolic execution.
+    - [54] Exploit existing tests to generate new tests based on path exploration probability.
+    - [9] Build a graph from changes to guide symbolic execution and find path condition for concrete test input.
+    - [30, 40] Use Katch tools to exploit the patches of code and produce test inputs to reveal changes in program behaviors.
+  5. Summary of the Section:
+    - Main achievements: Hybrid approaches (symbolic and concolic execution) produced test inputs increase coverage.
+    - Main challenges: Size of the changes should consider, get rid of symbolic execution for scalability.
+
+[C] Amplification by Modifying Test Execution:
+
+1. Research Papers:
+  - [72,73] Trigger unexpected exceptions in sequences of API calls to validate exception handling.
+  - [14] Modify original code with the insertion of throw instructions inside try blocks.
+  - [28] Find races and non-determinism by generalize the information between the trace of the dynamic run and statically collected information flow. 
+  - [18] Detect and diagnose memory issues by observing the execution of a set of test cases.
+  - [71] Version variants (uncovered parts) are compared  to detect regression faults.
+2. Summary of the Section Main:
+  - Main achievements: Place observations at certain points or mocking resources to explore unexpected scenarios.
+  - Main challenges: Know the concept and Enlarge the research community of this topic.
+
+[D] Amplification by Modifying Existing Test Code:
+
+  1. Input Space Exploration:
+    - [15] Add or remove method calls to cover a wider set of executions.
+    - [21] Establish ‘reliability amplification’ and relate reliability to testability assessment.
+  2. Oracle Improvement:
+    - [56] Add assertion on the state of the returned value and the state of parameters.
+    - [12] Compare the outcome of original method to equivalent method as cross-checking oracles.
+    - [26] Execute both concretely and symbolically the tests to check the assertion is verified.
+    - [37] Compare the produced logs with expected log to raise an exception when the access is denied.
+  3. Purification:
+    - [62] Split existing tests into smaller parts (if/then/else) in order to ‘purify’ test cases.
+    - [64] Modify existing failing tests into single assertion tests and remove all statements that are not related to the assertion for improving the fault localization capabilities.
+  4. Automated Test Case Refactoring:
+    - Main achievements: Cross-checking oracle and purification techniques provide better fault localization.
+    - Main challenges: No experiments for the acceptability and maintainability of amplified tests.
+
