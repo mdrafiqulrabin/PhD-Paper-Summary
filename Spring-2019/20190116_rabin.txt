@@ -1,0 +1,64 @@
+
+Title: Compiler Fuzzing through Deep Learning
+
+Authors: Chris, Pavlos, Hugh, Alastair.
+
+Published in: ISSTA 2018.
+
+Keywords: Deep Learning; Differential Testing; Compiler Fuzzing.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Fuzzing is very popular to find bugs but it requires a good efforts to support a complex program like compiler.
+Manually written test suite is not enough to test all parts and may leave some parts even untested.
+The modern approaches like CSmith automatically generates C programs and finds many bugs in compilers. But it generates many test cases and takes long time to identify bugs in compilers, also require huge understanding effort to convert into the target language.
+Authors propose a fast, effective, and low effort approach to the generation of random programs for compiler fuzzing. 
+They introduce DeepSmith to accelerate the validation of compiler by adding the model for compiler inputs.
+
+[2] Solution:
+
+Summary:
+- Infer a learned model of the structure for compiler inputs.
+- Use the model to automatically generate test programs.
+- Apply differential testing method to find bugs in compiler.
+
+In details:
+- Choose 10k open source OpenCL programs from GitHub.
+- Check with oracle LLVM 3.9 and discard thats are not well-formed.
+- Textual representation of program codes are encoded as numeric sequences.
+- Create uniform code style with encoder and feed as input to the machine learning model.
+- Use the Long Short-Term Memory (LSTM) architecture of Recurrent Neural Network (RNN) as model.
+- Model the program code and then the trained network is sampled to generate new programs. 
+- Filter few non-deterministic behavior (data races, out-of-bounds, division by zero and uninitialized accesses).
+- Consider the same test harness of CLSmith and Execute a test case on a testbed.
+- Use the voting heuristics for differential testing to expose compiler defects.
+- Finally evaluate the results with the state-of-the-art compiler and extend the model.
+
+[3] Evaluation:
+
+The experimental setup includes:
+- Conduct testing of 10 OpenCL systems where 7 is real programs and 3 is open source.
+- Create testbeds where one is without optimization and other is with optimization.
+- Generate test cases where one using 1 thread and other using 2048 threads.
+- Compare both DeepSmith and CLSmith for 48 hours on each of the 20 testbeds. 
+
+Results of the evaluation:
+- Detect Compile-time Defects: Semantic Analysis Failures, Parser Failures, Compiler Hangs, Other errors.
+- Detect Runtime Defects: Thread-dependent Flow Control, Kernel Inputs, Latent Compile-time Defects.
+- Discover bugs in all of commercial and open source compilers, and submit 67 bug reports.
+- Comparison of DeepSmith to CLSmith:
+    - Code generation time is average 2.45× faster.
+    - Test case execution is on average 4.46× faster.
+    - Optimization level generally does not affect testing throughput significantly.
+    - DeepSmith kernel code is average 20 lines but CLSmith program is 1189 lines.
+    - DeepSmith is 2 times smaller in number of test case and 3 times faster in time to find bugs.
+- Compiler Stability Over Time: [Clang front-end to LLVM]
+    - The number of failing compiler crashes decreased tenfold between 3.6.2 and 5.0.0.
+    - Trigger distinct Clang front-end assertions or unreachables for every change or feature addition.
+- Extensibility of Language Model:
+    - Extend DeepSmith to the Solidity programming language with additional 150 lines of code that took just 1 day.
+    - Use same methodology and trained the model in the same manner as OpenCL for testing compiler solc 
+and solc-js and found many silent crashes and distinct compiler assertion.
+    - Require only a corpus of example, an encoder, and a test harness to target a new language.
