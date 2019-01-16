@@ -1,4 +1,4 @@
-# Spring-2019:
+# Spring-2019
 
 - Paper info
 - Problems that they tried to solve(80-100 words)
