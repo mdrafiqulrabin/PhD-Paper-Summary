@@ -52,7 +52,7 @@ Performance Measures:
 - Main Takeway: Stack hashing is far better than coverage profiles, but not than ground truth. Heuristics rather than ground truth as de-duplication strategy can lead to misleading or wrong conclusions. Code coverage as performance measure is secondary with primary Ground truth strategy.
 
 Target Programs: 
-Real programs suite: Google Fuzzer Test suite, binutils: nm, objdump and cxxfilt, FFmpeg and gif2png.
+Real programs suite: Google Fuzzer Test suite, binutils programs: nm, objdump, cxxfilt, and image processing programs: FFmpeg and gif2png.
 Artificial programs suite: CGC, and LAVA-M: base64, md5sum, uniq, and who.
 - Refs 32 Papers: Used a variety of benchmark programs in two categories: real programs and artificial programs. Only real programs by 22(+7) papers, CGC or LAVA-M by 6 papers, Google fuzzer test suite by 2 papers and manually injected bugs by 2 papers. That means different benchmark programs were used in different evaluation.
 - Authors' Evaluation: nm, objdump and cxxfilt were 3 programs in which Böhme et al found crashes and claimed that AFLFast is uniformly superior to AFL. But FFmpeg & gif2png were 2 programs in fuzzing and Mann Whitney U test found no statistical difference between AFL and AFLFast. Most of the paper experiment with insufficient small number of targets and also many papers didn't use the same version of the same target during experiment. For example, AFLFast used 2.26 versions of binutils but FairFuzz used 2.28 and Angora used 2.29.
