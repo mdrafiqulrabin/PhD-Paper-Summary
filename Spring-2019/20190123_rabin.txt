@@ -13,11 +13,38 @@ Keywords: empirical studies, compiler bugs, compiler testing.
 Compiler should be correct because silently miscompilation may cause serious damage in safety-critical software.
 Understanding compiler bugs are very important because they can help to detect and fix compilers bug.
 For this reason, authors conduct an empirical study on the characteristics of the bugs in GCC and LLVM.
-This study shows that even mature production compilers may trigger many bugs and it also highlights various kinds of interesting characteristics of bugs.
+This study shows that even mature production compilers may trigger many bugs and it also highlights various kinds of interesting characteristics of bugs (distribution, trigger-fix, test size, live time, priority, etc.).
 This study will guide developers towards the challenges and opportunities to more effectively test and debug compilers.
 
 [2] Solution:
-  
+
+This paper investigates 39K+ bugs of GCC with 22K+ GCC revisions and 12K+ bugs of LLVM with 8K+ LLVM revisions.
+By exploring the compilers bugs, authors attempt to investigate following four central aspects:
+  (1) Location of Bugs: Distribution of Bugs in Components, Distribution of Bugs in Files.
+  (2) Revealing and Fixing: Size of test cases, Time for regressions, Size of fixes (Lines of code, Number of functions).
+  (3) Duration of Bugs: the time between the bug report and fix.
+  (4) Priorities of Bugs: Five levels -> P1 (highest) to P5(lowest).
+
+The summary of methodology:
+  1. Collect fixed bugs from the bug repositories of GCC and LLVM.
+  2. Collect the revison log related to these fixed bugs by using commit marker.
+  3. Analyze those 50K fixed bugs and 30K revisions including enhancment requests.
+  4. Design tkfuzz and proof an observation (buggy test cases are usually small).
+
 [3] Evaluation:
-  
- 
+
+General Statistics:
+  1. Rejected Bug Reports: invalid -> undefined, worksforme -> not reproduced, wontfix -> not maintained.
+  2. Duplicate Bug Reports: multiple reports for same bugs.
+  3. Reopening Bugs: bugs that were not correctly or fully fixed.
+
+Central Aspects:
+  (1) Location of Bugs: c++ is most buggy for many more features, most of the files contain one bug only.
+  (2) Test Cases, Localization and Fixes of Bugs: Buggy test cases and fixs are usually small.
+  (3) Duration of Bugs: GCC confirms bugs faster than LLVM but spends more time to fix.
+  (4) Priorities of Bugs: Most have the default P3 priority, P1 bugs are fixed faster, P5 bugs are fixed slower.
+
+Result of tkfuzz tool:
+  - Design tkfuzz by leveraging the observation (buggy test cases are usually small) for compiler testing.
+  - Proof by finding 18 bugs where 12 have alreday been fixed or accepted. 
+
