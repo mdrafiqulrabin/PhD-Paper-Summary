@@ -27,8 +27,8 @@ By exploring the compilers bugs, authors attempt to investigate following four c
 
 The summary of methodology:
   1. Collect fixed bugs from the bug repositories of GCC and LLVM.
-  2. Collect the revison log related to these fixed bugs by using commit marker.
-  3. Analyze those 50K fixed bugs and 30K revisions including enhancment requests.
+  2. Collect the revision log related to these fixed bugs by using commit marker.
+  3. Analyze those 50K fixed bugs and 30K revisions including enhancement requests.
   4. Design tkfuzz and proof an observation (buggy test cases are usually small).
 
 [3] Evaluation:
@@ -40,11 +40,11 @@ General Statistics:
 
 Central Aspects:
   (1) Location of Bugs: c++ is most buggy for many more features, most of the files contain one bug only.
-  (2) Test Cases, Localization and Fixes of Bugs: Buggy test cases and fixs are usually small.
+  (2) Test Cases, Localization and Fixes of Bugs: Buggy test cases and fixes are usually small.
   (3) Duration of Bugs: GCC confirms bugs faster than LLVM but spends more time to fix.
   (4) Priorities of Bugs: Most have the default P3 priority, P1 bugs are fixed faster, P5 bugs are fixed slower.
 
-Result of tkfuzz tool:
+The result of tkfuzz tool:
   - Design tkfuzz by leveraging the observation (buggy test cases are usually small) for compiler testing.
-  - Proof by finding 18 bugs where 12 have alreday been fixed or accepted. 
+  - Proof by finding 18 bugs where 12 have already been fixed or accepted. 
 
