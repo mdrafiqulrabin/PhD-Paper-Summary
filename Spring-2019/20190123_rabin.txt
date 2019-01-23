@@ -10,6 +10,12 @@ Keywords: empirical studies, compiler bugs, compiler testing.
 
 [1] Problem:
 
+Compiler should be correct because silently miscompilation may cause serious damage in safety-critical software.
+Understanding compiler bugs are very important because they can help to detect and fix compilers bug.
+For this reason, authors conduct an empirical study on the characteristics of the bugs in GCC and LLVM.
+This study shows that even mature production compilers may trigger many bugs and it also highlights various kinds of interesting characteristics of bugs.
+This study will guide developers towards the challenges and opportunities to more effectively test and debug compilers.
+
 [2] Solution:
   
 [3] Evaluation:
