@@ -1,0 +1,17 @@
+Title: Toward Understanding Compiler Bugs in GCC and LLVM
+
+Authors: Chengnian Sun, Vu Le, Qirun Zhang, Zhendong Su
+
+Published in: ISSTA 2016.
+
+Keywords: empirical studies, compiler bugs, compiler testing.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+  
+[3] Evaluation:
+  
+ 
