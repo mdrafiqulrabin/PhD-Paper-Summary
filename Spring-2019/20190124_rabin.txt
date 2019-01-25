@@ -1,8 +1,8 @@
 Title: Efficient file fuzz testing using automated analysis of binary file format
 
-Authors: Hyoung Chun Kim, Young Han Choi, Dong Hoon Lee
+Authors: Hyoung Chun Kim, Young Han Choi, Dong Hoon Lee.
 
-Published in: Journal of Systems Architecture 2011.
+Published in: Elsevier 2011.
 
 Keywords: Fuzzing; Security testing; Software testing.
 
@@ -10,6 +10,31 @@ Keywords: Fuzzing; Security testing; Software testing.
 
 [1] Problem:
 
+Fuzzing inserts unexpected data into the input and finds serious security holes in a software system. 
+Similarly, file fuzz testing inserts fault data into files, let the software read those files, and detects its exceptions.
+But fuzzing with binaries requires a large number of fault-inserted files to cover every test case. 
+In order to overcome this drawback, authors propose the Binary File Analyzer and Fault Injector (BFAFI) tool.
+The BFAFI tool reduces the number of fault-inserted files and maintains the maximum test case coverage.
+This tool also detects interesting exceptions and finds more exceptions than the general fuzzer.
+
 [2] Solution:
 
+The file formats should be analyzed to reduce the number of fault-inserted files for testing but maximize the coverage. 
+
+In order to do so:
+1. Log Analyzer -> File Format Information: Extract field information of a sample file by tracing the execution of the program and analyzing the execution in the assembly level.
+2. Fault Injector -> Fault-inserted Files: Insert fault into sample file using the extracted field information based on its format in the field.
+3. Exception Monitor -> Exception Event: Let the target program read the fault-inserted files and analyze abnormal behavior.
+
+The automatic analysis of fields of binary files decreases the number of fault-inserted files used but maximizes coverage.
+
 [3] Evaluation:
+
+Authors evaluate the efficacy of this paper by implementing a debugger BFAFI that can trace and analyze fields of the WMF file format automatically.
+
+The result of BFAFI than general fuzzers:
+- Detected many more exceptions. 
+- Found many more causes of exceptions.
+- Need to input a less number of fault-inserted files.
+
+The BFAFI was capable of finding about 14 times more exceptions than FileFuzz, also found 11 causes of exceptions in the graphic rendering engine in and system library of Windows XP SP2.
