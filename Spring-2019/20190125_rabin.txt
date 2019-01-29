@@ -2,7 +2,7 @@ Title: Testing Static Analyzers with Randomly Generated Programs
 
 Authors: Pascal Cuoq, Benjamin Monate, Anne Pacalet, Virgile Prevosto, John Regehr,Boris Yakobowski, and Xuejun Yang.
 
-Published in: Springer 2012.
+Published in: NFM 2012.
 
 Keywords: Not added by the authors.
 
