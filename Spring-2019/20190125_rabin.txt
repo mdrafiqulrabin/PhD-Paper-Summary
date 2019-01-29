@@ -8,4 +8,34 @@ Keywords: Not added by the authors.
 
 -------------x-------------x-------------x-------------
 
-Will write details soon (by today).
+[1] Problem:
+
+In safety-critical applications, the tools should be more acute and fulfill its function.
+Various certification standards are used to measure the quality of the tools.
+The compiler and the static analyzer could be on the same formalization of the programming language.
+But an early adopter can change any of them without changing both of them.
+So, the key question is that 'how can we ensure the static analyzer being proposed agrees with the compiler already in use?'.
+Authirs offer one partial solution to this problem: 'the compiler and the analyzer can be subjected to automated random testing'.
+In this paper, the Csmith generated random programs were used to test the Farma-C Static Analyzer.
+
+[2] Solution:
+
+Frama-C is a framework for analysis and transformation of C programs.
+Csmith is an automatic generator of random C programs for differential testing of compilers.
+Authos used Csmith to test Frama-C. The steps are followings:
+  - Generate random C programs by Csmith. 
+  - Define several oracles for those deterministic programs.
+  - Check whether Frama-C wrongly handled a generated program.
+    
+[3] Evaluation:
+
+Authors performed the value analysis or plug-ins of Frama-C:
+    - Robustness Testing: Uncover crash bugs if doesn't terminate normally.
+    - Value Analysis as C Interpreter: Check the result of Frama-C interpreter with the result of a reference compiler (GCC/Clang).
+    - Printing Internal Invariants in Executable C Form: Analyze and obtain an assertion that hold before termination.
+    - Constant Propagation: Compair results by replacing the single input expressions with corresponding value.
+    - Slicing: Compair results by removing everything that does not contribute to the user-defined criterion.
+    
+Result of the evaluation:
+- 50 bugs were found and fixed during the process, in the front-end (AST elaboration and type-checking) and in the value analysis, constant propagation and slicing plug-ins.
+- Several undefined bugs were also found by Frama-C in Csmith (dangling pointers, unsequenced assignments to the same memory location, access uninitialized members of unions).
