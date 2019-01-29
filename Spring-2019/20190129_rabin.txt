@@ -1,0 +1,10 @@
+
+Title: Grammar-based Program Generation Based on Model Finding
+
+Authors: Mathias Soeken, Rolf Drechsler.
+
+Published in: IDT 2013.
+
+Keywords: Not added by the authors.
+
+-------------x-------------x-------------x-------------
