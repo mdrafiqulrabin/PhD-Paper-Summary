@@ -3,7 +3,7 @@ Title: A Snowballing Literature Study on Test Amplification
 
 Authors: Benjamin, Oscar, Zhongxing, Andy, Martin, Benoit.
 
-Published in: arXiv 2018.
+Published in: CoRR 2018.
 
 Keywords: test amplification; test augmentation; test optimization; test regeneration; test repair; automatic testing.
 
