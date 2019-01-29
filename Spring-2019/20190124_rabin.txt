@@ -2,7 +2,7 @@ Title: Efficient file fuzz testing using automated analysis of binary file forma
 
 Authors: Hyoung Chun Kim, Young Han Choi, Dong Hoon Lee.
 
-Published in: Elsevier 2011.
+Published in: EUROMICRO 2011.
 
 Keywords: Fuzzing; Security testing; Software testing.
 
