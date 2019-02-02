@@ -7,3 +7,8 @@ Published in: S&P 2015.
 Keywords: N/A.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+A set of parameters is needed to run a fuzzer. The effectiveness of the fuzzer highly depends on the fuzz configuration. But the key challenge is how to find the appropriate combination of parameters that maximize the chance of detecting bug numbers based on a given limited resource. The state-of-the-art approach Fuzz Configuration Scheduling (FCS) is to search over the parameter space for maximizing the fuzzing outcome. But it is not feasible when parameter space is large or continuous. In general, all the existing methods involve either manual or non-adaptive parameter selection. So, the key motivation of authors research is to automatically find mutation ratio parameter and maximize the bug finding rate of mutational fuzzing for a given program and a time limit with adaptive mutation ratio selection. Authors introduce SYMFUZZ which determines an optimal mutation ratio from a given program-seed pair based on the probability of finding crashes. This result provides evidence that adaptive mutation ratio selection can benefit fuzzing efficiency.
+
