@@ -10,12 +10,42 @@ Keywords: N/A.
 
 [1] Problem:
 
-A set of parameters is needed to run a fuzzer. The effectiveness of the fuzzer highly depends on the fuzz configuration. But the key challenge is how to find the appropriate combination of parameters that maximize the chance of detecting bug numbers based on a given limited resource. The state-of-the-art approach Fuzz Configuration Scheduling (FCS) is to search over the parameter space for maximizing the fuzzing outcome. But it is not feasible when parameter space is large or continuous. In general, all the existing methods involve either manual or non-adaptive parameter selection. So, the key motivation of authors research is to automatically find mutation ratio parameter and maximize the bug finding rate of mutational fuzzing for a given program and a time limit with adaptive mutation ratio selection. Authors introduce SYMFUZZ which determines an optimal mutation ratio from a given program-seed pair based on the probability of finding crashes. This result provides evidence that adaptive mutation ratio selection can benefit fuzzing efficiency.
+A set of parameters is needed to run a fuzzer. The effectiveness of the fuzzer highly depends on the fuzz configuration. 
+But the key challenge is how to find the appropriate combination of parameters that maximize the chance of detecting bug
+numbers based on a given limited resource. The state-of-the-art approach Fuzz Configuration Scheduling (FCS) is to search
+over the parameter space for maximizing the fuzzing outcome. But it is not feasible when parameter space is large or 
+continuous. In general, all the existing methods involve either manual or non-adaptive parameter selection. So, the key 
+motivation of authors research is to automatically find mutation ratio parameter and maximize the bug finding rate of 
+mutational fuzzing for a given program and a time limit with adaptive mutation ratio selection. Authors introduce SYMFUZZ 
+which determines an optimal mutation ratio from a given program-seed pair based on the probability of finding crashes. This
+result provides evidence that adaptive mutation ratio selection can benefit fuzzing efficiency.
 
 [2] Solution:
 
-Authors introduce SYMFUZZ in this paper. SYMFUZZ is a system that automatically finds an optimal mutation ratio for mutational fuzzing based on the input-bit dependence inference. This system consists of two major components: symbolic analysis and mutational fuzzing. The symbolic analysis module takes a program and a seed as input, then analysis the execution trace for this program-seed pair to detect dependencies among the bit positions of the input, then uses this dependency relation to compute a probabilistically optimal mutation ratio for this program-seed pair, and finally returns the optimal mutation ratio for this program-seed pair. The mutational fuzzing module then uses the mutation ratio to perform fuzzing and triggers buggy inputs. It (mutational fuzzing module) generates test cases by flipping input bits of a seed, then it evaluates a program under test using the generated test cases to determine whether they crash the program. Finally, authors triage the buggy inputs using safe stack hash (modified stack hash: stops traversing the call stack when it finds an unreachable return address) to figure out the same root cause group.
+Authors introduce SYMFUZZ in this paper. SYMFUZZ is a system that automatically finds an optimal mutation ratio for 
+mutational fuzzing based on the input-bit dependence inference. This system consists of two major components: symbolic 
+analysis and mutational fuzzing. The symbolic analysis module takes a program and a seed as input, then analysis the 
+execution trace for this program-seed pair to detect dependencies among the bit positions of the input, then uses this 
+dependency relation to compute a probabilistically optimal mutation ratio for this program-seed pair, and finally returns
+the optimal mutation ratio for this program-seed pair. The mutational fuzzing module then uses the mutation ratio to perform
+fuzzing and triggers buggy inputs. It (mutational fuzzing module) generates test cases by flipping input bits of a seed,
+then it evaluates a program under test using the generated test cases to determine whether they crash the program. Finally,
+authors triage the buggy inputs using safe stack hash (modified stack hash: stops traversing the call stack when it finds an
+unreachable return address) to figure out the same root cause group.
 
 [3] Evaluation:
 
-Authors initially obtained a list of 100 file-conversion applications of Debian and manually created a seed file for each application, then fuzzed all 100 program-seed pairs with BFF and found 8 programs that resulted in at least one crash. Then authors evaluate the SYMFUZZ on 8 real-world applications in order to answer the following questions: 1) Does it make sense to optimize the mutation ratio in mutational fuzzing? How does the number of bugs differ per mutation ratio? 2) What is the cardinality of minimum buggy bitsets? Is the conventional wisdom about choosing small mutation ratios correct? 3) How effective is it to use the SYMFUZZ’s adaptive strategy in terms of number of bugs found? 4) Does SYMFUZZ work well in practice? How many bugs did we find compared to the practical fuzzers such as BFF, zzuf, AFL-fuzz?. Authors fuzzed this 8 programs for 1 hour with each of 1,000 distinct mutation ratios from 0.001 to 1.000. They found that the number of bugs found varies significantly over different mutation ratios. Also the distribution of the number of bugs in 1,000 ratios was indeed biased towards several mutation ratios, and the best mutation ratio was different for each distinct program-seed pair. This result provides evidence that adaptive mutation ratio selection can benefit fuzzing efficiency. Authors also show that SYMFUZZ can find 39.5% more bugs than BFF and 57.9% more bugs than zzuf in the same amount of fuzzing time. As per the evaluation, the result is promising as it found an average of 38.6% more bugs (than 3 previous fuzzers over 8 programs) using the same amount of fuzzing time.
+Authors initially obtained a list of 100 file-conversion applications of Debian and manually created a seed file for each 
+application, then fuzzed all 100 program-seed pairs with BFF and found 8 programs that resulted in at least one crash. Then 
+authors evaluate the SYMFUZZ on 8 real-world applications in order to answer the following questions: 1) Does it make sense
+to optimize the mutation ratio in mutational fuzzing? How does the number of bugs differ per mutation ratio? 2) What is the 
+cardinality of minimum buggy bitsets? Is the conventional wisdom about choosing small mutation ratios correct? 3) How 
+effective is it to use the SYMFUZZ’s adaptive strategy in terms of number of bugs found? 4) Does SYMFUZZ work well in 
+practice? How many bugs did we find compared to the practical fuzzers such as BFF, zzuf, AFL-fuzz?. Authors fuzzed this 8 
+programs for 1 hour with each of 1,000 distinct mutation ratios from 0.001 to 1.000. They found that the number of bugs 
+found varies significantly over different mutation ratios. Also the distribution of the number of bugs in 1,000 ratios was 
+indeed biased towards several mutation ratios, and the best mutation ratio was different for each distinct program-seed 
+pair. This result provides evidence that adaptive mutation ratio selection can benefit fuzzing efficiency. Authors also show
+that SYMFUZZ can find 39.5% more bugs than BFF and 57.9% more bugs than zzuf in the same amount of fuzzing time. As per the 
+evaluation, the result is promising as it found an average of 38.6% more bugs (than 3 previous fuzzers over 8 programs) 
+using the same amount of fuzzing time.
