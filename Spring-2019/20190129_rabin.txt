@@ -8,3 +8,15 @@ Published in: IDT 2013.
 Keywords: Not added by the authors.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Model finder plays an important role in the field of Model Driven Engineering (MDE). Model finders require a meta-model and a list of constraints and return a model that conforms to the meta-model and meets the given constraints (if such a model exists). For example, in Xtext, the grammar description is transformed into a meta-model and each program corresponds to a model that conforms to that meta-model. Since models correspond to programs of the respective grammar, the result of the model finder is a program. Many approaches for grammar-based program generation have been proposed in the past. The main aim of this paper is to show that the problem can be described in terms of a model finding application. This paper illustrates how object constraint can be used in order to generate test programs by making use of the grammar and the model finder.
+
+[2] Solution:
+
+The algorithm takes two inputs (a grammar that describes the syntax of the programming language and additional constraints that describe properties) and produces one output (automatically generated test programs which meet the given constraints). So, the model finder takes a meta-model and additional constraints as inputs and returns one model that meets the additional constraints or proves that no such model exists. A scope has to be also given as input in order to execute a model finder automatically. Besides the meta-model, constraints, and scopes, a further input is given by a set of blocking models. Since a model finder can only find one model, a set of blocking models can be added to model finder in order to iteratively find several solutions. This solution can be arbitrary since the model finder depends on the underlying proof algorithms.
+
+[3] Evaluation:
+
+Authors implemented the proposed approach using Xtext and ocl2smt as model finder using Z3 as back-end solver. The applicability of the proposed approach has been evaluated on the languages CoffeeScript, Lua, and BibTEX. The approach can generate test programs in a reasonable run-time. The results of the evaluation show that many test programs can be generated efficiently.
