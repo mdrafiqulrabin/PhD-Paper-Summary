@@ -1,0 +1,9 @@
+Title: Learn&Fuzz: machine learning for input fuzzing
+
+Authors: Patrice Godefroid, Hila Peleg, Rishabh Singh.
+
+Published in: ASE 2017.
+
+Keywords: Fuzzing, Deep Learning, Grammar-based Fuzzing, Grammar Learning.
+
+-------------x-------------x-------------x-------------
