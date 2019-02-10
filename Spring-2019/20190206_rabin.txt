@@ -1,4 +1,4 @@
-Title: Learn&Fuzz: machine learning for input fuzzing
+Title: Learn&Fuzz: Machine Learning for Input Fuzzing
 
 Authors: Patrice Godefroid, Hila Peleg, Rishabh Singh.
 
@@ -7,3 +7,27 @@ Published in: ASE 2017.
 Keywords: Fuzzing, Deep Learning, Grammar-based Fuzzing, Grammar Learning.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The grammar-based fuzzing is an important types of fuzzing use today with complex structured input formats (Ex. Web Browser). But this is not fully automated as it requires a manually defined input grammar to generate new/modified test cases.
+This paper first shows how to automate the generation of an input grammar using sample inputs and machine-learning techniques.
+This paper also defines the learn&fuzz challenge: learning wants to capture the structure of well-formed inputs, while fuzzing wants to break that structure in order to cover unexpected code paths and find bugs.
+Authors present Learn&Fuzz algorithm for the learn&fuzz challenge and detail a case study on the PDF parser of Microsoft’s new Edge browser for the PDF format. 
+The result provides evidence that Learn&Fuzz can benefit testing efficacy in regards to the pass rate, code coverage and bugs.
+
+[2] Solution:
+
+The main steps of Learn&Fuzz is to make a corpus of PDF objects, train char-rnn model to learn a generative model of PDF objects and generate new PDF objects by different sampling strategies. 
+
+To implement the Learn&Fuzz, authors first merge multiple the PDF files to make a corpus of PDF objects and then extract multiple set of training input and output sequences correspond to the sequences of characters in the corpus. Then they use a recurrent neural network based character-level language model (char-rnn) to learn a generative model of PDF objects. Finally, use the learnt model to generate new PDF objects by sampling the distribution given a starting prefix (NoSample/Sample/SampleSpace).
+
+[3] Evaluation:
+
+Authors randomly select 1,000 PDF objects as baseline and also mark the smallest 3 PDF files as host1, host2, host3, and combine them as host123. Then they recombined the 1,000 baseline objects with those 3 hosts to obtain 3 sets of 1,000 new PDF files: baseline1, baseline2 and baseline3. Then they run those objects to the target PDF parser and compute the coverage information. The result shows that coverage varies across hosts but the recombined PDF file is larger than the host alone.
+
+Authors train the RNN model with two generation modes: Sample and SampleSpace. The result shows that the pass rate for SampleSpace is consistently better than the one for Sample and higher in 50 epochs on 10~50 epochs. With considering everything so-far, the best overall coverage is obtained with Sample 40-epochs for host123.
+
+After combining the learning with random fuzzing, the result shows that all the learning-based algorithms considered here are competitive compared to baseline+Random, and three of those beat that baseline coverage but pass rate goes down.
+
+In addition to coverage and pass rate, during a 5 days longer experiment with Sample+Random including 100,000 objects and 300,000 PDF files found a stack-overflow bug in the Edge PDF parser. This bug was later confirmed and fixed by the Microsoft Edge development team.
