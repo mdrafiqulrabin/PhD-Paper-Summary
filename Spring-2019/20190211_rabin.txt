@@ -1,0 +1,39 @@
+Title: Deep Reinforcement Fuzzing
+
+Authors: Konstantin Bottinger, Patrice Godefroid, and Rishabh Singh.
+
+Published in: SPW 2018.
+
+Keywords: Deep reinforcement learning; Fuzzing.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+An important way of fuzzing is to find the security vulnerabilities in code 
+by repeatedly testing the code with modified inputs. But none of the existing 
+fuzzing tools can explore the entire input space for a program. The state-of-art
+use fuzzing heuristics to prioritize next input, based on random or coverage.
+In this paper, authors investigate how to formalize the fuzzing as a reinforcement 
+learning problem to generate the next fuzz input.
+
+[2] Solution:
+
+Authors use the concept of Markov decision processes to formalize fuzzing as a 
+reinforcement learning problem. The target is to use the Q-learning algorithms that 
+optimize rewards drawn from runtime properties of the program under test. The process 
+starts with initial inputs and run those inputs in taget program. Then fuzzer extract 
+the run time information from those execution and observe some quality feedback. Then 
+a feedback-driven fuzzer takes those quality feedback in consideration and generate 
+fuzzed inputs by mutating the initial input with a specific set of actions. After that 
+it observes the rewards casused by input set. Finally, the fuzzing agent learns a policy 
+to generate new higher reward inputs and continue the process until get the target rewards.
+
+[3] Evaluation:
+
+Authors formalize fuzzing as a reinforcement learning by defining states, actions, and rewards
+in the fuzzing context: Set seed program as system that agent interacts, substrings of program
+as states that agent observes, random variables mapping substrings of an input as actions, and
+observes the coverage/bug/time as rewards. Authors tested on different PDF processing programs 
+including the PDF parser in the Microsoft Edge browser and several command line converters. 
+The result shows that the reinforcement fuzzing can outperform baseline random fuzzing.
