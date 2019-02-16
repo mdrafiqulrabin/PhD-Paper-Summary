@@ -1,0 +1,42 @@
+Title: Development of Intelligent Digital Certificate Fuzzer Tool
+
+Authors: B Chandrasekar, B Ramesh, V Prabhu, S Sajeev, PK Mohanty, G Shobha.
+
+Published in: ACM 2017.
+
+Keywords: Digital Certificates; Mutation Fuzzing; OpenSSL; X.509.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Digital certificates are used over network to autheticate users, but it can be tampered and subjected
+to duplication that may result in impersonation and spoofing attacks. That's why digital certificates
+are vital in case of network security and needs proper verification and validation. Nowadays software
+testing demands effective ways to find vulnerabilities in software. An effective approach to testing 
+digital certificates is to implement protocol based fuzzing. And so this paper aims to create a user 
+friendly protocol based fuzzing tool in order to fuzz digital certificate validation systems. The 
+process is to insert high volume of interesting fuzzed certificates as inputs in order to detect 
+vulnerabilities in digital certificate validation systems.
+
+[2] Solution:
+
+Authors implement the tool Cfuzz which is protocol aware mutation fuzzer based on specification+protocol.
+Two main components: user interface java swing, C library. The user interface allows to set fuzzer parameters, 
+base certificate path, and fuzzed certificates output path. Then java swing will interact with C library with
+native syatem call. In C library, the parameters are obtained from the user interface and stored into a temporary 
+intermediate file. This file is then passed as input to the fuzzer which does flip operations to produce more 
+mutated files which are passed through a loop back feed into the C program. The tool makes use of X.509 format 
+for digital. The tool creates fuzzed digital certificates with user provided test-case specific fields. Authors 
+implement an effective black box testing through the use of mutation based fuzzing and OpenSSL. It creates 
+corruption cases for the NetScaler system by using bit flipping to alter base certificates. 
+
+
+[3] Evaluation:
+
+The tool generated several fuzzed certificates from the original base certificate based on the various 
+fuzz pamameters that are tested on the NetScaler. The metric for comparison used is Levenshtein distance. 
+The execution time against the number of files created by the tool showing nearly linear increase in time 
+for completion. The leveshtein distance for each fuzzing level falls within the predefined range for that 
+level. The result shows that it has the following benefits: quality assurance, expose threat (segmentation 
+faults or memory corruption cases), coverage through gray-box testing and friendly UI.
