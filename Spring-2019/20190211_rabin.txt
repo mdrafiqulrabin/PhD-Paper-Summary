@@ -10,24 +10,24 @@ Keywords: Deep reinforcement learning; Fuzzing.
 
 [1] Problem:
 
-An important way of fuzzing is to find the security vulnerabilities in code 
-by repeatedly testing the code with modified inputs. But none of the existing 
-fuzzing tools can explore the entire input space for a program. The state-of-art
-use fuzzing heuristics to prioritize next input, based on random or coverage.
-In this paper, authors investigate how to formalize the fuzzing as a reinforcement 
-learning problem to generate the next fuzz input.
+An important way of fuzzing is to find the security vulnerabilities in code by repeatedly 
+testing the code with modified inputs. But none of the existing fuzzing tools can explore 
+the entire input space for a program. The state-of-art use fuzzing heuristics to prioritize 
+next input, based on random or coverage. In this paper, the authors investigate how to formalize 
+the fuzzing as a reinforcement learning problem to generate the next fuzz input.
 
 [2] Solution:
 
 Authors use the concept of Markov decision processes to formalize fuzzing as a 
 reinforcement learning problem. The target is to use the Q-learning algorithms that 
 optimize rewards drawn from runtime properties of the program under test. The process 
-starts with initial inputs and run those inputs in taget program. Then fuzzer extract 
+starts with initial inputs and run those inputs in target program. Then fuzzer extract 
 the run time information from those execution and observe some quality feedback. Then 
 a feedback-driven fuzzer takes those quality feedback in consideration and generate 
 fuzzed inputs by mutating the initial input with a specific set of actions. After that 
-it observes the rewards casused by input set. Finally, the fuzzing agent learns a policy 
+it observes the rewards caused by input set. Finally, the fuzzing agent learns a policy 
 to generate new higher reward inputs and continue the process until get the target rewards.
+
 
 [3] Evaluation:
 
