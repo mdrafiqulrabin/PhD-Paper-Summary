@@ -2,7 +2,7 @@ Title: Development of Intelligent Digital Certificate Fuzzer Tool
 
 Authors: B Chandrasekar, B Ramesh, V Prabhu, S Sajeev, PK Mohanty, G Shobha.
 
-Published in: ACM 2017.
+Published in: ICCSP 2017.
 
 Keywords: Digital Certificates; Mutation Fuzzing; OpenSSL; X.509.
 
