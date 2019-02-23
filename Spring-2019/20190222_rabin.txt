@@ -1,0 +1,36 @@
+Title: Active Learning of Input Grammars
+
+Authors: Matthias Hoschele, Alexander Kampmann, Andreas Zeller.
+
+Published in: ASE 2017.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Recently researchers have focused on inferring a formal language from a set of sample inputs for a 
+given program. For systematic effective testing, the precise format of input data is very important.
+The state-of-the-art tools (GLADE tool or Learn&Fuzz) use membership query or machine learning approach
+to infer structural properties. But the main problem of those tools is that their corresponding language 
+models are very specific to the input samples (i.e. only integer numbers but no floating-point numbers).
+In this paper, authors implement an AUTOGRAM prototype by observing the data flow of sample inputs. 
+The tool infers accurate and readable input grammars from a given program and set of sample inputs. 
+Then those formal languages can be used into any test generation system for automated fuzz testing. 
+
+[2] Solution:
+
+The AUTOM requires a program and a small set of sample inputs. The workflow of this tool: 1) Run the
+sample inputs into the given program. 2) Track the data flow of inputs by using the dynamic tainting. 
+3) Aggregate the input fragments that share the same data flow through the program execution. 4) Assign 
+names for lexical and syntactic entities based on the associated variable and function identifiers. 
+5) Define a concrete grammar rules. 6) Detect the optional, repeatable or predefined items by using 
+membership query. 7) Generalize the original production rules. 8) Derive a producer to fuzz the program 
+with the generated inputs from production rules.
+
+[3] Evaluation:
+
+To evaluate the effectiveness of AUTOGRAM tool, authors run the tool on a set of on inputs (i.e. URL, 
+CSV, JAVA, INI, and JSON). The tool finds accurate and readable input grammars from those given inputs.
+The result shows that the produced grammars are both sound (valid inputs) and complete (kind inputs).
