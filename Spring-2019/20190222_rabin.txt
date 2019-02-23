@@ -21,7 +21,7 @@ Then those formal languages can be used into any test generation system for auto
 
 [2] Solution:
 
-The AUTOM requires a program and a small set of sample inputs. The workflow of this tool: 1) Run the
+The AUTOGRAM requires a program and a small set of sample inputs. The workflow of this tool: 1) Run the
 sample inputs into the given program. 2) Track the data flow of inputs by using the dynamic tainting. 
 3) Aggregate the input fragments that share the same data flow through the program execution. 4) Assign 
 names for lexical and syntactic entities based on the associated variable and function identifiers. 
