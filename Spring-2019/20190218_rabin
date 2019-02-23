@@ -1,0 +1,38 @@
+Title: Detecting Information Flow by Mutating Input Data
+
+Authors: Bjorn Mathis, Vitalii Avdiienko, Ezekiel O. Soremekun, Marcel Bohme, and Andreas Zeller.
+
+Published in: ASE 2017.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Analyzing information flow plays an important role to detect vulnerabilities in applications. The 
+state-of-the-art, static and dynamic analyses tools are although used to detect the information flow.
+But the existing dynamic and static analysis tools cannot detect the hidden flows and also need the 
+concrete path along with the information flow. In this paper, authors present a lightweight mutation-based 
+analysis that is used to find a flow between source and sink by mutating dynamic values returned by 
+sensitive source. The evaluation of this prototype is called MUFAFLOW.
+
+[2] Solution:
+
+Authors investigated a lightweight mutation-based analysis to find information flow and then deployed this 
+analysis into a MUFAFLOW tool. The mutation-based flow analysis attempts to detect information flow between 
+a source and a sink. They use an experimental approach: systematically mutate the information sources
+of a program to assess whether the mutation impacts its information sinks. The workflow of MUFAFLOW: 
+1) Take a set of test cases and a target application. 2) Point the sensitive data sources and sinks in the 
+application by using SuSi tool. 3) Mutate input values at sources and track output values at sinks by using
+Soot and log-caller. 4) Finally, trigger a flow if the value changes due to a mutated sink value.
+
+[3] Evaluation:
+
+To evaluate the effectiveness of MUTAFLOW, authors compared the MUFAFLOW tool with a static taint analysis 
+tool (FLOWDROID 1.5) for detecting information flows in 131 Android apps on 3 benchmarks (2-micro & 1-macro).
+The effectiveness evaluated by 3 research questions: RQ1) Effectiveness for micro-benchmarks (DroidBench and 
+DroidRA). RQ2) Effectiveness for macro-benchmark (random apps from Google Play store). RQ3) Performance and 
+Scalability. The evaluation result shows MUTAFLOW outperforms FLOWDROID in terms of better precision, recall, 
+and accuracy. But authors suggest using MUTAFLOW as complementarity of FLOWDROID, because both are very fast 
+and almost all existing flows would be detected using both techniques.
