@@ -31,6 +31,6 @@ with the generated inputs from production rules.
 
 [3] Evaluation:
 
-To evaluate the effectiveness of AUTOGRAM tool, authors run the tool on a set of on inputs (i.e. URL, 
+To evaluate the effectiveness of AUTOGRAM tool, authors run the tool on a set of inputs (i.e. URL, 
 CSV, JAVA, INI, and JSON). The tool finds accurate and readable input grammars from those given inputs.
 The result shows that the produced grammars are both sound (valid inputs) and complete (kind inputs).
