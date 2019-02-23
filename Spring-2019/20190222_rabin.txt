@@ -2,7 +2,7 @@ Title: Active Learning of Input Grammars
 
 Authors: Matthias Hoschele, Alexander Kampmann, Andreas Zeller.
 
-Published in: ASE 2017.
+Published in: arXiv 2017.
 
 Keywords: N/A.
 
