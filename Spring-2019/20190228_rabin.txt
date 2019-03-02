@@ -7,3 +7,28 @@ Published in: AAAI 2019.
 Keywords: N/A.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Compilers plays an important role to build software and it should be correct, but production compilers remain buggy.
+Fuzz testing is leveraged with newly or mutated test cases to find new bugs or security vulnerabilities in compilers.
+The grammar-based fuzzing approach requires grammar specification but the problem is that it can be too much details.
+In this paper, the authors propose a grammar-based fuzzing tool called DEEPFUZZ in this regard.
+DeepFuzz automatically generates C programs based on a generative seq2seq model.
+Authors use this new generated C programs to fuzz C compilers (GCC and Clang/LLVM).
+The result provides better pass rate, code coverage and bug finddings for DeepFuzz.
+
+[2] Solution:
+
+Authors build DEEPFUZZ as seq2seq model with 2 RNNs for character-level sequences prediction. They used three sampling methods (NoSample, Sample and SampleSpace) and three generation strategies (G1, G2 and G3).
+DEEPFUZZ works on two stages: Program Generation and Compiler Testing; first generates syntactically correct programs and then use this programs to improve the compiler testing efficacy.
+On the first stage, authors train a character-level Sequence-to-Sequence model (generative recurrent neural network) with the original test suites of production compilers to learn the language patterns of the input data. They tune parameters to encode the language patterns for C programs into the model on the training stage and then generate new programs by leveraging different generation strategies and sampling methods.
+On the second stage, authors log the compiling messages and the execution trace by feeding the generated C programs to the compilers in different optimization levels. They analyze the compiling messages and the execution trace in order to improve the code coverages and to detect the new bugs.
+
+[3] Evaluation:
+
+Authors use 10,000 well-formed C programs of the GCC test suites as taring data for Sequence-to-Sequence model and then use the new generated C programs to fuzz C compilers (for both GCC-5 and Clang-3). Authors use three metrics to measure the effectiveness of DEEPFUZZ: Pass rate, coverage and bug. 
+a) Use command line of gcc to determine the pass rate: the program is correct if no error is reported during gcc command. The result shows that NoSample as sampling method and G1 as generation strategy provides better pass rate.
+b) Use gcov by gcc to collect the coverage information: line coverage, function coverage, and branch coverage. The result shows that Sample as our sampling method and G2 as generation strategy provides better coverage.
+c) Use different optimization levels and compilers to trigger bugs: crashes or code errors. The result shows that DEEPFUZZ generated 82.63% syntax valid C programs and found 8 new bugs addressed by developers.
+Authors also compared DEEPFUZZ with Csmith based on the the coverage improvements for the GCC and LLVM test suites with 10,000 generated programs. The result shows that DEEPFUZZ achieves better coverage improvement than Csmith.
