@@ -1,0 +1,9 @@
+Title: Guiding Dynamic Symbolic Execution toward Unverified Program Executions
+
+Authors: Maria Christakis, Peter Müller, Valentin Wüstholz.
+
+Published in: ICSE 2016.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
