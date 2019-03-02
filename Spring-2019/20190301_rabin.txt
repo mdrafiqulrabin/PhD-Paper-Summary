@@ -7,3 +7,18 @@ Published in: ICSE 2016.
 Keywords: N/A.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Verifying all possible executions of a program is required to detect program errors. But the state-of-the-art approaches leave some executions unverified, or partially verify, or verify with unsound assumptions. Static analysis is time consuming, Dynamic symbolic execution leads to redundancy, and combinations of static and dynamic analysis fails to find unsound assumptions. In this paper, authors introduce a technique to complement the partial verification by automatic test case generation. The result shows that this technique covers more unverified executions with producing smaller test suites and reducing testing time. 
+
+[2] Solution:
+
+This technique contains two main steps: a) Annotate which execution have been verified with which assumption with annotate programs. b) Use annotations to guide dynamic symbolic execution toward unverified program executions.
+Authors privide a code instrumentation that focused on Pruning redundant tests (abort tests that lead to verified executions) and Prioritizing tests that cover more properties that are not fully verified (verified, unverified, may-unverifie and must-unverified).
+
+[3] Evaluation:
+
+Authors implemented the technique for the .NET static analyzer Clousot and the DSE tool Pex and used 101 C# methods from 9 open-source projects and 13 programming tasks on the Rosetta Code repository for the experiments. 
+They evaluated (both with and without this technique) based on 4 subsequent stages: (1) static analysis and verification-annotation instrumentation, (2) may-unverified and must-unverified instrumentation, (3) runtime checking, and (4) dynamic symbolic execution.
+The result shows that this technique produces smaller test suites (by up to 19.2%), covers more unverified executions (by up to 7.1%), and reduces testing time (by up to 52.4%) compared to combining Clousot and Pex without this technique.
