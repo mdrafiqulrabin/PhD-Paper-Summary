@@ -1,0 +1,9 @@
+Title: DeepFuzz: Automatic Generation of Syntax Valid C Programs for Fuzz Testing
+
+Authors: Xiao Liu, Xiaoting Li, Rupesh Prajapati, Dinghao Wu.
+
+Published in: AAAI 2019.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
