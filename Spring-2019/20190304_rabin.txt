@@ -2,8 +2,19 @@ Title: A Systematic Impact Study for Fuzzer-Found Compiler Bugs
 
 Authors: Michaël Marcozzi, Qiyi Tang, Alastair Donaldson, Cristian Cadar.
 
-Published in: arXiv 2019.
+Published in: CoRR 2019.
 
 Keywords: N/A.
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+Fuzz testing is widely used in recent years to found interesting bugs in the software system. But the importance of those fuzzer found bugs is rarely studied in most case. Authors represent a study about the practical impact of fuzzer found bugs in the real world. The results show that almost half of the bugs propagate to binary-level difference but these differences never cause application test suite failures. The major takeaways are that the application test suites do not reflect real-world usage, the impact of compiler bugs on the real-world code is limited, and the fuzzer-found compiler bugs are first class citizens than others source.
+
+[2] Solution:
+
+Given a miscompilation bug, fixing patch (using the buggy compiler and fixed compiler) and a set of applications, authors wanted to study the practical impact of the bug on each application in three stages: (1) whether the bug appears to trigger during compilation. (2) whether the effects of triggering a bug propagate to the binary code. (3) whether a binary-level propagation leads to observable differences in the application’s test suite results. Authors also focused on whether the test suites act as a proxy for typical real-world usage. The workflow contains the following steps: (1) Sampling compiler bugs to investigate. (2) Sampling applications to compile. (3) Experimental process and environment setup. (4) Three stage results analysis (Stage 1: compile-time analysis, Stage 2: binary comparison, Stage 3: test suite execution.). and (5) Comparison with other bug sources. Initially, the authors added a list of packages into a tasks.json file. For each package, authors run (i) 'chroot' shell script for fresh build, (ii) 'compiler-llvm' shell script for warning-laden, buggy and fixed compilers, and (iii) 'steps-llvm' shell script to perform the three stages analysis.
+
+[3] Evaluation:
+
+Authors applied their evaluation on Clang/LLVM. Initially they collected 1,033 bugs based on four fuzzers (Csmith, EMI, Orange, yarpgen) and Alive tool. Then they removed unfixed, too old (<v3.1) and non-miscompilation bugs and only focused on high impact bugs (-O2). In a result, they finally sampled 35 bugs from those tools and another 10 bugs from Clang/LLVM end-users for their study (total 45 bugs). After that, they collected more than 30,000 packages from the latest stable release of Debian (version 9). Then they filtered based on reproducible build, Debian Autopkgtest-compatible test suites, more than 1K lines of C/C++ code and successful build using version 3.6 of Clang/LLVM. In a result, they finally sampled 318 Debian packages. Then experiments were performed on Debian 9 virtual machines with using Amazon Web Services (AWS). The results show that almost half of the fuzzer found bugs propagate to the generated binaries for some packages, but never cause application test suite failures. The user reported and Alive bugs have a lower impact, with less frequently triggered bugs and also no test failures. The major conclusions are that (1) either application test suites do not reflect real-world usage or the impact of compiler bugs on real-world code is limited, and (2) to the extent that compiler bugs matter, fuzzer-found compiler bugs are first class citizens, having at least as much impact as bugs from other sources.
