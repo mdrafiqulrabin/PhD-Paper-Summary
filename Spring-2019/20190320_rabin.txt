@@ -1,0 +1,15 @@
+Title: Static Detection of Event-based Races in Android Apps
+
+Authors: Yongjian Hu, Iulian Neamtiu.
+
+Published in: ASPLOS 2018.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
