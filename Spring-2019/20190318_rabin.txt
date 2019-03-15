@@ -1,0 +1,15 @@
+Title: Covert Channels Through Branch Predictors
+
+Authors: Dmitry Evtyushkin, Dmitry Ponomarev, Nael Abu-Ghazaleh.
+
+Published in: HASP 2015.
+
+Keywords: N/A.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
