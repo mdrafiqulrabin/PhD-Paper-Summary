@@ -1,0 +1,15 @@
+Title: Finding and Analyzing Compiler Warning Defects
+
+Authors: Chengnian Sun, Vu Le, Zhendong Su.
+
+Published in: ICSE 2016.
+
+Keywords: Compilers; Software testing and debugging; Usability testing.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
