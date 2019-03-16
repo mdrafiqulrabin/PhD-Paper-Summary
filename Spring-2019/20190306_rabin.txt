@@ -10,12 +10,35 @@ Keywords: Compilers; Software testing and debugging; Usability testing.
 
 [1] Problem:
 
-Compiler warning contains possible problematic info with the file name, column number, and line number. Compiler message is very useful for the developer to find a mistake or code smell. This warning message should be correct but it can be erroneous due to compiler bugs. Researchers are more likely to find bugs in the compiler but pay little attention to the warning. This paper introduces the first effort in this direction. Authors propose a randomized differential testing technique to detect compiler warning defects. The evaluation result shows that this technique is very effective in finding warning bugs in the popular compiler like GCC and Clang. It also highlights the need to continue improving compiler warning support.
+Compiler warning contains possible problematic info with the file name, column number, and line number. 
+Compiler message is very useful for the developer to find a mistake or code smell. This warning message 
+should be correct but it can be erroneous due to compiler bugs. Researchers are more likely to find bugs 
+in the compiler but pay little attention to the warning. This paper introduces the first effort in this 
+direction. Authors propose a randomized differential testing technique to detect compiler warning defects.
+The evaluation result shows that this technique is very effective in finding warning bugs in the popular 
+compiler like GCC and Clang. It also highlights the need to continue improving compiler warning support.
 
 [2] Solution:
 
-Authors implemented 'Epiphron' tool based on the differential testing technique to find warnings bugs of the compiler. They classified warnings bugs into three class: (a) Erroneous Messages (wrong location), (b) Spurious Warnings (wrong message), and (c) Missing Warnings. Besides, they also defined three key technical challenges: (1) Generating Effective Test Programs, (2) Aligning Warnings, and (3) Reducing Test Cases. The proposed technique contains two major steps: (a) Random Testing, and (b) Differential Testing. The basic workflow of Epiphron: (1) Program Generator generates a random program (p). (2) Compile program (p) with two compilers (c1 and c2) and emit two raw warning output (m1 and m2). (3) Use compiler-specific parser to parse those two raw warnings (m1 and m2) into two sets of warning records (w1 and w2). (4) Warning Aligner aligns w1 and w2 into a list of pairs based on the parsed records and computes the symmetric difference between w1 and w2 as potential warning bugs in either c1 or c2. (5) Filter removes known inconsistencies (i.e., false positives and reported bugs). (6) Then, reduce the test program to minimized test program but as same as the inconsistency. (7) Finally, report after indicating a warning bug.
+Authors implemented 'Epiphron' tool based on the differential testing technique to find warnings bugs of the 
+compiler. They classified warnings bugs into three class: (a) Erroneous Messages (wrong location), (b) Spurious
+Warnings (wrong message), and (c) Missing Warnings. Besides, they also defined three key technical challenges:
+(1) Generating Effective Test Programs, (2) Aligning Warnings, and (3) Reducing Test Cases. The proposed technique
+contains two major steps: (a) Random Testing, and (b) Differential Testing. The basic workflow of Epiphron: (1) 
+Program Generator generates a random program (p). (2) Compile program (p) with two compilers (c1 and c2) and emit
+two raw warning output (m1 and m2). (3) Use compiler-specific parser to parse those two raw warnings (m1 and m2)
+into two sets of warning records (w1 and w2). (4) Warning Aligner aligns w1 and w2 into a list of pairs based on 
+the parsed records and computes the symmetric difference between w1 and w2 as potential warning bugs in either 
+c1 or c2. (5) Filter removes known inconsistencies (i.e., false positives and reported bugs). (6) Then, reduce 
+the test program to minimized test program but as same as the inconsistency. (7) Finally, report after indicating
+a warning bug.
 
 [3] Evaluation:
 
-Authors evaluated Epiphron on widely used production compilers GCC and Clang. The evaluation shows that Epiphron is very effective in finding warning bugs. This tool found 60 (accepted 38) bugs for GCC and 39 (accepted 14) bugs for Clang; in total found 99 bugs and more than 50% (52 accepted) are accepted by developers. All confirmed bugs have the default priority P3 and developers already fixed 21 bugs. Epiphron generates 2,000 lines of code on average and all reported bugs have under five lines of code. Authors compair their result with CSmith and the result shows that Epiphron found 14 warning bugs that Csmith cannot detect and Epiphron utperformed Csmith in terms of enumerations or switch statements.
+Authors evaluated Epiphron on widely used production compilers GCC and Clang. The evaluation shows that Epiphron
+is very effective in finding warning bugs. This tool found 60 (accepted 38) bugs for GCC and 39 (accepted 14) 
+bugs for Clang; in total found 99 bugs and more than 50% (52 accepted) are accepted by developers. All confirmed 
+bugs have the default priority P3 and developers already fixed 21 bugs. Epiphron generates 2,000 lines of code on 
+average and all reported bugs have under five lines of code. Authors compair their result with CSmith and the result
+shows that Epiphron found 14 warning bugs that Csmith cannot detect and Epiphron utperformed Csmith in terms of 
+enumerations or switch statements.
