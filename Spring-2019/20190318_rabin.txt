@@ -10,6 +10,32 @@ Keywords: N/A.
 
 [1] Problem:
 
+Malicious processes can communicate secretly through the shared processor resource.
+Covert channel opens a way to transfers information between processes that are not supposed to be allowed.
+In this paper, authors show a new way of covert channel through the concept of branch predictors.
+Authors demonstrated the covert channel on both multi-threading and single threading system.
+This paper also shows the techniques on how to improve the quality of covert channel and how to prevent the covert channel.
+
 [2] Solution:
 
+The covert channel through branch predictor is based on two observations:
+a) The state of a branch predictor is shared by all processes executing on the same core: When a program executes 
+a large block of taken or non-taken branches, the predictor structures are put in the corresponding state. The next
+time this program executes the same block of branches with the same out- comes, its branch misprediction rate will 
+decrease sig- nificantly, leading to shorter execution time. In other words, the branch prediction unit can be 
+controlled to reduce the execution time of blocks containing branch instructions with appropriately configured outcomes.
+b) The state of a branch predictor is preserved across context switches: When a context switch occurs, the internal
+structures of the branch prediction unit do not get invalidated. Thus, they can affect the branch prediction accuracy 
+of the newly scheduled process. In an SMT environment where the spy executes concurrently with the trojan on the same 
+core, the second property is not critical for the attack, as the spy can probe the shared branch predictor while the 
+trojan sets its state.
+
 [3] Evaluation:
+
+When the trojan intends to send a one to the spy, it executes a large block of conditional branch instructions with 
+taken outcomes. At the same time, the spy continuously executes a large block of taken branch instructions and measures 
+its execution time. When the execution time is below average due to the lower branch misprediction rate, as the trojan 
+put the predictor to the taken state, the spy detects the transmission of one. Transferring the value of zero between 
+the trojan and the spy is achieved in the same way, with the trojan intentionally executing not-taken branches. In order
+to detect timing differences, the spy process can either measure its total execution time, or can read the performance 
+counters to directly observe the branch misprediction rate.
