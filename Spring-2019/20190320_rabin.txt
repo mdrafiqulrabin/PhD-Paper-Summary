@@ -10,6 +10,29 @@ Keywords: N/A.
 
 [1] Problem:
 
+The event-based model of android apps can lead to the concurrency errors. 
+Event-driven races more frequent than other races in Android apps.
+Concurrency being one of the top-5 most common bug. 
+More than half of the high-severity bugs are due to concurrency.
+Several dynamic detectors have been proposed to find races (i.e. DroidRacer, CAFA, EventRacer Android.
+However, dynamic detectors have two main issues: a)prone to false negatives and b)suffer from good coverage.
+To address these issues, authors propose a static approach called SIERRA to event race detection.
+
 [2] Solution:
 
+Authors implement SIERRA in following steps:
+a) DroidEL examines the android apps for AF reflection and Layout inflation. It detects callback and generates a harness as a single entrypoint.
+b) WALA uses this result for program analysis such as pointer analysis, call graph generation and control/data flow analysis. It combines object sensitivity and call-site sensitivity within an action sensitivity.
+c) Define happens-before relation between actions based on SHBG node and edge.
+d) Generates candidate races by intersecting the points-to sets between actions that are not ordered by happens-before. 
+e) Refute the false positives by a path-sensitive, backward symbolic execution with Thresher tool.
+f) Finally, race prioritization (app code -> framework code -> pointer reference). 
+
 [3] Evaluation:
+
+Authors evaluated SIERRA in terms of effectiveness (i.e. how many races vd analyze daata) an app. 
+They evaluated SIERRA on 194 Android apps. Experimental results show that SIERRA is effective and 
+efficient as it is taking 960 seconds to analyze an app and revealing 43 potential races. Compared 
+with the dynamic race detector, SIERRA discovered an average 29.5 true races with 3.5 false positives,
+where the dynamic detector only discovered 4 races and hence missing 25.5 races per app. Experiments 
+reveal that author's approach is effective at finding true races without a large number of false positives.
