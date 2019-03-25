@@ -1,0 +1,17 @@
+Title: Machine Learning Applied to Software Testing: A Systematic Mapping Study
+
+Authors: Vinicius H. S. Durelli , Rafael S. Durelli , Simone S. Borges, Andre T. Endo, Marcelo M. Eler , DiegoR.C.Dias ,and MarceloP.Guimaraes.
+
+Published in: IEEE 2019.
+
+Keywords: Machine learning (ML), software testing, systematic mapping study.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+
+[2] Solution:
+
+
+[3] Evaluation:
