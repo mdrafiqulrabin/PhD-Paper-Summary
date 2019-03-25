@@ -30,7 +30,7 @@ f) Finally, race prioritization (app code -> framework code -> pointer reference
 
 [3] Evaluation:
 
-Authors evaluated SIERRA in terms of effectiveness (i.e. how many races vd analyze daata) an app. 
+Authors evaluated SIERRA in terms of effectiveness (how many races) and efficiency (how much times). 
 They evaluated SIERRA on 194 Android apps. Experimental results show that SIERRA is effective and 
 efficient as it is taking 960 seconds to analyze an app and revealing 43 potential races. Compared 
 with the dynamic race detector, SIERRA discovered an average 29.5 true races with 3.5 false positives,
