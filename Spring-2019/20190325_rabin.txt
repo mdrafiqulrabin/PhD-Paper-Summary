@@ -36,7 +36,7 @@ repairs similar failures is highly ranked than the dissimilar failure.
 
 [3] Evaluation:
 
-Authors applied there experiments (based on the concept of compiler fuzzer taming) on SpiderMonkey 1.6 and 
+Authors applied their experiments (based on the concept of compiler fuzzer taming) on SpiderMonkey 1.6 and 
 GCC 4.3.0 with FPF benchmark in terms of faults detection and localization. Authors used Andrews’ tool (four 
 operators: statement deletion, conditional negation, operator replacement, and constant replacement) to produce 
 mutants from benchmark test suites. After that, they ignored mutants that already covered by failing mutants or 
