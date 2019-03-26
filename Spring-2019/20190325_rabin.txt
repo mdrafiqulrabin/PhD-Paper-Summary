@@ -10,12 +10,42 @@ Keywords: N/A.
 
 [1] Problem:
 
-Determining the similarity of failing test cases is very important for the automated fault detection process. Measuring the distance between programs is very challenging for fault identification and localization. The state-of-the-art fuzzer taming using FPF is limited and not good for benchmark data sets. Re-running the tests after fixing at least one fault is hardly controversial. This paper proposes a mutant based metric for measuring the distance between executions. Additionally, it also demonstrates how to use such a metric in compiler fuzzer taming and fault localization. Our. Authors evaluate the metric on SpiderMonkey 1.6 and GCC 4.3.0 in terms of faults detection and localization. The result shows the improvements of using mutant based metric over state-of-the-art methods.
+Determining the similarity of failing test cases is very important for the automated fault detection 
+process. Measuring the distance between programs is very challenging for fault identification and 
+localization. The state-of-the-art fuzzer taming using FPF is limited and not good for benchmark data 
+sets. Re-running the tests after fixing at least one fault is hardly controversial. This paper proposes 
+a mutant based metric for measuring the distance between executions. Additionally, it also demonstrates 
+how to use such a metric in compiler fuzzer taming and fault localization. Our. Authors evaluate the 
+metric on SpiderMonkey 1.6 and GCC 4.3.0 in terms of faults detection and localization. The result shows 
+the improvements of using mutant based metric over state-of-the-art methods.
 
 [2] Solution:
 
-This paper investigates the utility of using distance metrics. The idea of measuring the distance between failures is based on the response to mutants. The proposal is that two executions of a program are similar to the degree that changes to the program produce the same changes in the correctness of the executions. The basic idea is that if failing test cases pass for the same mutant, then they are likely to have similar faults. If a failed test passes for a mutant, then the mutant repairs test. The repairing with mutants creates an onion-ring structure where failure is repaired by (1) mutants that are very specific to the fault (the inner rings) (2) hypothetical mutants that repair more and more faults (3) mutants that turns off all optimization (the outer rings). More matching repairs indicates a much higher probability two failures are due to the same fault. It had been said that Jaccard distance is better than Hamming distance as Hamming distance is not good when common mutants larger than disagree mutants, using the mutant response metrics improves FPF-based fuzzer taming. The repairing mutants are also used for fault localization by examining the repairing ranking: a given mutant that repairs similar failures is highly ranked than the dissimilar failure.
+This paper investigates the utility of using distance metrics. The idea of measuring the distance between 
+failures is based on the response to mutants. The proposal is that two executions of a program are similar 
+to the degree that changes to the program produce the same changes in the correctness of the executions. 
+The basic idea is that if failing test cases pass for the same mutant, then they are likely to have similar 
+faults. If a failed test passes for a mutant, then the mutant repairs test. The repairing with mutants creates 
+an onion-ring structure where failure is repaired by (1) mutants that are very specific to the fault (the inner
+rings) (2) hypothetical mutants that repair more and more faults (3) mutants that turns off all optimization (the 
+outer rings). More matching repairs indicates a much higher probability two failures are due to the same fault. 
+It had been said that Jaccard distance is better than Hamming distance as Hamming distance is not good when common 
+mutants larger than disagree mutants, using the mutant response metrics improves FPF-based fuzzer taming. The 
+repairing mutants are also used for fault localization by examining the repairing ranking: a given mutant that 
+repairs similar failures is highly ranked than the dissimilar failure.
 
 [3] Evaluation:
 
-Authors applied there experiments (based on the concept of compiler fuzzer taming) on SpiderMonkey 1.6 and GCC 4.3.0 with FPF benchmark in terms of faults detection and localization. Authors used Andrews’ tool (four operators: statement deletion, conditional negation, operator replacement, and constant replacement) to produce mutants from benchmark test suites. After that, they ignored mutants that already covered by failing mutants or failed to survive under quick test. Then, calculated the APFD (Average Percent Faults Detected) of the first 50 tests for the discovery graph to compare the results. The trend graph shows that the mutation-based metric's curve is above the best previous curve at 60% of data points. GCC's APFD improvement is larger than SpiderMonkey but the early curve is worse than the benchmark curve. Finally, authors also compare the result of fault localization for compiler faults between Repair and MUSE/MUSEUM; and for CoREBench faults among Repair, Stmts, Metallaxis-FL, MUSE. No method performs extremely well: MUSE performs worst and Repair performs slightly better than the MUSEUM. After removing random subsets of faults, these metrics still outperform the previous best. Authors also applied X-means clustering with these metrics and concluded that clustering is not interesting in fuzzer taming. The evaluation shows that using mutant response metrics improves FPF-based fuzzer taming over previous results.
+Authors applied there experiments (based on the concept of compiler fuzzer taming) on SpiderMonkey 1.6 and 
+GCC 4.3.0 with FPF benchmark in terms of faults detection and localization. Authors used Andrews’ tool (four 
+operators: statement deletion, conditional negation, operator replacement, and constant replacement) to produce 
+mutants from benchmark test suites. After that, they ignored mutants that already covered by failing mutants or 
+failed to survive under quick test. Then, calculated the APFD (Average Percent Faults Detected) of the first 50 
+tests for the discovery graph to compare the results. The trend graph shows that the mutation-based metric's curve 
+is above the best previous curve at 60% of data points. GCC's APFD improvement is larger than SpiderMonkey but the 
+early curve is worse than the benchmark curve. Finally, authors also compare the result of fault localization for 
+compiler faults between Repair and MUSE/MUSEUM; and for CoREBench faults among Repair, Stmts, Metallaxis-FL, MUSE. 
+No method performs extremely well: MUSE performs worst and Repair performs slightly better than the MUSEUM. After 
+removing random subsets of faults, these metrics still outperform the previous best. Authors also applied X-means 
+clustering with these metrics and concluded that clustering is not interesting in fuzzer taming. The evaluation 
+shows that using mutant response metrics improves FPF-based fuzzer taming over previous results.
