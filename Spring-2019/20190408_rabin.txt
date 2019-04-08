@@ -5,14 +5,39 @@ Authors: Brett Daniel, Danny Dig, Kely Garcia, Darko Marinov
 
 Published in: IEEE 2007.
 
-Keywords: Machine learning (ML), software testing, systematic mapping study.
+Keywords: Automated testing, bounded-exhaustive testing, imperative generators, test data generation, refactoring engines.
 
 -------------x-------------x-------------x-------------
 
 [1] Problem:
 
+Refactoring is an way to improve the design of the code without modifying any behavior.
+The refactoring engine is the tool that automated the refactoring functionality of the IDE.
+As manual refactoring is error-prone, users rely on the refactoring engine.
+User chooses a refactoring type and then IDE transforms the program based on the type.
+This is expected that the program’s behavior should be same  without any side effect after refactoring.
+To verify this, in this paper, authors present a technique to test the refactoring engine.
+Writing test input manually is very time consuming and may results in incomplete test suite.
+So, they automatically generated complex test input and tested on popular open source IDEs.
+The result shows that bugs can be found after applying refactoring.
 
 [2] Solution:
 
+Authors introduce a general framework for iterative generation of structurally complex test inputs.
+The general framework has been built in a library called ASTGen that produce ASTs as input programs.
+ASTGen allows the tester to develop the imperative generators that is the main disadvantage of this paper.
+To help regarding this generator implementation, authors shows some code description of generators in this paper.
+They discussed the structure of basic generator and how to go through the generator composition with generator iteration and data composition, they also talked about the dependent composition.
+Then they discussed the AST generation with some code example of Simple AST (i.e. field declaration and initialization) and Complex AST (field reference, class relation and double-class field reference).
+On the other hand, to test the refactoring engine, they also define a variety of oracles (six oracles): DoesCrash, DoesNotCompile, WarningStatus, Inverse, Custom and Differential Oracle.
+The summary contains three main steps: 1) Generate text programs by ASTGen, 2) Create refactored program by IDE, and 3) Test with Oracles.
 
 [3] Evaluation:
+
+Authors evaluated the ASTGen generated input programs on Eclipse and NetBeans refactoring engines.
+Their main target was to find bugs of refactoring engines and report those bugs to corresponding IDEs.
+They tested following 8 refactoring: Rename, EncapsulateField, PushDownField, PullUpField, PushDownMethod, PullUpMethod, ChangeSignature, and MemberToTop.
+Followings were the major generator that they used during testing: FieldReference, ClassRelationship, DoubleClassFieldReference, MethodReference, and MethodParamReference.
+Authors found 21 new bugs in Eclipse and 24 in NetBeans. Eclipse confirmed 20 bugs and  NetBeans fixed 2 bugs, ignored 2 bugs as duplicate and confirmed 19 bugs.
+The bug finding result shows that  ASTGen found more bugs (already reported or fixed) but only interested on new unreported bugs.
+By observing the effort (number of test inputs, time to generate and compile), they also concluded that ASTGen is better than manual testing.
