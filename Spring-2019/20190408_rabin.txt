@@ -1,0 +1,18 @@
+
+Title: Automated Testing of Refactoring Engines
+
+Authors: Brett Daniel, Danny Dig, Kely Garcia, Darko Marinov
+
+Published in: IEEE 2007.
+
+Keywords: Machine learning (ML), software testing, systematic mapping study.
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+
+[2] Solution:
+
+
+[3] Evaluation:
