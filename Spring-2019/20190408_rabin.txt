@@ -1,4 +1,3 @@
-
 Title: Automated Testing of Refactoring Engines
 
 Authors: Brett Daniel, Danny Dig, Kely Garcia, Darko Marinov
@@ -41,3 +40,4 @@ Followings were the major generator that they used during testing: FieldReferenc
 Authors found 21 new bugs in Eclipse and 24 in NetBeans. Eclipse confirmed 20 bugs and  NetBeans fixed 2 bugs, ignored 2 bugs as duplicate and confirmed 19 bugs.
 The bug finding result shows that  ASTGen found more bugs (already reported or fixed) but only interested on new unreported bugs.
 By observing the effort (number of test inputs, time to generate and compile), they also concluded that ASTGen is better than manual testing.
+
