@@ -6,6 +6,8 @@ Published in: CoRR 2017.
 
 Keywords: N/A
 
+Link: https://arxiv.org/abs/1711.00740
+
 -------------x-------------x-------------x-------------
 
 [1] Problem:
