@@ -1,0 +1,15 @@
+Title: A Literature Study of Embeddings on Source Code
+
+Authors: Zimin Chen, Martin Monperrus
+
+Published in: arXiv 2019.
+
+Keywords: N/A
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
