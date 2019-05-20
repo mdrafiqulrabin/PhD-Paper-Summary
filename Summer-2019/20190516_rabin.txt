@@ -2,9 +2,11 @@ Title: A Literature Study of Embeddings on Source Code
 
 Authors: Zimin Chen, Martin Monperrus
 
-Published in: arXiv 2019.
+Published in: CoRR 2019.
 
 Keywords: N/A
+
+Link: https://arxiv.org/abs/1904.03061
 
 -------------x-------------x-------------x-------------
 
