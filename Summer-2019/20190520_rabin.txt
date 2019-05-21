@@ -12,6 +12,34 @@ Link: https://arxiv.org/abs/1711.00740
 
 [1] Problem:
 
+Existing deep learning based methods generally work on textual structure such that sequence of tokens, parse trees or
+dependency networks.  But the learning tasks on source code doesn’t attempt to infer the well-defined semantics of source
+code. To diminish this, authors represent the source code as graphs and expose the underlying semantic (+syntactic)  structure
+of source code. The key insight is that exposing the semantic structure may show the advantages in model training, code
+completion, and bug finding. In this paper, the authors represent a deep learning model GGNN (Gated Graph Neural Networks)
+that encodes programs as graphs and learns the program representation over those graphs.
+
 [2] Solution:
 
+To illustrate the effectiveness of exposing the semantic structure of programs, authors evaluate their methods on two tasks:
+(1) VARNAMING task where the network predicts the correct variable name based on the understanding of its usage and (2)
+VARMISUSE task where the network infers the correct variable name in a program location. To achieve this, authors need to know
+the semantics role and semantics usage of a variable, respectively. In order to learn the semantic representation, authors
+rely on the data flow information and type hierarchies of the programs. To model the VARNAMING, all occurrences of the target
+variable have been replaced from the graph by a specific token. Then a neural propagation predicts the target variable. On the
+other hand, to model the VARMISUSE, a new variable is added with the graph to compute a context representation and a candidate
+variable is added with the graph to compute a usage representation in the target slot. Then a linear layer computes the
+correct variable by concatenating the context and usage.
+
 [3] Evaluation:
+
+Authors choose 29 top-starred open source C# projects from GitHub. Those projects are compiled with Roslyn to extract type
+information. Here, two projects are selected as a development set, three projects are selected as UNSEENPROJTEST, and
+remaining projects are split into train/validation/test sets in a 60-10-30 ratio, where the test set is named SEENPROJTEST.
+For VARMISUSE, authors use two bidirectional RNN model (LOC and AVGBIRNN) as baselines. For VARNAMING, authors use one 
+log-bilinear model (AVGLBL) and one bidirectional RNN model (AVGBIRNN) as baselines. The evaluation performed on the
+quantitative scale (with ablation study of design effect) and qualitative scale. The result shows the effectiveness of GGNN
+on both SEENPROJTEST and UNSEENPROJTEST dataset over baselines. Authors also use VARMISUSE task to identify bugs in RavenDB
+document database and Roslyn Microsoft’s C# compiler framework. They reviewed 500 locations of both projects and found three
+bugs in each project. Those bugs types - crash, memory consumption, non-informative error message, etc. The authors suggest
+that the VARMISUSE task would be useful in testing like code review.
