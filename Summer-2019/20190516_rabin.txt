@@ -12,6 +12,25 @@ Link: https://arxiv.org/abs/1904.03061
 
 [1] Problem:
 
+In deep learning, researchers generally translate images, audios, etc into a vector representation called embedding. 
+The evaluation of word embedding technique has been placed a significant role in NLP as textual data can be used as 
+a mathematical model. Natural languages have characters, words, sentences, paragraphs, etc metrics for word embedding.
+Similarly, programming languages also have different metrics such as variables, expressions, statements, methods, etc.
+Therefore, word embedding can be applied to programming languages like natural languages. In this paper, authors focus 
+on programming languages and discuss the usage of word embedding techniques on programs and source code.
+
 [2] Solution:
 
+This study is a survey of embedding techniques on programs and source code. The authors of this survey paper collected
+articles by asking authors of reference paper and by searching on Google Scholar. Then they categorize the articles in 
+five categories: (1) EMBEDDING OF TOKENS, (2) EMBEDDING OF FUNCTIONS OR METHODS, (3) EMBEDDING OF SEQUENCES OR SETS OF 
+METHOD CALLS, (4) EMBEDDING OF BINARY CODE, and (5) OTHER EMBEDDINGS. They reviewed the techniques and applications of 
+each paper and categories them into these five groups. They also show the links of publicly available embeddings on the 
+source code. Additionally, they hypothesize potential future research directions by discussing EMBEDDING VERSUS DOWNSTREAM
+TASKS and CONTEXTUAL WORD EMBEDDING.
+
 [3] Evaluation:
+
+The authors collected and reviewed articles that use source code embedding. In this literature study, the authors mainly 
+show different types of embedding techniques and their application on different downstream tasks. This can be considered 
+as an embedding bookmark of source code and will provide an overview of diverse embedding to future researchers.
