@@ -1,0 +1,14 @@
+
+Title: COSET: A Benchmark for Evaluating Neural Program Embeddings
+
+Authors: 	Ke Wang, Mihai Christodorescu
+
+Published in: arXiv 2019.
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1905.11445
+
+-------------x-------------x-------------x-------------
+
+[Already read, will write summary shortly]
