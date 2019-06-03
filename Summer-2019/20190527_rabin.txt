@@ -1,0 +1,13 @@
+Title: Fully Automated Compiler Testing of a Reasoning Engine via Mutated Grammar Fuzzing
+
+Authors: 	Yavuz Koroglu, Franz Wotawa
+
+Published in: ICSE 2019.
+
+Keywords: compiler testing, fuzz testing, mutation testing, grammar fuzzing
+
+Link: https://dl.acm.org/citation.cfm?id=3338665
+
+-------------x-------------x-------------x-------------
+
+[Already read, will write summary shortly]
