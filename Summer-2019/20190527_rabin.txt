@@ -29,8 +29,8 @@ The tool contains the following three sections: (1) Test Generation, (2) Test Ex
 In test generation, the authors implement two fuzzers to generate test inputs: 
 (1) gFuzzer that generates test inputs from original grammar and
 (2) mgFuzzer that generates test inputs by mutating original grammar.
-They used six mutation functions for gFuzzer: (1) Terminal replacement, (2) Rule Deletion, (3) Rule Duplication, (4) Non-terminal Exchange, (5) Recursion Rule Insertion and (6) Terminal Insertion.
-They check two types of error: Type-I where the parser accepts an invalid input (false positive) 
+Six mutation functions are used for gFuzzer: (1) Terminal replacement, (2) Rule Deletion, (3) Rule Duplication, (4) Non-terminal Exchange, (5) Recursion Rule Insertion and (6) Terminal Insertion.
+Two types of error have been checked: Type-I where the parser accepts an invalid input (false positive) 
 and Type-II where the parser rejects a valid input (false negative).
 gFuzzer generates test inputs for Type-I and mgFuzzer generates test inputs for both Type-I and Type-II. 
 In test execution, authors execute the generated test inputs on ATMS engine and check the output (failure message or list of consequences) with test oracles.
