@@ -10,4 +10,44 @@ Link: https://dl.acm.org/citation.cfm?id=3338665
 
 -------------x-------------x-------------x-------------
 
-[Already read, will write summary shortly]
+[1] Problem:
+
+Reasoning engines are used in automated debugging to increase the reliability of systems.
+The reasoning engine infers logical consequences from a set of fixed axioms and observations.
+The engine (a) must accept all valid inputs and reject invalid inputs, 
+and (b) must infer logical consequences and never infer illogical consequences.
+To produce a reliable result, the engine itself should be reliable, therefore testing is required.
+In this paper, the authors test the Assumption-based Truth Maintenance System (ATMS).
+The authors implement (a) a mutated grammar fuzzer to test the compilation stage of ATMS reasoning engine
+and (b) an oracle recognizer to evaluate the correctness of compiler output.
+The result shows that the mutated grammar fuzzer outperforms the original grammar fuzzer in terms of fault finding and code coverage.
+
+[2] Solution:
+
+The authors aim to implement a fully automated tool for testing the ATMS engine. 
+The tool contains the following three sections: (1) Test Generation, (2) Test Execution, and (3) Test Oracle.
+In test generation, the authors implement two fuzzers to generate test inputs: 
+(1) gFuzzer that generates test inputs from original grammar and
+(2) mgFuzzer that generates test inputs by mutating original grammar.
+They used six mutation functions for gFuzzer: (1) Terminal replacement, (2) Rule Deletion, (3) Rule Duplication, (4) Non-terminal Exchange, (5) Recursion Rule Insertion and (6) Terminal Insertion.
+They check two types of error: Type-I where the parser accepts an invalid input (false positive) 
+and Type-II where the parser rejects a valid input (false negative).
+gFuzzer generates test inputs for Type-I and mgFuzzer generates test inputs for both Type-I and Type-II. 
+In test execution, authors execute the generated test inputs on ATMS engine and check the output (failure message or list of consequences) with test oracles.
+In test oracle, the authors check whether the test input is failed or passed.
+Authors use the CYK recognizer to decide whether the test input should be accepted or rejected by a given grammar.
+
+[3] Evaluation:
+
+The authors run the tool for one week on ATMS. 
+In this period, gFuzzer generates almost 1.5M test inputs and mgFuzzer generates 1K test inputs. 
+The mgFuzzer generates much fewer test inputs as mutating original grammar and using CYK recognizer slowdown the generation process.
+The gFuzzer could not find any fault but mgFuzzer finds two test inputs inducing one similar fault.
+Both gFuzzer and mgFuzzer cover 100% rule coverage, but mgFuzzer covers 8.5% more code coverage than gFuzzer, 75.9% and 67.6%, respectively.
+The combined test inputs of gFuzzer and mgFuzzer do not cover more than 75.9%, which indicates that gFuzzer could not cover any code that is not covered by mgFuzzer.
+Therefore, the result shows that the mutated grammar fuzzer outperforms the original grammar fuzzer in terms of fault finding and code coverage.
+
+
+
+
+
