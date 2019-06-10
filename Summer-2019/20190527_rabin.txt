@@ -46,3 +46,4 @@ The gFuzzer could not find any fault but mgFuzzer finds two test inputs inducing
 Both gFuzzer and mgFuzzer cover 100% rule coverage, but mgFuzzer covers 8.5% more code coverage than gFuzzer, 75.9% and 67.6%, respectively.
 The combined test inputs of gFuzzer and mgFuzzer do not cover more than 75.9%, which indicates that gFuzzer could not cover any code that is not covered by mgFuzzer.
 Therefore, the result shows that the mutated grammar fuzzer outperforms the original grammar fuzzer in terms of fault finding and code coverage.
+
