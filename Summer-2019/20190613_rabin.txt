@@ -1,0 +1,11 @@
+Title: code2vec: Learning Distributed Representations of Code
+
+Authors: Uri Alon, Meital Zilberstein. Omer Levy and Eran Yahav
+
+Published in: POPL 2019.
+
+Keywords: Big Code, Machine Learning, Distributed Representations ACM
+
+Link: https://dl.acm.org/citation.cfm?id=3290353
+
+-------------x-------------x-------------x-------------
