@@ -37,5 +37,20 @@ path-context is more efficient than single path-context, authors use the soft at
 instead of selecting a single path-context. And the predicted distribution of tag is computed with softmax function. 
 
 [3] Evaluation:
-[TODO: 30 pages paper]
+
+Authors collected 12M methods from 10K HitHub Java repositories. They took top 1M paths and randomly sampled up to 
+200 path-contexts. The dataset created by shuffled projects methods in respect of sizes and then split to training,
+validation and testing set. Authors aimed to answer the following RQ: 
+(1) How useful is our model in predicting method names, and how well does it measure in comparison to other recent approaches? 
+(2) What is the contribution of the attention mechanism to the model? How well would it perform using hard attention instead, or using no attention at all? 
+(3) What is the contribution of each of the path-context components to the model? 
+(4) Is it actually able to predict names of complex methods, or only of trivial ones? 
+(5) What are the properties of the learned vectors? Which semantic patterns do they encode? 
+Authors use precision, recall, and F1 score as evaluation metrics. Different type of evaluation are performed: 
+(1) Quantitative Evaluation: Compare code2vec with CNN+Attention, LSTM+attention, Paths+CRFs. 
+(2) Alternative Design: Attention (compare soft attention with no attention, hard attention, train-soft predict-hard), removing the fully-connected layer to see the contribution of each component, element-wise soft attention. 
+(3) Ablation Study: Compare full path-context with only-values, no-values, value-path, one-value. 
+(4) Qualitative Evaluation: the importance of interpreting the attention and semantic properties of the learned embeddings. 
+The result shows that code2vec is effective in terms of prediction metrics, generalization ability and complexity compared to previous works. 
+The model achieves its best results after 30 hours for k=200 path-contexts, increasing the further time or path-context doesn’t have significant improvement.
 
