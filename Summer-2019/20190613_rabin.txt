@@ -1,11 +1,42 @@
 Title: code2vec: Learning Distributed Representations of Code
 
-Authors: Uri Alon, Meital Zilberstein. Omer Levy and Eran Yahav
+Authors: Uri Alon, Meital Zilberstein, Omer Levy and Eran Yahav
 
 Published in: POPL 2019.
 
-Keywords: Big Code, Machine Learning, Distributed Representations ACM
+Keywords: Big Code, Machine Learning, Distributed Representations.
 
 Link: https://dl.acm.org/citation.cfm?id=3290353
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Distributed representations of words, sentences, paragraphs, and documents are essentials in neural network based NLP tasks. 
+The vector representation is called embeddings where the meaning is distributed through various vector components. 
+Existing approaches represent code as token but using the syntax of the code is more beneficial in programming task. 
+The goal of this paper is to learn the embedding from code snippet so that it can be used in programming languages task. 
+The embedding of code snippet is key as similar code snippets result in similar code vectors. 
+The applications of this embeddings can be code review, code retrieval, tagging, classification, clone detection, etc. 
+One motivating task is labeling the semantic of code snippets: given a method body authors want to predict the method name. 
+In this paper, authors present a path-context based neural attention-based model that learns code embeddings and predicts program properties i.e. code label.
+
+[2] Solution:
+
+The code2vec model works as 
+(1) Take code snippet and the corresponding label as input, 
+(2)  Extract syntactic paths from AST of code snippet, 
+(3) Represent syntactic paths as a bag of distributed path-context triplets, 
+(4) Map each path-context to a combined context vector by concatenation of independent triplet vectors with fully connected layer. 
+(5) Aggregate multiple context vectors into a single code vector with neural attention, 
+and (6) Use code vector for various programming tasks. 
+The key challenge is how to present the code snippet with leveraging the semantic information that can be used to predict the properties i.e. code label. 
+Authors use the syntactic paths as a representation of code snippet but new challenges arise such that how to aggregate the extracted paths of code snippet and which path to follow for prediction. 
+To address these challenges authors use neural attention approach that learns how much attention should be given to each path-context. 
+This aggregates each path-context into a single vector that contains the semantics of the whole code snippet. 
+As multiple path-context is more efficient than single path-context, authors use the soft attention over distributed syntactic paths instead of selecting a single path-context. 
+And the predicted distribution of tag is computed with softmax function. 
+
+[3] Evaluation:
+[TODO: 30 pages paper]
+
