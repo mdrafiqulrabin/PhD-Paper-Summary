@@ -1,0 +1,11 @@
+Title: DeepTest: Automated Testing of Deep-Neural-Network-driven Autonomous Cars
+
+Authors: Yuchi Tian, Kexin Pei, Suman Jana, Baishakhi Ray
+
+Published in: ICSE '18.
+
+Keywords: N/A
+
+Link: https://dl.acm.org/citation.cfm?doid=3180155.3180220
+
+-------------x-------------x-------------x-------------
