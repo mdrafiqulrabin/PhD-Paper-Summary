@@ -4,7 +4,7 @@ Authors: Yuchi Tian, Kexin Pei, Suman Jana, Baishakhi Ray
 
 Published in: ICSE '18.
 
-Keywords: N/A
+Keywords: deep learning, testing, self-driving cars, deep neural networks, autonomous vehicle, neuron coverage
 
 Link: https://dl.acm.org/citation.cfm?doid=3180155.3180220
 
