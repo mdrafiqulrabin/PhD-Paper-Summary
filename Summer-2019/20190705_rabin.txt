@@ -1,0 +1,9 @@
+Title: The Adverse Effects of Code Duplication in Machine Learning Models of Code
+
+Authors: Miltiadis Allamanis
+
+Published in: CoRR 2018
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1812.06469
