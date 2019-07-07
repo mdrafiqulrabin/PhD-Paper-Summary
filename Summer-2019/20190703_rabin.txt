@@ -2,7 +2,7 @@ Title: DeepTest: Automated Testing of Deep-Neural-Network-driven Autonomous Cars
 
 Authors: Yuchi Tian, Kexin Pei, Suman Jana, Baishakhi Ray
 
-Published in: ICSE '18.
+Published in: ICSE 2018
 
 Keywords: deep learning, testing, self-driving cars, deep neural networks, autonomous vehicle, neuron coverage
 
