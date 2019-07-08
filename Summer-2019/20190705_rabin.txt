@@ -31,8 +31,12 @@ Authors report the observations and hint some recommendations for best practices
 
 [3] Evaluation:
 
-The authors illustrate the impact of code duplication based on Biased vs Unbiased on the 'Autocompletion' task on the JavaScript-150k dataset. The computed metrcis are: ACC, ACC-ID, MRR, MRR-ID, PPL, PPL-ID. The result shows that all metrics are affected by code duplication but identified related metrics are affected more severely.
-
-The authors perform the case study of code duplication over model capacity on the NLM model with different capacity trained on the JavaScript-150k dataset. The result shows that models having larger capacity are affected hevaily by code suplication than smaller capacity. Therefore, comparison between different models having different capacity are not effective.
-
-Another observation made by authors for code duplication is performed over a series of tasks: Method Naming Model (code2vec), Variable Naming Model (JsNICE), Code Autocompletion Model (PHOG), and Docstring Prediction Model (seq2seq). The result shows that different models and tasks are affected differently by code duplication.
+The authors illustrate the impact of code duplication based on Biased vs Unbiased on the 'Autocompletion' task 
+on the JavaScript-150k dataset. The computed metrcis are: ACC, ACC-ID, MRR, MRR-ID, PPL, PPL-ID. The result shows 
+that all metrics are affected by code duplication but identified related metrics are affected more severely. 
+The authors perform the case study of code duplication over model capacity on the NLM model with different capacity 
+trained on the JavaScript-150k dataset. The result shows that models having larger capacity are affected hevaily by 
+code suplication than smaller capacity. Therefore, comparison between different models having different capacity are 
+not effective. Another observation made by authors for code duplication is performed over a series of tasks: 
+Method Naming Model (code2vec), Variable Naming Model (JsNICE), Code Autocompletion Model (PHOG), and Docstring 
+Prediction Model (seq2seq). The result shows that different models and tasks are affected differently by code duplication.
