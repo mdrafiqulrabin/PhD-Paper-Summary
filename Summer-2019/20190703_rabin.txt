@@ -9,3 +9,43 @@ Keywords: deep learning, testing, self-driving cars, deep neural networks, auton
 Link: https://dl.acm.org/citation.cfm?doid=3180155.3180220
 
 -------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The recent progress of DNN has enabled the development of autonomous ML systems like an autonomous car. 
+Several manufacturers already started building and testing the cars and many states already granted law towards the testing in roads. 
+Driving without humans demands lots of testing with real-world cases. But unexpected corner cases may lead to serious consequences like a collision in an autonomous car. 
+The existing approaches collect corner cases with manual collection, ad hoc test data or random simulation that misses numerous corner cases like rain, fog, lighting conditions. 
+Therefore, authors propose DeepTest tool in this paper to automatically generated test cases which leverage the real-world corner cases.
+
+[2] Solution:
+
+Authors design, implement and evaluate a testing tool called DeepTest for testing of the autonomous vehicle in this paper.
+The main target is automatically to generate test cases leveraging the real world corner cases. 
+Authors propose some potential image transformation that mimics the real-world conditions but sustain the original meaning of images, i.e. blurring the image, changing the brightness, crop or resize, rotation, etc. 
+The key insight of this approach has been revealed with the following demonstrations: 
+(1) the number of activated neurons increase the chance of exploration towards the different parts of the DNN logic, 
+(2) different image transformation results in different sets of neuron activation, 
+(3) combination of multiple transformation can achieve up to 100% neuron coverage. 
+The tool works in four main steps: 
+(1) Systematic Testing with Neuron Coverage, 
+(2) Increasing Coverage with Synthetic Images, 
+(3) Combining Transformations to Increase Coverage, 
+and (4) Creating a Test Oracle with Metamorphic Relations.
+
+[3] Evaluation:
+
+Authors evaluate the tool on the top three Udacity self-driving challenge: Rambo (s1, s2, s3), Chauffeur (CNN, LSTM), and Epoch. 
+Authors generate test inputs with nine different realistic image transformations (linear: changing brightness, changing contrast; affine: translation, scaling, horizontal shearing, rotation;  convolutional.: blurring, fog effect, rain effect). 
+Authors address the following research questions: 
+(RQ1) Do different input-output pairs result in different neuron coverage? 
+The results show that neuron coverage varies significantly for different input-output pairs. 
+(RQ2) Do different realistic image transformations activate different neurons? 
+The results show that different image transformations increase different neuron coverage. 
+(RQ3) Can neuron coverage be further increased by combining different image transformations? 
+The results show that guided transformations achieves higher neuron coverage than cumulative transformations and can achieve 100% coverage. 
+(RQ4) Can we automatically detect erroneous behaviors using metamorphic relations? 
+The results show that transformed images have higher chance to expose erroneous behaviors and can detect more than 1000 erroneous behaviors. 
+(RQ5) Can retraining DNNs with synthetic images improve accuracy? 
+The results show that the accuracy of the retrained model improved significantly over the original model. 
+
