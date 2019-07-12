@@ -12,20 +12,19 @@ Link: https://arxiv.org/abs/1809.03740
 
 [1] Problem:
 
-Recent progress in NLP focus on the adversarial problem which leads the systems to mistakenly change the output. 
-Authors investigate the importance of the verb in the QA system in this paper. They show that the main verb in 
-questions has a very low influence on the decisions. These observations help authors to analyze the mechanism of 
-self-attention and values contained in the hidden layers on RNN.
+Recent progress in NLP focus on the adversarial problem which leads the systems to mistakenly change the output. Authors
+investigate the importance of the verb in the QA system in this paper. They show that the main verb in questions has a very
+low influence on the decisions. These observations help authors to analyze the mechanism of self-attention and values
+contained in the hidden layers on RNN.
 
 [2] Solution:
 
-The QA system generally modifies the questions or contexts and shows that the small change in semantics may change 
-the system decisions. On the other hand, in this paper, authors generate questions and negate the meaning which creates 
-a heavy difference. Then they observe the system outputs. The overall process contains the following steps: (1) Measure 
-the impact of verb (PoS) in QA systems, (2) Swap the verb in question with their antonyms with WordNet, (3) Evaluate the 
-system outputs with original verb questions and swapping verb questions, (4) Check how many system output matches with 
-minimal differences in meaning, and (5) Analyze the mechanism of self-attention and values contained in the hidden layers 
-on RNN.
+The QA system generally modifies the questions or contexts and shows that the small change in semantics may change the 
+system decisions. On the other hand, in this paper, authors generate questions and negate the meaning which creates a 
+heavy difference. Then they observe the system outputs. The overall process contains the following steps: (1) Measure the
+impact of verb (PoS) in QA systems, (2) Swap the verb in question with their antonyms with WordNet, (3) Evaluate the system
+outputs with original verb questions and swapping verb questions, (4) Check how many system output matches with minimal
+differences in meaning, and (5) Analyze the mechanism of self-attention and values contained in the hidden layers on RNN.
 
 [3] Evaluation:
 
