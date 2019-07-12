@@ -34,3 +34,4 @@ TASKS and CONTEXTUAL WORD EMBEDDING.
 The authors collected and reviewed articles that use source code embedding. In this literature study, the authors mainly 
 show different types of embedding techniques and their application on different downstream tasks. This can be considered 
 as an embedding bookmark of source code and will provide an overview of diverse embedding to future researchers.
+
