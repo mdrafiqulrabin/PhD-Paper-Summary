@@ -13,7 +13,33 @@ Link: https://ieeexplore.ieee.org/document/957835
 
 [1] Problem:
 
+Cut-copy-paste is bad but common gesture used by programmers in software development. As a result, the system becomes more
+complex because any errors in the original code also propagate to duplicate code and any modification in the original code
+should be applied also in copied code. Therefore, researchers have placed a lot of efforts and techniques towards detecting
+similar codes in programs. For example, graph-based, text-based, syntax-based, etc. But most of these approaches could not
+able to detect the duplicated codes that are not identical as those have been modified for the underline environment. To
+resolve this shortcoming, the author of this paper proposes the program dependency graph-based approach to identify similar
+codes in programs. 
+
 [2] Solution:
 
+The technique has been used in this paper is the fine-grained program dependency graph which considers both the syntactical
+structure and the data flow of the program.  The key insight of this technique is to find similar subgraphs in directed
+attributed graphs of programs in order to locate similar codes of those programs. The programs have been represented in the
+graph with vertices, edges, and attributes. The vertices represent the program components and edges (have two attributes:
+control dependency and data dependency) represent the dependencies between the program components. The data dependency is
+represented by value dependency edge and reference dependency edge. To identify the similarity, author checks the maximal
+path that is identical in both graphs and has similar attributes in vertices and edges. Only control dependency could be
+misleading, therefore the number of data dependency has been used as a weighted criterion during duplication detection. 
+The naive approach of pairwise comparison is infusible, so the author decides to check the possible set of matching edge 
+in a recursive way. 
+
 [3] Evaluation:
+
+The author evaluates this approach to ANSI-C programs. Like other approaches, the author also applies the tuning to find the
+appropriate parameters. The result shows that k=20 limit seems to be sufficient in most of the cases. The smaller value of k
+could not able to find duplicate and larger value of k does not increase the detection. The tuning for minimum weight shows
+that the maximum weight of all duplicates is less than 45 and having above 45 could not find any duplicates. The measured
+running time shows that having k bigger than 10 does not need additional time, therefore time is independent of k. Here
+author applies the k-limited path as the maximal path detection is an NP-complete problem.
 
