@@ -12,6 +12,25 @@ Link: https://www.aclweb.org/anthology/N19-5001
 
 [1] Problem:
 
+Recent advances in NLP introduce a new area of research called deep adversarial learning (AdvL). In recent years this 
+area has gained a significant amount of attractions after the publication of Generative Adversarial Networks (GANs).
+Therefore, deep adversarial learning methods should be introduced to the researchers without any prior knowledge. 
+Authors in this article aim to support that with a tutorial. They represent the applications of adversarial learning 
+in different NLP problems with different examples.
+
 [2] Solution:
 
+Researchers already have taken some steps to adversarial learning that could be sectioned into three core parts: 
+(1) Adversarial Example: creating or learning adversarial examples to improve the NLP system, (2) Adversarial Training: 
+adding noise, randomness, etc loss parameters during optimization, and (3) Adversarial Training: including practical 
+solutions of GANs for processing natural languages. Authors design the tutorial in three parts: (I) Introduction to deep 
+adversarial learning with various application in NLP, (II) Generation of deep adversarial examples and uses in  NLP, 
+and (III) A case study of Generative Adversarial Networks (GANs) for NLP.
+
 [3] Evaluation:
+
+Authors focus on the related subject of Natural Language Processing: Noise-Robust Representation Learning, Adversarial
+Learning, and Generation. This tutorial is organized in three parts: Foundations of Deep Adversarial Learning, Adversarial
+Examples for NLP, and An In-depth Case Study of GANs in NLP. The recent studies of AdvL include: Deep Reinforcement Learning
+for NLP, Scalable Construction and Reasoning of Massive Knowledge Bases, Questioning Question Answering Answers, Teaching a
+Machine to Converse, Local, Model-Agnostic Explanations of machine Learning Predictions, etc.
