@@ -1,0 +1,37 @@
+Title: Understanding Importance of Verbs in Deep Learning QA System
+
+Authors: Barbara Rychalska, Dominika Basaj, Przemysław Biecek, and Anna Wróblewska.
+
+Published in: CoRR 2018.
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1809.03740
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Recent progress in NLP focus on the adversarial problem which leads the systems to mistakenly change the output. 
+Authors investigate the importance of the verb in the QA system in this paper. They show that the main verb in 
+questions has a very low influence on the decisions. These observations help authors to analyze the mechanism of 
+self-attention and values contained in the hidden layers on RNN.
+
+[2] Solution:
+
+The QA system generally modifies the questions or contexts and shows that the small change in semantics may change 
+the system decisions. On the other hand, in this paper, authors generate questions and negate the meaning which creates 
+a heavy difference. Then they observe the system outputs. The overall process contains the following steps: (1) Measure 
+the impact of verb (PoS) in QA systems, (2) Swap the verb in question with their antonyms with WordNet, (3) Evaluate the 
+system outputs with original verb questions and swapping verb questions, (4) Check how many system output matches with 
+minimal differences in meaning, and (5) Analyze the mechanism of self-attention and values contained in the hidden layers 
+on RNN.
+
+[3] Evaluation:
+
+Authors evaluate the approach on SQuAD dataset. The result shows that reversal verbs with antonyms does not change the 
+decision in 90.5% cases and only in 9.5% case the reversal verb case disturbs the system output. Authors observe the 
+results and find the problem that in most of the case a specific noun appears in a single sentence which represents a 
+single context. This specifies the low importance of the main verb in the QA system and identifies the shortcomings of 
+the  SQuAD training dataset. Authors suggest that including more sentences with repeating nouns and varying verbs will 
+address this drawback.
