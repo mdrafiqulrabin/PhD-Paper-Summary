@@ -1,0 +1,19 @@
+    
+Title: Identifying Similar Code with Program Dependence Graphs
+
+Authors: Jens Krinke
+
+Published in: WCRE 2002.
+
+Keywords: N/A
+
+Link: https://ieeexplore.ieee.org/document/957835
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
+
