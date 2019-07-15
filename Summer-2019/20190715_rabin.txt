@@ -1,0 +1,18 @@
+
+Title: DeepRoad: GAN-Based Metamorphic Testing and Input Validation Framework for Autonomous Driving Systems
+
+Authors: Mengshi Zhang, Yuqun Zhang, Lingming Zhang, Cong Liu, Sarfraz Khurshid.
+
+Published in: ASE 2018
+
+Keywords: N/A
+
+Link: https://dl.acm.org/citation.cfm?id=3238187
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
