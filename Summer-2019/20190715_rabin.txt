@@ -13,6 +13,26 @@ Link: https://dl.acm.org/citation.cfm?id=3238187
 
 [1] Problem:
 
+DNNs system can find exceptional case in autonomous driving system. Many testing techniques have been proposed to generate
+transformed test images from original images. But most of those suffer from test case diversity and a mismatch between
+training set and  domain set could degrade the system accuracy as invalid images highly affect the system’s prediction.
+Therefore, invalid validation is important  to test the consistency of system. In this paper, authors propose DeepRoad, 
+an unsupervised DNN based framework, to validate the inputs for improving the robustness of system.
+
 [2] Solution:
 
+The DeepRoad contains main two module: (a) Metamorphic testing module, (b) Input validation module. The metamorphic testing
+module uses UNIT, the GAN-based techniques, to generate test inputs with various extreme weather conditions (i.e. heavy rain,
+hard snow, etc.) from YouTube videos. The UNIT projects two domains of image in same latent and train the model to transform
+dataset. This module helps the DeepRoad to test the system accuracy under various synthetic test inputs. On the other hand,
+the input validation module uses the pre-trained VGGNet for feature extraction and then apply PCA to reduce the dimension.
+This module helps the DeepRoad to test the system robustness by comparing the average distance between training inputs and
+domain inputs within a threshold.
+
 [3] Evaluation:
+
+Authors evaluate the DeepRoad on three popular DNN based autonomous driving systems of Udacity self-driving car. Authors use
+the real-world dataset of Udacity and Youtube (i.e. larger driving videos/images under various lightning, road conditions,
+heavy snow, hard rain, etc.). The results show that DeepRoad could find erroneous inconsistent behaviors with synthetic scenes
+and could validate inputs (i.e. detect outliers) to improve the robustness of system.
+
