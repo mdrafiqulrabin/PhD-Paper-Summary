@@ -1,0 +1,14 @@
+
+Title: Trick Me If You Can: Human-in-the-loop Generation of Adversarial Examples for Question Answering
+
+Authors: Eric Wallace, Pedro Rodriguez, Shi Feng, Ikuya Yamada, Jordan Boyd-Graber
+
+Published in: CoRR 2018
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1809.02701
+
+-------------x-------------x-------------x-------------
+
+[TODO]
