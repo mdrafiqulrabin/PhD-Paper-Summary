@@ -10,4 +10,39 @@ Link: https://arxiv.org/abs/1907.02136
 
 -------------x-------------x-------------x-------------
 
-[Already read one time, will add summary after re-read.]
+[1] Problem:
+
+Neural program embedding is a key factor in program languages research for program analysis tasks. Existing approaches mainly focus
+on embedding from source code and, therefore, do not touch the deep program semantics. On the other hand, program embedding from
+runtimeinformation depends on the high quality of program execution (i.e. large number of execution instances). Therefore, the authors ofthis paper introduce a new deep neural model (LIGER) to address those prior issues. The blended embedding of LIGER
+contains boththe symbolic and concrete execution traces. Authors evaluated the LIGER on COSET and showed that LIGER outperforms 
+the previous state-of-the-art models.
+
+[2] Solution:
+
+The LIGER uses the benefits of blending traces from both the symbolic traces and concrete traces. Therefore, the blended traces
+gain more strength and outperform either the symbolic traces or the concrete traces, alone.  In LIGER’s architecture, authors 
+use RNNs to encode each execution into vectors and then compress those execution vectors into program embedding with pooling
+layer.  LIGER works with five layers: (1) Vocabulary Embedding Layer where authors symbolically execute programs to obtain
+distinct path and assign vector for tokens and variables. (2) Fusion Layer where authors encode each statement as a sequence of
+tokens and each concrete program state as a tuple of values in each path. (3) Executions Embedding Layer where authors embed 
+the partially blended traces. (4) Programs Embedding Layer where authors compress the embedding of blended traces into program
+embedding using pooling layer. (5) Loss Function as minimization of the cross-entropy loss on a softmax over the prediction
+labels.  The extension of LIGER to solve the method name prediction has been formalized with encoder-decoder architecture and
+attention. For evaluation, authors collect the dataset and remove the programs that do not require the external inputs or fail
+to pass all test cases. Then they collect the execution traces after executing each program with a larger number of random
+inputs. After that, they split the dataset into training-validation-test set.
+
+[3] Evaluation:
+
+Authors first evaluate the LIGER on COSET’s dataset where the task is to predict the category where a program falls based on its
+semantics. Authors compare the result with code2vec, GGNN, and DYPRO. The result shows that LIGER significantly outperforms both
+the static and dynamic model in the classification task. Authors also check the stability of LIGER on COSET’s transformation and
+find that LIGER is more stable on than static (code2vec, GGNN) and dynamic (DYPRO) models.  Besides, authors also perform
+experiments between DYPRO and LIGER in terms of increasing path coverage, removing the number of concrete traces but preserving 
+the symbolic traces, and decreasing number of symbolic traces but preserving same branch coverages. The results show that DYPRO
+suffers a significant performance drop while LIGER is more accurate than DYPRO. The same conclusion is found for randomly reducing
+both the symbolic and concrete traces. Therefore, LIGER is less reliance on program executions. After that, the authors also
+conduct an ablation study by removing static/dynamic features and removing attention to measure the contribution of LIGER’s
+components. Finally, authors extend the LIGER to predict the method name given a method body and compare with code2seq. 
+The result shows that LIGER significantly outperforms the code2seq in method’s name prediction.
