@@ -11,4 +11,29 @@ Link: https://arxiv.org/abs/1809.02701
 
 -------------x-------------x-------------x-------------
 
-[TODO]
+[1] Problem:
+
+Adversarial examples are more significant than traditional test suites to discover failures in the model. But it is hard 
+to automate the generation of adversarial examples for NLP unless it changes meaning or invalidates it. The recent studies
+mainly focus on meaning preserving simple transformation (i.e. has to ’s, adding distractors, word replacement with 
+synonyms, character replacement, etc.). Although the generative models can reveal adversarial perturbations, it requires
+post-hoc human verification. Moreover, the existing approaches mostly focus on sentences, not the paragraphs. As a result,
+the adversarial examples are limited to the complexity and suffer from diversity. Therefore, the authors of this paper
+propose an adversarial generation approach where humans are guided to break the model. They have applied their framework 
+on Quizbowl task and the resulting questions are more diverse to find challenges in QA systems.
+
+[2] Solution:
+
+The implementation of this paper follows an adversarial writing interface where humans interact with either the IR system 
+or the neural QA system. In the interface, authors write questions and interface provides the model’s top five predictions.
+The interface also highlights the words of the question for which it makes an interpretation. The goal of this writing is 
+to make the model incorrect prediction or delay the response. Then, the authors try to rewrite the questions in different
+forms so that the model can not solve the entire questions. To do this, authors introduce two rounds attack: (1) First 
+Round for IR Adversarial Questions and (2) Second Round for IR Adversarial and RNN Adversarial Questions. 
+
+[3] Evaluation:
+
+The evaluation part is not clear to me as I didn’t find any specific evaluation in this paper. I found some sections that
+analyze the source of difficulty of adversarial questions where they discuss Quantitative Differences in Questions One 
+and Adversarial Category (Reasoning and Distracting Clues). They also include sections for How Do Interpretation Help 
+and Interviews With Adversarial Authors.
