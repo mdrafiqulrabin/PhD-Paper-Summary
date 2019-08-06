@@ -1,0 +1,14 @@
+
+Title: Discrete Adversarial Attacks and Submodular Optimization with Applications to Text Classification
+
+Authors: Qi Lei, Lingfei Wu, Pin-Yu Chen, Alexandros G. Dimakis, Inderjit S. Dhillon, Michael Witbrock
+
+Published in: CoRR 2018
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1812.00151
+
+-------------x-------------x-------------x-------------
+
+[TODO]
