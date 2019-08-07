@@ -11,4 +11,40 @@ Link: https://arxiv.org/abs/1812.00151
 
 -------------x-------------x-------------x-------------
 
-[TODO]
+[1] Problem:
+
+The adversarial attack makes a simple modification in an input that changes the output of a classifier. The adversarial
+attack has played a significant role in continuous fields such as images and audio samples, but tricky for discrete fields
+like text or code. The gradient-based adversarial attacks can’t be applied directly to discrete input, even the variations
+to support discrete structure result in poor accuracy. Also, the recent heuristic attacks on NLP classifier by greedy
+methods are slow and unknown when to achieve the best accuracy. On the other hand, the semantic preserving adversarial is
+challenging to discrete input like text as it requires too many changes. Therefore, the authors in this paper have studied
+the adversarial attack with discrete input to resolve these limitations. They also show how to use the gradient of the
+attacked classifier to guide the greedy search. The experimental results on state-fo-the-art text classification tasks 
+over baselines show that the approach is significant in terms of ability and efficiency. 
+
+[2] Solution:
+
+Authors propose a framework to generate adversarial examples for discrete inputs such as text. The target is to modify 
+the original sentence and create a new sentence by preserving the semantic meaning and syntactic properties. Authors 
+applied the transformation on the original sentence to generate a new equivalent sentence. The transformation has been 
+done by replacing a word with one of its possible replacements. Therefore, the key challenges are: (1) How to select the
+suitable candidate replacements and (2) How to develop an efficient transformation within the candidate set. For 
+suitable candidate replacements, authors define the joint sentence and word paraphrasing attack with following steps: 
+(1) Paraphrasing Corpus: Generating an initial set of word and sentences replacements with Paragram-SL999 and 
+Para-nmt-50m, respectively. (2) Semantic Similarity: Measuring semantic dissimilarity with WMD. (3) Syntactic Similarity:
+Ensuring the generated sentence is fluent and natural with a language model. For efficient transformation, authors present
+a gradient-guided greedy word paraphrasing algorithm that selects the best paraphrase combinations within the candidate set.
+
+[3] Evaluation:
+
+Authors formulate the attacks with discrete input on a set function as an optimization task. They mainly focus on attacking
+the state-of-the-art models: WCNN and LSTM. The experiments have been applied to three different text classification: 
+fake-news detection, spam filtering, and sentiment analysis. The results show that the joint sentence and word level
+paraphrasing is more effective than the traditional word replacements to generate adversarial examples, and significantly
+drops the accuracy of the state-of-the-art models for those adversarial examples. Besides, authors also measure the success
+rate over consumption time and conclude that the gradient-guided greedy algorithm is more optimized than the gradient 
+method and objective-guided greedy method. Authors also validate their evaluation by comparing with the human evaluation
+which achieves similar performance. A separate study of adversarial training shows that the models improve after training
+with adversarial examples.
+
