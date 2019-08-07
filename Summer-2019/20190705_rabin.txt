@@ -15,7 +15,7 @@ Link: https://arxiv.org/abs/1812.06469
 Machine learning models are used to perform the learning task on the big field of code.
 Recent studies show that the big code contains a significant amount of near-duplicate code.
 The code duplication may negatively impact the performance of machine learning models.
-But the impact of code duplication has not been by researchers.
+But the impact of code duplication has not been studied by researchers.
 Therefore, the authors examine the effect of code duplication on machine learning models.
 The result shows the code duplication biases the evaluation in the learning task.
 
@@ -36,7 +36,7 @@ on the JavaScript-150k dataset. The computed metrcis are: ACC, ACC-ID, MRR, MRR-
 that all metrics are affected by code duplication but identified related metrics are affected more severely. 
 The authors perform the case study of code duplication over model capacity on the NLM model with different capacity 
 trained on the JavaScript-150k dataset. The result shows that models having larger capacity are affected hevaily by 
-code suplication than smaller capacity. Therefore, comparison between different models having different capacity are 
+code duplication than smaller capacity. Therefore, comparison between different models having different capacity are 
 not effective. Another observation made by authors for code duplication is performed over a series of tasks: 
 Method Naming Model (code2vec), Variable Naming Model (JsNICE), Code Autocompletion Model (PHOG), and Docstring 
 Prediction Model (seq2seq). The result shows that different models and tasks are affected differently by code duplication.
