@@ -12,6 +12,39 @@ Link: https://arxiv.org/abs/1903.06089
 
 [1] Problem:
 
+The correctness of programs is a desire but complex to ensure. The invariants can be useful to validate the correctness 
+of programs. Therefore, tools like Daikon that can automatically generate invariants are very lucrative. However, the 
+Daikon suffers from a large scale of false positive as it generates invariants based on run-time traces which is 
+inadequate and does not extract the deep insight of source code. To address this drawback, in this paper, authors propose 
+a deep neural-based invariant validator model to capture the deep semantics of source code instead of focusing on the 
+traced values. The experiment illustrates that the program behaviors mined from source code are useful to identify the
+validity of invariants.
+
 [2] Solution:
 
+This invariant validation tool has two main steps: (1) Mining Invariants and (2) Setup Model. [1] Mining invariants : 
+First, authors collect a large corpus of methods having pre-conditions and post-conditions: (a) Collect 11 C# projects 
+from the dataset of recent work on loop idioms by Allamanis et al. Then, they implement a ‘crawler’ to extract test cases
+from core project tests. This extracts 2.5K test methods associated with 43K pre-conditions and 51K post-conditions from 
+8 projects. After that, the authors extract trace data for the different sampling of calls with the Celeriac custom Daikon
+of C#. Next, they extract and label (Valid/Invalid) invariants based on the validity score measured by the cross-validation
+of Daikon after running on the stored trace files of different runs. Finally, they prepare the human-cured golden data: 
+(a) Produce trace file by executing all test for each project. (b) Generate invariants by Daikon. (c) Perform manual
+inspection on invariants and label (Valid/Invalid/Irrelevant/Conflicts) by raters. (d) Omit unresolved conflicts and mark
+the resulting corpus as golden data. (e) Rank the invariants based on the ROC metrics for two settings: per-project and 
+per-method. [2] Setup model: Authors setup GGNN to learn the representation of source code. For a given method and 
+invariant pair, the task is to identify the validation of invariant. The task is done in the following steps: (1) Include
+the invariants into the method. (2) Feed the graph of the method as input into the GGNN. (3) Perform K>=8 message passing
+phases to capture the role of each node in the graph. (4) Produce the probability by aggregating the hidden states of each
+node with sigmoid activation. (5) An additional RNN model is also used to perform ablation study with adjacent token only.
+
 [3] Evaluation:
+
+Authors perform two sets of training setup:  (a) Intra-project: train and test on methods from the same project. and (b)
+Cross-project: test on methods of a project and train on methods of all other projects. They show the rank of invariants 
+for both the per-method and per-project. The mean ROC-AUC value of intra-project and cross-project is more than 90% and 
+75%, respectively for both the pre-conditions and post-conditions. To check the strength of semantics of source code used 
+in GGNN, authors also study two ablation study: (1) RNN model with adjacent token only (2) No Context GGNN where invariant
+itself is used instead of source code. The full GGNN model outperforms the RNN model by a large margin (~8%) but no-context
+GGNN by a very close margin (~3%).  Additionally, authors also perform an evaluation on human-cured golden data where only
+the full GNN model shows the accuracy improvement.
