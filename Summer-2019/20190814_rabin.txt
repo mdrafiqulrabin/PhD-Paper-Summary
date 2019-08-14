@@ -1,0 +1,17 @@
+Title: Are My Invariants Valid? A Learning Approach
+
+Authors: Vincent J. Hellendoorn, Premkumar T. Devanbu, Oleksandr Polozov, Mark Marron
+
+Published in: CoRR 2019
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1903.06089
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
