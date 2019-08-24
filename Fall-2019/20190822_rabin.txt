@@ -1,12 +1,12 @@
-Title:
+Title: Coverage Prediction for Accelerating Compiler Testing
 
-Authors:
+Authors: Junjie Chen, Guancheng Wang, Dan Hao, Yingfei Xiong, Hongyu Zhang, Lu Zhang, Bing Xie
 
-Published in:
+Published in: TSE 18
 
-Keywords:
+Keywords: Compiler Testing, Test Prioritization, Machine Learning
 
-Link: 
+Link: https://xiongyingfei.github.io/papers/TSE18.pdf
 
 -------------x-------------x-------------x-------------
 
@@ -15,3 +15,5 @@ Link:
 [2] Solution:
 
 [3] Evaluation:
+
+[Writing In Progress, will complete by weekend]
