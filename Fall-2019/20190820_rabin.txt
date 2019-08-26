@@ -39,6 +39,7 @@ following research questions: (RQ1) How effective is LET in accelerating C compi
 being applied to different compiler testing techniques (i.e., DOL and EMI)? (RQ3) How does LET perform in different
 application scenarios (i.e., cross-compiler and cross-version scenarios)? (RQ4) Can the major components of LET (i.e.,
 feature selection and time model) contribute to the overall effectiveness? They run test programs on RO for 10 times and
-record the average time spent on each bug. After that, they apply LET (+ two variants LRT-A: without feature selection and
-LET-B: without time model), TB-G (token vector-based prioritization) and ARP (adaptive random prioritization). The
-experiments show that LET significantly accelerates compiler testing.
+record the average time spent on each bug - they use the correcting commits as an indication of a similar bug. After that,
+they apply LET and two variants of LET(LET-A: without feature selection and LET-B: without time model), TB-G (token 
+vector-based prioritization) and ARP (adaptive random prioritization). Theexperiments show that LET significantly
+accelerates compiler testing.
