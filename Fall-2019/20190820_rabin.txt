@@ -2,7 +2,7 @@ Title: Learning to Prioritize Test Programs for Compiler Testing
 
 Authors: Junjie Chen, Yanwei Bai, Dan Hao, Yingfei Xiong, Hongyu Zhang, Bing Xie
 
-Published in: ICSE '17
+Published in: ICSE 2017
 
 Keywords: N/A
 
@@ -12,8 +12,33 @@ Link: https://dl.acm.org/citation.cfm?id=3097368.3097451
 
 [1] Problem:
 
+In traditional compiler testing, a program generation tool generates a large set of test inputs and then those test inputs
+have been used to find the bugs in compilers. But this process is time-consuming as it takes a long period of time in input
+generation and bug finding. Therefore, prioritize test inputs is desired so that the bug inducing test inputs are likely to
+run earlier in testing. The existing test prioritization approaches mainly rely on program coverage information but this is
+not applicable for the programs generated on the fly. In this paper, the authors proposed a 'learning to test' (LET)
+approach which learns properties of previous buggy test inputs to prioritize the new test inputs.
+
 [2] Solution:
+
+Authors implemented the LET with following two processes: (1) Learning process: (a) Identifying features based on whether
+features exist in test programs and how features use in test programs. (b) Training a capability model (adopt the SMO
+algorithm) with a set of programs after selecting features with information gain ratio and normalizing with min-max
+normalization where the label is whether it is a buggy program - this model measures the bug prediction probability of a
+test program. (c) Training a time model (Regression model with Gaussian process) with a set program after collecting
+execution time and using extracted features - this model measures the execution time of a test program. (2) Scheduling
+process: (a) Extracting the features from new test inputs. (b) Measuring the bug prediction probability by capability model
+and the execution time by time model for each test programs. (c) Ordering the test programs based on the bug prediction
+probability per unit time.
 
 [3] Evaluation:
 
-[Writing In Progress]
+The authors evaluate on GCC and LLVM compilers with cross-{optimization/compiler/version} ways for DOL and EMI techniques.
+They first generate 100K C programs using CSmith and use random order (RO) as the baseline. Authors aim to address the
+following research questions: (RQ1) How effective is LET in accelerating C compiler testing? (RQ2) How does LET perform when
+being applied to different compiler testing techniques (i.e., DOL and EMI)? (RQ3) How does LET perform in different
+application scenarios (i.e., cross-compiler and cross-version scenarios)? (RQ4) Can the major components of LET (i.e.,
+feature selection and time model) contribute to the overall effectiveness? They run test programs on RO for 10 times and
+record the average time spent on each bug. After that, they apply LET (+ two variants LRT-A: without feature selection and
+LET-B: without time model), TB-G (token vector-based prioritization) and ARP (adaptive random prioritization). The
+experiments show that LET significantly accelerates compiler testing.
