@@ -33,13 +33,13 @@ probability per unit time.
 
 [3] Evaluation:
 
-The authors evaluate on GCC and LLVM compilers with cross-{optimization/compiler/version} ways for DOL and EMI techniques.
-They first generate 100K C programs using CSmith and use random order (RO) as the baseline. Authors aim to address the
-following research questions: (RQ1) How effective is LET in accelerating C compiler testing? (RQ2) How does LET perform when
-being applied to different compiler testing techniques (i.e., DOL and EMI)? (RQ3) How does LET perform in different
-application scenarios (i.e., cross-compiler and cross-version scenarios)? (RQ4) Can the major components of LET (i.e.,
-feature selection and time model) contribute to the overall effectiveness? They run test programs on RO for 10 times and
-record the average time spent on each bug - they use the correcting commits as an indication of a similar bug. After that,
-they apply LET and two variants of LET(LET-A: without feature selection and LET-B: without time model), TB-G (token 
-vector-based prioritization) and ARP (adaptive random prioritization). Theexperiments show that LET significantly
-accelerates compiler testing.
+The authors evaluate LET on GCC and LLVM compilers with cross-{optimization/compiler/version} ways for DOL and EMI
+techniques. They first generate 100K C programs using CSmith and use random order (RO) as the baseline. Authors aim 
+to address the following research questions: (RQ1) How effective is LET in accelerating C compiler testing? 
+(RQ2) How does LET perform when being applied to different compiler testing techniques (i.e., DOL and EMI)? 
+(RQ3) How does LET perform in different application scenarios (i.e., cross-compiler and cross-version scenarios)? 
+(RQ4) Can the major components of LET (i.e., feature selection and time model) contribute to the overall effectiveness? 
+They run test programs on RO for 10 times and record the average time spent on each bug - they use the correcting commits 
+as an indication of a similar bug. After that, they apply LET and two variants of LET(LET-A: without feature selection and
+LET-B: without time model), TB-G (token vector-based prioritization) and ARP (adaptive random prioritization). The
+experiments show that LET significantly accelerates compiler testing.
