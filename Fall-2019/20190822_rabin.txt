@@ -2,7 +2,7 @@ Title: Coverage Prediction for Accelerating Compiler Testing
 
 Authors: Junjie Chen, Guancheng Wang, Dan Hao, Yingfei Xiong, Hongyu Zhang, Lu Zhang, Bing Xie
 
-Published in: TSE 18
+Published in: TSE 2018
 
 Keywords: Compiler Testing, Test Prioritization, Machine Learning
 
@@ -12,8 +12,35 @@ Link: https://xiongyingfei.github.io/papers/TSE18.pdf
 
 [1] Problem:
 
+Automated compiler testing is key to ensure the correctness of compiler but it can take a long period of time to find 
+even a small set of bugs in compiler. In practical case, the time consuming process can delay the release in software
+development. Therefore, test accelaration has received attention from researchers. However, the researchers did not 
+foucs on an important topic: test capabilities. As different test programs can cover same funtionality, they could 
+result in finding same bugs. Therefore, test coverage would be a good indication to differentiate test programs. Morever,
+the coverage information is infesiable to collect as test programs are generated on the fly by an automated test generation
+tool. In this paper, the authors proposed a coverage prediction (COP) approach which predicts the coverage of test 
+programs statically and prioritizes test programs by the predicted coverage information.
+
 [2] Solution:
+
+Authors implemented the COP with the following three steps: (1) Predicting coverage: (a) Identifying features based on 
+the language features, operation features, and structure features use in test programs. (b) Labeling each program as 
+multi-label by collecting the coverage fraction for each individual compiler module. (c) Building a prediction model
+(regression model with gradient boosting) with a set of programs after extracting features, collecting labels and
+normalizing features with min-max normalization. (d) Predicting coverage of new test inputs after extracting features
+and normalizing with min-max normalization. (2) Clustering test programs: Using X-Means clustering algorithms with 
+Manhattan distance for clustering test programs into different groups. (3) Prioritizing test programs: (a) Calculating 
+the bug-revealing probability in unit time of each test program using LET approach. (b) Selecting the best one from 
+each group and rank them until all test programs selected.
 
 [3] Evaluation:
 
-[Writing In Progress, will complete by weekend]
+The authors evaluate COP on GCC and LLVM using the same dataset of LET, where they apply same-version (train and test
+on the same version) and cross-version (train and test on the different version) scenarios for DOL and EMI techniques.
+They first generate 100K C programs using CSmith and compare with the baseline RO and the state-of-the-art LET. In this paper, authors aim to address the following research questions: 
+(RQ1) Does COP accelerate C compiler testing? 
+(RQ2) How does COP perform in terms of predicting coverage for C compilers? 
+At first, They run test programs on RO for 10 times and record the average time spent on each bug - they use the correcting
+commits as an indication of a similar bug. After that, they apply the COP and LET with the same scenarios. The experiments
+show that COP significantly outperforms the state-of-the-art approaches (i.e. LET). Besides, authors also evaluate the
+accuracy of COP using 10-fold cross-validation and show the improvement over RO.
