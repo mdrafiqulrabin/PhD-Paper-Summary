@@ -37,7 +37,8 @@ each group and rank them until all test programs selected.
 
 The authors evaluate COP on GCC and LLVM using the same dataset of LET, where they apply same-version (train and test
 on the same version) and cross-version (train and test on the different version) scenarios for DOL and EMI techniques.
-They first generate 100K C programs using CSmith and compare with the baseline RO and the state-of-the-art LET. In this paper, authors aim to address the following research questions: 
+They first generate 100K C programs using CSmith and compare with the baseline RO and the state-of-the-art LET. 
+In this paper, authors aim to address the following research questions: 
 (RQ1) Does COP accelerate C compiler testing? 
 (RQ2) How does COP perform in terms of predicting coverage for C compilers? 
 At first, They run test programs on RO for 10 times and record the average time spent on each bug - they use the correcting
