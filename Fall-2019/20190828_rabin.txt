@@ -12,6 +12,34 @@ Link: https://dl.acm.org/citation.cfm?id=3330579
 
 [1] Problem:
 
+DL has attained impressive success in many intelligent applications such that image classification, speech recognition,
+natural language processing, etc. However, like the traditional software, the DNNs could also exhibit incorrect result
+caused by hidden defects. In safety-critical scenarios, these erroneous behaviors could be severe accidents and losses
+(i.e. automatic car driving, medical assisting, etc). Therefore, testing DNNs and finding defects in DNNs have received
+great attention to researchers. Moreover, the recent studies on testing DL software depict some fundamental challenges:
+(a) the coverage of traditional software is source code based while the coverage of DL software is neuron based. (b) 
+there is no obvious oracle for testing DNNs. In this paper, authors propose DeepHunter, a coverage-guided fuzz testing
+framework for detecting potential defects in DNNs.
+
 [2] Solution:
 
+DeepHunter start with an initial set of seeds. Then it selects one seed from the seed queue based on seed selection 
+strategy (uniform or probability). After that, it mutates the seed 'K' times with the metamorphic mutation strategy
+(multiple pixel value transformation and one affine transformation) to generate a set of new tests. Now, run the target
+DNN against the newly generated tests and try to compute the label & coverage information (NC, KMNC, NBC, SNAC, TKNC).
+For each new test, report as a failed test if a crash is detected and save as a passed test into the queue if maximizes
+coverage, otherwise ignore the seed.
+
 [3] Evaluation:
+
+Authors leverage DeepHunter to answer the following research questions: RQ1 (Metamorphic Mutation): How effective are
+different mutation strategies for generating semantic-preserving images? RQ2 (Coverage): How effective are different 
+testing criteria and seed selection strategies for improving coverage of DNNs? RQ3 (Error Detection): How effective are
+different testing criteria and seed selection strategies for detecting erroneous behaviors of DNNs? RQ4 (Platform
+Migration): Is DeepHunter applicable to detect the specific defects introduced by DNN quantization during platform
+migration? They perform a large-scale study on three dataset (MNIST, CIFAR-10, ImageNet) and five DNN model (LeNet-1, 
+LeNet-5, ResNet-20, VGG-16, MobileNet) with three mutation strategy (DeepHunter, DeepTest, TensorFuzz), five testing
+criteria (NC, KMNC, NBC, SNAC, TKNC), five seed selection strategy (RT, DH+UF, DH+Prob, DeepTest, TensorFuzz) and three
+quantization ratio (10%, 50%, 100%) settings from 32-bit to 16-bit. The evaluation results show that DeepHunter 
+outperforms the state of the arts in terms of coverage, number of defects, and diversity of defects in both general 
+and quantization DNNs.
