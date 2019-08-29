@@ -1,0 +1,17 @@
+Title: DeepHunter: A Coverage-Guided Fuzz Testing Framework for Deep Neural Networks
+
+Authors: Xiaofei Xie, Lei Ma, Felix Juefei-Xu, Hongxu Chen, Minhui Xue, Bo Li, Yang Liu, Jianjun Zhao, Jianxiong Yin, Simon See
+
+Published in: ISSTA 2019
+
+Keywords: Deep learning testing, metamorphic testing, coverage-guided fuzzing
+
+Link: https://dl.acm.org/citation.cfm?id=3330579
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
