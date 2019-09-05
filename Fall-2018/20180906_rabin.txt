@@ -1,0 +1,103 @@
+Title: Fuzz Testing in Practice: Obstacles and Solutions
+
+Authors: Jie Liang, Mingzhe Wang, Yuanliang Chen, Yu Jiang, Renwei Zhang†
+
+Published in: 25th IEEE International Conference on Software Analysis, Evolution and Reengineering, SANER 2018
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Authors collaborate with the engineers from Huawei to adapt the fuzzing techniques (SAFL fuzzer) to a proprietary message middleware named libmsg, which is responsible for the message transfer of the entire distributed system department. 
+They identify several typical obstacles coming across in applying an efficient fuzzer to libmsg (including system configuration inconsistency, system build complexity, fuzzing driver absence) and provide solutions for those typical obstacles.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+libmsg is separated from Project M to promote the use of libmsg to a wider range of products and finally support message transfer of the entire distributed system department.
+To fulfill the dependencies of libmsg, the separation requires major changes. Authors work closely with the development team, aiming to pinpoint bugs with fuzz testing techniques.
+
+•	What are the previous solutions and why are they inadequate?
+
+Two testing engineers from Huawei spent two weeks trying to run Driller on libmsg with the source code of both projects in hand. 
+unfortunately, they still failed to run the fuzz testing because Driller didn’t support a set of POSIX APIs and had rigid requirements on system and library configuration.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+The fuzzer used in this paper is SAFL. The algorithm behind is a combination of FairFuzz and AFLFast. 
+- The idea of FairFuzz is to overcome the unfair seed selection.
+- The idea of AFLFast is to overcome the slow seed mutation.
+
+Stages of test plan: 
+- Preparing the environment: setting up the fuzzers SAFL with a combination of FairFuzz and AFLFast.
+- Fuzzing driver development: fuzzing driver is written by a test engineer. 
+- Software compilation: source code such as libmsg is compiled into a hardened test program for fuzzing. 
+- Test run stage: some handwritten inputs are fed to the program to validate the fuzzing driver. 
+- Production run stage: the improved fuzzer efficiently tests the target program and produces crash.
+
+Then authors run SAFL fuzzer on the production server of libmsg and evaluate the effectiveness.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+For simplicity and availability, researchers usually pick modular open-source projects and standard benchmarks to evaluate their works.
+Most academic tools show good performance in simplified environment. However, in practical environment, when apply those tools to real industrial projects, they do not work as well as what the benchmarks indicate. 
+Too many causes may fail a “smart” fuzzer, due to the increasing complexity in system designs and execution environment dynamics. 
+
+Authors run SAFL fuzzer on the production server of libmsg and evaluate the effectiveness.
+SAFL fuzzer can effectively identify software bugs, and report 9 previously unknown vulnerabilities, including flaws that lead to denial of service.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+Things don’t go as planned. From environment preparation to production run, virtually authors stumbled on every step. 
+The following section lists the obstacles authors encountered and the corresponding solutions:
+
+Obstacle 1: Configuration inconsistency in environment preparation stage for too old operating system.
+Solution: Rebuild the system from source with fresh GCC and CMake.
+
+Obstacle 2: Absence of Training in Driver Development Stage.
+Solution: Transform Fuzzing Driver from Unit Tests and Sample Code with adding networking code.
+
+Obstacle 3: Build System Complexity in Software Compilation Stage for a mix of bash, autoconf and CMake.
+Solution: Develop Automatic Toolchain to Support Complex Compilation and Build.
+
+Obstacle 4: Shallow Bugs in Test Run Stage.
+Solution: Shallow Bugs Repair with Developers.
+
+Obstacle 5: Bug-Hiding Code in Production Run Stage.
+Solution: Patch the Program and the Fuzzer to Detect Hiding Bugs.
+
+After overcoming the obstacles, authors successfully run the fuzzer on the production server. They evaluate the effectiveness of fuzz testing and traditional unit tests on the very same hardened messaging library libmsg. 
+SAFL successfully detects 11 vulnerabilities, including 9 previously unknown ones, while traditional unit tests only capture 3 vulnerabilities. 
+Without considering the cost and risk to overcome the obstacles, fuzz testing is more effective than traditional unit tests.
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+Targetting libmsg with fuzzing technique is a great idea. But
+It seems costly and complex process as it requires lots of handwritten code to make fuzzer compatible for libmsg.
+It will take many engineering efforts to do such configuration and transformation for others program as well. 
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Overcome obstacles to test libmsg with fuzzing and find vulnerabilities.
+- Develop a tool module to mitigate the system build complexity. 
+- Propose a method that mitigates the absence of fuzzing drivers.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Test SAFL on another large and complex programs.
+- Test the tool module that mitigate the system build complexity.
+- Test the method that mitigates the absence of fuzzing drivers.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+- SAFL, FairFuzz and AFLFast.
+- etc

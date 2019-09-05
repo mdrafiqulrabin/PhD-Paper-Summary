@@ -1,0 +1,143 @@
+
+Title: An Empirical Study of Android Test Generation Tools in Industrial Cases
+
+Authors: Wenyu Wang, Dengfeng Li, Wei Yang, Yurui Cao, Zhenwen Zhang, Tao Xie
+
+Published in: 33rd ACM/IEEE International Conference on Automated Software Engineering (ASE ’18)
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Testing android apps with automate testing tool is excellent approach to find bugs. There are many tools available to perform automatic testing. Authors aim to run those testing tools on industrial apps and compare the results by measuring the code coverage and number of crash bugs. Then authors provide the suggestion that testing with multiple tools will give better performance than individual tools as different tools cover different method/activity and trigger different crashes.
+
+In this paper authors presented an empirical study of existing Android test generation tools’ applicability on industrial apps over open source apps.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Industrial apps are more practical than open source apps. Industrial apps demand a very complex design pattern and development process. And there is not that much research on Industrial apps. So testing software tools on industrial apps will result in effective outcomes.
+
+•	What are the previous solutions and why are they inadequate?
+
+Researchers have proposed various automate testing tools (i.e. Monkey, Dynodroid, DroidBot, Sapienz, WCTester, and etc state-of-the-practice tool) for Android UI testing to find bugs in the application. But there exists no comparison among existing tools over industrial apps in terms ofboth code coverage and fault detection. 
+
+- WCTester tool was compared with Monkey on industrial app WeChat.
+- Others tools were compared on open source apps.
+- Few were run on industrial apps but without tool comparison.
+
+This paper differs with others in terms of comparison between testing tools, industrial apps instead of open source apps and code coverage with fault detection. 
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+- Choose 6 state-of-the-art or state-of-the-practice UI test generation tools.
+- Choose 68 widely-used industrial apps of 30 different categories from Google Play having at least 1 million installs.
+- Choose device Android x86 emulators and 4 real phones having Android 4.4 OS.
+- Modify each tool’s implementation to adapte it to the testing environment or fix implementation defect.
+- Run each test generation tool continuously for 3 hours on each application.
+- Run each test 3 times on the same device to compensate the potential influence of randomness.
+- Study the coverage (method and activity coverage) and fault-detection results.
+
+Measure method coverage:
+- Share the Ella-collected method coverage information with test generation tools.
+
+Measure activity coverage:
+- Extract all activity names from AndroidManifest.xml.
+- Monitor the activity stack on the testing device.
+
+Measure crash:
+- Monitor the Logcat on target devices.
+- Record error messages related to stack traces.
+  
+•	Why is it believed it will work? How does it represent an improvement? 
+
+According to the results:
+- Monkey achieves the highest method coverage on 22 of 41 apps.
+- Monkey achieves the highest activity coverage on 35 of 68 apps.
+- Stoat triggers the highest number of unique crashes on 23 apps. 
+- Monkey has the highest numbers of rank-1 methods and activities.
+- Stoat has the highest numbers of rank-1 unique crashes.
+
+By analyzing the experimental results: 
+- Different tools show different results for different apps.
+- Combine different tools shows better performance than individual tools.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+RQ1: What is the code coverage (method coverage and activity coverage) achieved by each test generation tool under study on applicable industrial apps?
+Analysis: 
+- Monkey,Sapienz achives the highest method coverage on 22,14 of 41 apps.
+- The method coverage is fewer than three apps for other tools.
+- Almost no tool manages to cover more than 50% ofmethods on any app.
+- The majority of the tools achieve less than 30% ofmethod coverage on most apps.
+- Monkey,Sapienz,WCTester achives the highest method coverage on 35,28,15 of 68 apps.
+- The overall activity coverage is higher than the method coverage.
+- Monkey has the highest average activity coverage but Sapienz has the highest average method coverage.
+- Monkey,Sapienz: these two tools both have much higher and faster coverage than others.
+
+RQ2: How many unique crashes can each test generation tool trigger on each applicable industrial app? What are the causes of these crashes? 
+Analysis:
+- Stoat,Sapienz,Monkey triggers the highest numbers of unique crashes on 23,19,16 apps.
+- The numbers of unique triggered crashes have much higher deviations across different tools for the same app, compared with method and activity coverage.
+- Stoat,Monkey,Sapienz triggers many NullPointerExceptions,ArrayIndexOutOfBoundsException & StackOverflowError,SQLiteExceptions.
+- None of other tools is able to trigger such number of exceptions during testing.
+
+RQ3: How to efficiently combine multiple test generation tools on applicable industrial apps to achieve better coverage and fault detection than applying these tools individually? 
+Analysis:
+- Monkey has the highest numbers of rank-1 methods and activities.
+- Stoat has the highest numbers of rank-1 unique crashes.
+- Monkey and Sapienz together contribute to over 90% of all covered methods by all tools on all apps.
+- Monkey with Sapienz and/or Stoat works well for activity coverage.
+- Stoat with Sapienz and/or Monkey seems more effective for fault detection.
+- Stoat and Sapienz/Monkey can trigger very different types of crashes.
+- Different tools cover different method/activity and trigger different crashes.
+
+
+RQ4: How much effort does it require to set up each test generation tool for testing industrial apps?
+- Spend no effort on setting up Monkey.
+- Spend 5,10,10,2,5 hours for WCTester,Sapienz,Stoat,DroidBot,A3E-Depth-First respectively.
+- Spend more than 10 hours for Ella setup.
+- Spend about 5 hours addressing Android framework issue.
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea?
+
+- Industrial apps are more complex than open source apps, are more maintained and tested by engineers, and have large number of users. So tesing industrial apps will make better sense to evaluate the strength of tools. 
+- Testing with multiple tools is better than individual tools as different tools cover different method/activity and trigger different crashes.
+
+• What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- Activity coverage and line coverage is very low in many cases.
+- Even if apps contain lots of unused code or library inside source, then this analysis of coverage is useless.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+- The comparison will help QA engineers to select proper tools for testing.
+- The comparison will help tools developer to improve their testing tools.
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Empirical investigation on existing automated testing tools on industrial apps,
+- Case studies on industrial apps for both code coverage and fault detection.
+- Run the testing tools on industrial apps over open source apps.
+- Show that testing with multiple tools give better performance than individual tools.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Check the call graph of apk to figure out the reason of low coverage.
+- Obtain activity/method coverage for those industrial apps that were not able to do.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)?
+
+- How to measure the method coverage of test generation tools.
+- Try coverage collection tools based on Soot but fail.
+
+•	What do you find difficult to understand? List as many as you can.
+
+- Ella: collect statistics of method coverage.

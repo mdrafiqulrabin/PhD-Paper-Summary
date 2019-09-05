@@ -1,0 +1,144 @@
+Engineering Research Paper Question–Answer Form
+
+Name: RABIN
+
+-------------x-------------x-------------x-------------
+
+Title: Do Programmers Work at Night or During the Weekend?
+
+Authors: Maëlick Claes, Mika V. Mäntylä, Miikka Kuutila, Bram Adams
+
+Published in: ICSE 2018
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+This paper aims to investigate the work patterns of software developers in large open source projects as well as in a local IT company. 
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? 
+
+Abnormal working hours can affect health, wellbeing and productivity among software engineers. That’s why authors are particularly interested in the degree to which work is performed outside of the commonly expected working hours.
+
+•	Why doesn’t the people problem have a trivial solution? 
+
+Working hours may vary from people to people based on age, habit, environment, office rules and urgent demand.
+
+•	What are the previous solutions and why are they inadequate?
+
+Some initial evidence has been found regarding the interplay between work and wellbeing in software engineering. But a structured analysis of work patterns is missing. This paper starts to fill this gap by studying and comparing the periods during which developers are actively working in a software project.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)?
+
+Authors investigate the following research questions for all considered projects:
+
+1.	(RQ1) What are the circadian and weekly work patterns of software developers?
+2.	(RQ2) How does the usual work pattern vary across different projects?
+3.	(RQ3) Are office hour commits different in terms of size? 
+4.	(RQ4) Is there a difference in the developers’ work patterns over time?
+5.	(RQ5) Are office hour commits different in terms of content? 
+6.	(RQ6) Can demographics explain office hour activity?
+
+•	Why is it believed it will work?
+
+Based on the literature discussed, it can be claimed that irregular working hours may act as a proxy for job-related stress and time pressure conditions and suggest non-sufficient detachment from work. So the investigation result of those research questions is very important to decide whether the health and productivity differ in terms working hours.
+
+•	How does it represent an improvement? 
+
+TBD
+
+•	How is the solution achieved?
+
+-	Mined development data from the Git and Mercurial repositories of Mozilla1 and Apache and of a local company’s product.
+-	Visited the company several times to ensure the validity and usefulness of our work. 
+-	Wrote custom scripts to extract the list of commits (code changes), associated timestamps and authors from all code repositories.
+-	Did extra processing for Mozilla in order to find out which commit belongs to which project. 
+o	Used the Grimoire Lab tools to extract issue comments from Mozilla’s Bugzilla repository.
+o	Linked commit messages to the corresponding issue report by looking for an issue identifier in a given message.
+o	Filtered the commits to only keep the ones related to the following major products: Firefox, Core, Firefox OS, Firefox for Android, Thunderbird and SeaMonkey.
+-	Considered commits starting from the first commit for Apache with a time zone different than UTC to ignore the commits missing the time zone information.
+-	Filtered Apache projects with at least 2,000 commits.
+-	Performed a basic merging of the different authors’ identities to study the work patterns of individual developers.
+o	Cleaned the name and email used in the version control system’s author field. 
+o	Grouped together identities using the same name or email addresses. 
+o	Checked manually the result in order to avoid any false positive.
+-	Finally, Prepared and investigated the research questions based on mined data with scripting, clustering technique and manual checking.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+•	What is the author's evaluation of the solution?
+
+	(RQ1) What are the circadian and weekly work patterns of software developers?
+	Fewer commits are being posted during the weekend, while there is a slight variation in activity during the week.
+	The lowest activity for all projects happens during the night, with the number of commits starting to increase in the morning until a dip in activity happens during lunch hour.
+	Working hours of software developers are typically from 10-18 and two thirds of the developers follow office hours.
+	Developers are more active during office hours than during the other hours of the week.
+
+	(RQ2) How does the usual work pattern vary across different projects?
+	90% of the projects have similar typical working hours.
+	Developers that work a lot outside office hours are also likely to work a lot during the weekend.
+	Paid developers mainly follow office hours but no open source project follows office hours.
+
+	(RQ3) Are office hour commits different in terms of size? 
+	In terms of commit size, there is no difference in practice between office hours and outside office hours.
+
+	(RQ4) Is there a difference in the developers’ work patterns over time?
+	Most projects do not experience large changes over time in their work pattern.
+
+	(RQ5) Are office hour commits different in terms of content? 
+	More formal reverts made to version control during office hours but more informal reverts made by the developers during outside office hours.
+
+	(RQ6) Can demographics explain office hour activity?
+	Outside office hour work is mostly performed by unpaid developers, even though most paid developers still work a lot outside regular office hours based on demands.
+	There are no major differences in office hour work between developer profiles.
+
+•	What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+TBD
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+•	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+It seems good to me on following perspectives:
+-	Authors target high quality repositories of Mozilla and Apache to retrieve the development data. Those repositories contain lots of commits from varieties of developers. 
+-	Authors also consider a local company’s data and have visited the company several times to ensure the validity and usefulness of our work.
+-	Two of the authors manually checked the result in order to avoid any false positive.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+Normal working pattern is more applicable to those developers who are doing job in a company having define time hours. But developer of a company having flexible hours or contributors of open source project or even freelancer are not following normal working pattern. 
+
+A timestamp cannot provide information about the time actually spent working for that commit and the time zone from the repository might not be accurate enough to the developer’s actual position.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+TBD
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+Authors future work plan:
+-	Perform a detailed qualitative analysis of both individual histories and individual developer histories to better explain the differences in working patterns, involving interviews and daily surveys to monitor project members. 
+-	Use additional data sources, such as chat logs, in order to make our set of timestamp activity more complete. 
+-	Study the impact of policies and guidelines put in place by project managers, such as a fast release cycle, on developers’ activity and health.
+-	Investigate further the causes of outside office hour work by focusing on periods with unusually high activity during the night or weekends.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+-	The Grimoire Lab tools used to extract issue comments from Mozilla’s Bugzilla repository.
+-	The clustering used in RQ1 and RQ2 and Fig 5.
+-	The violin plots used in Fig 3 and Fig 10.

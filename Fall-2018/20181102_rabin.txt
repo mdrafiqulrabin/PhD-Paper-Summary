@@ -1,0 +1,68 @@
+Title: Finding and Analyzing Compiler Warning Defects
+
+Authors: Chengnian Sun, Vu Le, Zhendong Su
+
+Published in: 2016 IEEE/ACM 38th IEEE International Conference on Software Engineering
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+There are many testing and analysis approaches to find bugs in popular compiler.
+But people generally pay little attention on the compiler warning.
+Compiler warning is very useful information to find problematic code fragment.
+Warning contains file name, column number, line number and also a indicator in its message.
+Developrs can detect bugs at compile time by observing the warning messages.
+This paper introduces the first effort in this direction.
+Authors propose the first randomized differential testing technique to detect compiler warning defects.
+The discovery of the warning bugs will help the developers to detect bugs/code smell at the compile time.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors implemented 'Epiphron' tool based on the differential testing to detect compiler warnings.
+The main idea is that compilers should emit similar warnings on the same given program, otherwise it likely compiler bug.
+
+The basic workflow of Epiphron:
+  - Random Testing:
+      - Program Generator: Generate a random program (p). 
+      - Compiler: Compile program (p) with two compilers (c1 and c2) and emit two raw warning output (m1 and m2).
+      - Parser: Parse those two raw warnings into two sets of warning records(w1 and w2).
+  - Differential Testing:
+      - Warning Aligner: Compute symmetric difference between the two warning records (w1 and w2).
+      - Filter: Remove known inconsistencies and indicate compiler bug for any inconsistent warning mismatch.
+  - Reducer: Reduce the test program to minimized test program but as same as the inconsistency.
+  - Report after indicating a warning bug.
+  
+The followings are the key technical challenges for evaluation: 
+  - Challenge 1: Generating Effective Test Programs.
+  - Challenge 2: Aligning Warnings.
+  - Challenge 3: Reducing Test Cases.
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors evaluated Epiphron on GCC and Clang until fixpoint (all found or resource budget) for 6 months:
+    Detected Bugs:
+      - Authors investigated 150 bugs of GCC and 80 of Clang.
+      - Epiphron reported 99 bugs; 60 bugs for GCC and 39 bugs for Clang.
+      - Developers confirmed 52 bugs; 38 bugs for GCC and 14 bugs for Clang.
+    Byg Type:
+      -  9 Spurious Warnings.
+      - 18 Erroneous Messages.
+      - 25 Missing Warnings.
+    Bug Importance:
+      - All confirmed bugs have the default priority P3.
+      - All confirmed bugs have the normal severity except 2 minor bugs leveled by developers.
+      - Developers already fixed 21 bugs. 
+    Size of Reported Test Cases:
+      - Epiphron henerates 2,000 lines of code on average.
+      - All reported bugs have under five lines of code.
+    False Positive Rate: [10%, 47%]
+      - Lower Bound (rejected bugs): 10%
+      - Upper Bound (rejected+pending bugs): 47%
+    Comparison with Csmith:
+      - Found 14 warning bugs that Csmith cannot detect.
+      - Outperforms Csmith in terms of enumerations or switch statements.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Warning bugs can be another target along with Error bugs.

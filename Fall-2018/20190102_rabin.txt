@@ -1,0 +1,66 @@
+Title: Evaluating Fuzz Testing
+
+Authors: George Klees, Andrew Ruef, Benji Cooper, Shiyi Wei, Michael Hicks
+
+Published in: 2018 ACM SIGSAC Conference on Computer and Communications Security (CCS'18)
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+Fuzz testing is an effective approach to find bugs in real software.
+Researchers have involved in various technique and algorithm for better results.
+Authors surveyed the recent 32 fuzzing papers and found problems in every evaluation.
+So, the key question is: "What experimental setup is needed to produce trustworthy results?".
+Then authors came out with their own experimental evaluation and conclude with some guidelines.
+Those guidelines will help to improve the experimental evaluations of fuzz testing.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors came out with their own experimental evaluation to conclude some guidelines of fuzz testing.
+The experimental setup contanis following steps:
+  (a) Baseline Fuzzers: AFL 2.43b as baseline B and AFLFast as advanced A.
+  (b) Benchmark programs: binutils-2.26(nm, objdump, cxxfilt), gif2png, and FFmpeg.
+  (c) Performance measure: number of unique (unique by coverage profile) crashes induced over some period of time.
+  (d) Platform & configuration: Tested on same machine with different seed, 30 trials per configuration, and 24 hours per trial.
+  (e) Finally, statistically comparing their performance and conclude some guidelines.
+
+Important questions by authors: 
+  - What experimental setup is needed to produce trustworthy results?
+  - Which of evaluations are good and which are not, in the sense that they obtain evidence that supports the claimed technical advance?
+  - What is a reasonable timeout to consider?
+  - What is a (distinct) bug?
+  - How should choose a benchmark suite?
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Statistically Sound Comparisons:
+- Refs 32 Papers: 18 out of 32 papers didn't mention the number of trials performed. 11 out of 14 papers din't mention the performance variance althouth considered multiple trials. That means different trials were used in different programs. 
+- Authors' Evaluation: Only a single trail may yield to the wrong conclusion. Running multiple trials and reporting averages is better. Only comparing average may yield to the wrong conclusion. Using statistical test is better as the difference in averages may not be statistically significant with enough variance.
+- Main Takeway: Authors recommendation is to use the statistical tests (Mann Whitney U-test/Standard t-test). Such a test indicates the likelihood that a difference in performance is real, rather than due to chance[?]. Also mentioned two alternatives: permutation test and bootstrap-based test. 
+
+Seeds Selection:
+- Refs 32 Papers: 2 out of 32 papers used empty seed and 30 out of 32 papers used non-empty seed but without proper details. That means different seeds were used in different programs. 
+- Authors' Evaluation: For FFmpeg with 24 hours timeout - AFL & AFLFast found significantly more crashes than AFLNaive with empty seed but AFLNaive found significantly more crashes than AFL & AFLFast with non-empty (1-made or 3-made) seeds.
+- Main Takeway: The details of the initial seed may unimportant but there is an interaction between seeds and results. Using a variety of seeds is better when evaluating programs and fuzzers.
+
+Timeout:
+- Refs 32 Papers: 24 hours by 10 papers, 5~12 hours by 6 papers, more than one day by 6 papers, 1~2 hours by 3 papers and no time mentioned by 7 papers. That means different timeouts were used in different programs. 
+- Authors' Evaluation: For nm with 3-sampled seeds - AFLFast found significantly more crashes than AFL in 6 hours but AFL found significantly more crashes than AFLFast in 24 hours.
+- Main Takeway: Shorter times (over night run) may be more useful in real world scenarios although some particular algorithms might be better with longer running times to find out significant number of crashes.
+
+Performance Measures: 
+- Refs 32 Papers: Number of unique crashes was used as performance measure. Many different inputs may trigger the same bug, so used de-duplication strategy to map crashes to unique bugs. Coverage profile by 7 papers, Stack hash by 7 papers, Ground truth by 6 papers, manual efforts by 8 papers and other tools/methods by 4 papers. That means different de-duplication strategy were used in different programs. 
+- Authors' Evaluation: Unique bug is better performance measure than unique crashes. A single bug can be triggered by different coverage profiles if error producing method called from different program flow. Stack hashing can undercount or overcount true bugs for setting different value of N as the top frame of stack. Additionally, Address Sanitizer and Undefined Behavior Sanitizer (ASAN and UBSAN) use dynamic checks to find miss fix bugs but not guaranteed to catch all.
+- Main Takeway: Stack hashing is far better than coverage profiles, but not than ground truth. Heuristics rather than ground truth as de-duplication strategy can lead to misleading or wrong conclusions. Code coverage as performance measure is secondary with primary Ground truth strategy.
+
+Target Programs: 
+Real programs suite: Google Fuzzer Test suite, binutils: nm, objdump and cxxfilt, FFmpeg and gif2png.
+Artificial programs suite: CGC, and LAVA-M: base64, md5sum, uniq, and who.
+- Refs 32 Papers: Used a variety of benchmark programs in two categories: real programs and artificial programs. Only real programs by 22(+7) papers, CGC or LAVA-M by 6 papers, Google fuzzer test suite by 2 papers and manually injected bugs by 2 papers. That means different benchmark programs were used in different evaluation.
+- Authors' Evaluation: nm, objdump and cxxfilt were 3 programs in which Böhme et al found crashes and claimed that AFLFast is uniformly superior to AFL. But FFmpeg & gif2png were 2 programs in fuzzing and Mann Whitney U test found no statistical difference between AFL and AFLFast. Most of the paper experiment with insufficient small number of targets and also many papers didn't use the same version of the same target during experiment. For example, AFLFast used 2.26 versions of binutils but FairFuzz used 2.28 and Angora used 2.29.
+- Main Takeway: Insufficient number of targets and different version may yield to the wrong conclusion. So, the suite should select programs with clear details (number of program, when bug found and fixed, etc), the suite should be large enough, the version should be same during comparison. And testing should also handle the overfitting.
+
+[4] How was it related to your research? (10 to 20 words)
+
+This paper will guide us to improve the experimental evaluations of fuzz testing.

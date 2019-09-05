@@ -1,0 +1,138 @@
+Title: Fuzzing with Code Fragments
+
+Authors: Christian Holler, Kim Herzig, Andreas Zeller
+
+Published in: 21st USENIX Security Symposium, 2012
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Fuzzing is an automated software testing that randomly generates test cases and feed those test cases 
+to system to find vulnerabilities. In order to be effective, the generated test cases must be common enough 
+to be semantically valid. And, on the other hand, must be uncommon enough to trigger exceptional behaviors.
+
+Authors introduce LangFuzz to resolve this conflict by using a grammar to randomly generate valid programs 
+and the code fragments mutated from previously problematic inputs. LangFuzz takes Language Grammar, Sample Code 
+and Test Suite as input and gives generative/mutative test cases as output.
+
+Authors feed the new test cases into JavaScript and PHP interpreter to find vulnerabilities, and also compare 
+LangFuzz with jsfunfuzz. And based on the result, authors show that LangFuzz detects several issues which jsfunfuzz misses.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Web interpreter (i.e. JavaScript) is likely to have many correctness and security related issues. 
+For instance, Mozilla Firefox fixes many vulnerability issues. But jsfunfuzz discovered more that 1,000 defects in the Mozilla JavaScript engine.
+Thus LangFuzz was inspired by jsfunfuzz as fuzzing web interpreter is a promising field and has significant outcome.
+
+•	What are the previous solutions and why are they inadequate?
+
+- SmartFuzz (work by Molnar et al.) triggered integer related problems in x86 binaries by using symbolic execution.
+- CSmith (work by Yang et al.) found more than 450 previously unknown bugs for C compilers.
+- jsfunfuzz (work by Ruderman) discovered more that 1,000 defects in the Mozilla JavaScript engine.
+- crossfuzz tool (work by Zalewski) target different functionality in many popular browsers to find severe vulnerabilities.
+
+LangFuzz differs from previous efforts in terms of security bugs (instead of correctness bugs), language-independent 
+grammar (instead of hardcoded specific knowledge) and generative+mutative (mutually instead of individually).
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+The workflow of LangFuzz :
+
+  Phase I: Build up a fragment pool: 
+
+    - The language grammar generates random fragments in a breadth-first manner.
+    - The parser separates the sample code and test suites into code fragments. 
+    - Mutate code fragments with semantic adjustment. 
+
+  Phase II: Generate new test cases: 
+
+    - Select a target file and randomly pick some of the fragments. 
+    - Then replace those fragments with other same type of fragments. 
+    - Adjust fragments to the environment.
+
+  Phase III: Feed test cases to interpreter: 
+
+    - Run test cases into interpreter with its proper test harness. 
+    - Check for crashes and assertions.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+LangFuzz is an effective tool to discover new unknown vulnerabilities, because during the experiment: 
+  - LangFuzz found 105 new vulnerabilities when tested on the Mozilla JavaScript interpreter.
+  - LangFuzz found 18 new crashing defects when applied on PHP interpreter.
+  
+The economic value of the uncovered vulnerabilities worth 18 Chromium Security Rewards and 12 Mozilla Security Bug Bounty Awards.
+And the above awards translated into 50,000 US$ of bug bounties.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+Authors setup three different experimens to evaluate how well LangFuzz discovers undetected errors in the JavaScript engines.
+  - External comparison - LangFuzz vs. jsfunfuzz:
+  - Internal comparison - Generation vs. Mutation:
+  - Field test: Find real world defects within industry products
+  
+  External comparison - LangFuzz vs. jsfunfuzz:
+  Q1. To what extend do defects detected by LangFuzz and jsfunfuzz overlap?
+  Main Takeaway: LangFuzz and jsfunfuzz detect different defects (overlap of 15%) and thus should be used complementary to each other.
+  Q2. How does LangFuzz’s detection rate compare to jsfunfuzz?
+  Main Takeaway: A generic grammar-based fuzzer like LangFuzz can be 53% as effective as a language-specific fuzzer like jsfunfuzz.
+
+  Internal comparison - Generation vs. Mutation:
+  Q3 + Q4. How important is it that LangFuzz generates new code? How important is it that LangFuzz uses learned code when replacing code fragments?
+  Main Takeaway: The combination of code mutation and code generation detects defects that not detected by either internal approach alone. Combining both approaches makes LangFuzz more successful.
+
+  Field test: Applying LangFuzz to: Mozilla TraceMonkey (JavaScript), Google V8 (JavaScript), and the PHP engine:
+  Q. Can LangFuzz detect real undetected defects?
+  Main Takeaway: LangFuzz detected 164 real world defects in popular JavaScript engines within four months, including 31 security related defects. On PHP, LangFuzz detected 20 defects within 14 days.
+
+Adapting LangFuzz to test different languages is easy:
+  - Provide language grammar
+  - Integrate test suite. 
+  - Adding language dependent information (optional but recommended).
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+Yes, it is a good target. Because -
+- Web interpreters are practically prone to vulnerabilities. So fuzzing web interpreters would have significant outcomes.
+- LangFuzz generated inputs are semantically correct. So it can be used to test other respective interpreters as well.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- LangFuzz is a pure black-box approach so code coverage indication has been ignored.
+- Parameters of LangFuzz cannot guarantee the best performance.
+- Running LangFuzz and jsfunfuzz on different targets might change comparison results.
+- Setups with less test cases or biased test suites might decrease LangFuzz’s performance.
+- Some additional language dependent information always required when changes to the another language.
+- Some of the reported bugs might be duplicates.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+- It can detect many unknown bugs that other tools miss and also can detect security bug for web interpreter.
+- This will help developers to correct their interpreter.
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Introduce a language independence framework called LangFuzz to test web interpreters.
+- Compare LangFuzz against jsfunfuzz on testing of JavaScript and PHP interpreters.
+- Provide study case of Generation vs Mutation and Running multiple tests in one shell.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Improve approach by overcoming the mentioned Threats to Validity.
+- Leverage with-box testing to ensure the code coverage.
+- Apply in other interpreters for different languages.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+- 4.3: Use a persistent shell for running multiple test
+
+•	What do you find difficult to understand? List as many as you can.
+- Figure 2, Figure 6, Figure 8, Figure 9

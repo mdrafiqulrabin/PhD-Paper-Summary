@@ -1,0 +1,148 @@
+Title: Taming Compiler Fuzzers
+
+Authors: Yang Chen, Alex Groce, Xiaoli Fern, Chaoqiang Zhang, Weng-Keen Wong, Eric Eide, John Regehr
+
+Published in: 34th ACM SIGPLAN conference on Programming language design and implementation - PLDI '13
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Fuzzing randomly generates test cases to find vulnerabilities. But the number of generated test cases is huge and also contains
+many redundant test cases. On the other hand triggered bug is also large number and many of them are redundant, known undesirable bug
+and bugs that difficult to debug. Authors formulate and address this as fuzzer taming problem. 
+
+Authors aim to rank the test cases so that the effective bugs will come first in the list and put the undesirable bugs late in the list.
+The main-take way is to reduce the number of test cases but trigger the district desirable bug in less time with less test cases.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+Fuzzing randomly generates test cases to find vulnerabilities. But it may result in many error inducing test cases those produce redundant and undesirable bugs. 
+Even a case study by authors in this paper shows that some of the bugs were triggered thousands of times.
+To figure out the effective test cases and bug will demand lots of  time and effort from engineers. 
+
+Generally, before any release, development team wants to fix only critical bugs with having lots of known low-priority bug unfixed. 
+So high quality test cases should be rewarded first to speed up the development process and product release.
+
+•	What are the previous solutions and why are they inadequate?
+
+- jsfunfuzz detects more than 1700 previously unknown bugs in SpiderMonkey js engine of Firefox. 
+- LangFuzz discovers more than 500 previously unknown bugs in the same SpiderMonkey engine. 
+- Google’s proprietary ClusterFuzz identifies 95 unique vulnerabilities in Chrome V8 JavaScript engine.
+- Csmith found more than 450 previously unknown bugs for C compilers.
+
+Taming a fuzzer differs from previous efforts in terms of ignoring duplicate bug, reducing test size, detecting undesirable
+bug, ranking bug and the overall goal of taming a fuzzer.
+
+- McKeeman’s C compiler fuzzer and QuickCheck used built-in greedy support to reduce the size of test inputs.
+- Zeller and Hildebrandt formalized Delta Debugging as test case reduction.
+
+Taming a fuzzer differs from previous efforts in terms of automation instead of human consumer.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+The workflow for a fuzzer tamer (Fig. 2):
+- Fuzzer generates random test cases.
+- Reference compile provides output and code coverage information.
+- Oracle detects bug triggering test cases by watching reference compiler’s output.
+- Reducer produce reduced bug triggering test cases.
+- Tamer outputs ranked reduced bug triggering test cases.
+
+Choose test inputs:
+- Choose C text inputs of Csmith
+- Choose JS text inputs of jsfunfuzz
+
+Define a distance function between test cases:
+- map any pair of test cases to a real number that serves as a measure of similarity
+- sort the list of test cases in furthest point first (FPF) order
+
+Ranking Test Cases:
+- Define a distance function between test cases.
+- Sort the list of test cases in furthest point first (FPF) order.
+- Lower the rank of uninteresting test cases by seeding to FPF.
+
+Apply the test cases to Compiler and Analysis the outcome:
+- GCC 4.3.0 and SpiderMonkey 1.6
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+The analysis result for the fuzzer taming problem:
+
+- 3799 test cases triggering 46 bugs in a C compiler.
+- 2603 test cases triggering 28 bugs in a JavaScript engine.
+
+The ranked order testing is 4.6× faster in comparison to random testing for bugs in JavaScript compiler.
+For wrong-code bugs and crash bugs in the C compiler, the improvements are 2.6× and 32×, respectively.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+Evaluating Effectiveness using Bug Discovery Curves:
+- Ranking test cases provide better result than random test cases.
+- More distinct bugs can be detected in less time with ranked test instead of randomly chosen tests.
+
+Selecting a Distance Function:
+- Levenshtein distance on the test-case text plus compiler output worked so well than their separate effects.
+- Compiler output plus C features worked well for GCC.
+- Levenshtein distance based on test-case text alone (not normalized) performed moderately well for SpiderMonkey.
+- Coverage-based methods worked fairly well for SpiderMonkey.
+- Valgrind output alone performed extremely poorly in the long run for both GCC crashes and SpiderMonkey bugs.
+- Test-case text performed well with Levenshtein distance or when combined with line coverage.
+- Test-case text performed badly as a vectorization without line coverage.
+- Etc.
+
+The Importance of Test-Case Reduction:
+- Ranking unreduced test cases is practically costly and undesirable.
+- Without test case reduction the overall discovery curve is worse than the baseline for many cases.
+- Reduced test cases triggered different bugs while unreduced test cases triggered many redundant bugs.
+
+Clustering as an Alternative to Furthest Point First The:
+- Levenshtein-distance is not compatible with X-mean clustering as it requires vector form as input.
+- Clustering different feature vectors independently provides better result than Clustering large vectors combining multiple features.
+- Clustering with ranking provides better result than Clustering without ranking.
+- Clustering is more complex, more expensive and less effective and slow runtime than FPF.
+- clustering does not find all defects and even worse than the baseline in many cases.
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea?
+
+- Ignoring reductant test cases and reducing test case size will save engineers time and effort.
+- Putting rank on desirable test cases over known unimportant cases will speed up the development process.
+
+• What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- Strong conclusion is not given for choosing a specific setup of distance functions.
+- Different setup of distance functions may produce different result in different test inputs.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+- Help developers to check only severe issue for quick release.
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Authors were the first researchers to address the fuzzer taming problem.
+- Observe that automated test case reduction is very significant with automated test case ranking.
+- Show that FPF (furthest point first) is more faster and effective than clustering.
+- Analysis the fuzzer taming effect for JavaScript engine and C compiler.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Apply to other language and compiler.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)?
+
+- SpiderMonkey bug was not classified into crash bug and wrong code bug like GCC bug.
+- The FPF vs X-means Clustering (runtime and efficiency but how).
+
+•	What do you find difficult to understand? List as many as you can.
+
+- Wrong code bugs, swarm testing, FPF, seeding, Compiler output vs Valgrind output
+- Figure 9. area under the discovery curve.
+- Suitably designed test-case reducer has a canonicalizing effect.
+- Clustering with different feature vector is unsupervised.
+- Fuzzers tend to trigger some bugs far more often than others, creating needle-in-the- haystack problems for engineers who are triaging failure-inducing outputs.

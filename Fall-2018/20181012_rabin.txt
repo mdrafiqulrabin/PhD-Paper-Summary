@@ -1,0 +1,57 @@
+Title: Steering Symbolic Execution to Less Traveled Paths
+
+Authors: You Li, Zhendong Su, Linzhang Wang, Xuandong Li
+
+Published in: ACM SIGPLAN 2013
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+The idea of symbolic execution is to explore the code execution path in order to generate test cases with high coverage. 
+But the problem is that program may have a large or even infinite number of paths for having lots of conditionals, loops, and recursions.
+The existing state-of-art approaches used some heuristic techniques but those are inefficient because the key issue is how effectively the symbolic execution can trace the tremendous path of real-world programs.
+Authors introduce the 'length-n subpath' program spectra to guide symbolic execution toward more profitable paths in order to improve the test coverage and error detection.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Three coverage metrics (branch, statement or function) are too shallow for the effectiveness of test suites.
+On the other hand, it is not practical to go for complete paths coverage as it may take infinite times.
+Authors introduced the concept of length-n subpath program spectra to fill this gap.
+They used frequency distributions of explored length-n subpaths to prioritize less traveled parts.
+
+The workflow:
+- Use program profiling for different runtime events (branches, paths, basic blocks, etc.)
+- List program spectra from program profiling (Branch Hit Spectra, Branch Count Spectra, Complete Path Spectra, Path Count Spectra, etc.)
+- Choose different length-n subpath that is consecutive sub-sequence from a complete path.
+- Use a structure e = (π, f) for statistical analysis, where π = length-n subpath and f = frequency of explored π.
+- Put subpath with the lowest frequency is at the top of a priority queue P.
+- Execution state ES with π (with lowest f) from top of P is selected to continue the symbolic execution.
+- Use the tool gcov for statement coverage information.
+
+Research Questions:
+(R1) What impact do different choices of n have? Can they be effectively combined?
+(R2) How does our strategy compare with the traditional strategies?
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors compared their own strategy with a state-of-the-art symbolic execution tool KLEE.
+Test Object: 75 programs in GNU COREUTILS utilities.
+Time-Limit: Sets the time limit to 3, 600 seconds.
+
+They ran KLEE on the GNU Coreutils programs with the most traditional strategies and also for their own strategy.
+Traditional Strategies: Depth-First Search (DFS), Random State Search (RSS), Random Path Selection (RPS), and Non Uniform Random Search (NURS)
+Authors Strategy: Subpath-Guided Search (SGS)
+
+Then they compared the quality of the generated test cases by measuring the statement coverage and defect. 
+The results show that authors strategy can guide symbolic execution to cover the program more faster and find more bugs than the evaluated traditional strategies.
+Result 1: SGS yields higher coverage.
+Result 2: No uniform best n for SGS.
+Result 3: Combined SGS performs the best.
+Result 4: SGS yields more bug reports.
+Result 5: SGS has acceptable overhead.
+Result 6: SGS kills more mutants.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Execute less traveled but the profitable path from a tremendous path of a program can trigger new bugs in a limited time frame.

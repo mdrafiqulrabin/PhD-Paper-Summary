@@ -1,0 +1,75 @@
+
+Title: Compiler Validation via Equivalence Modulo Inputs
+
+Authors: Vu Le, Mehrdad Afshari, Zhendong Su
+
+Published in: 35th ACM SIGPLAN Conference on Programming Language Design and Implementation - PLDI '14
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+This work opens up an exciting new direction and described a new validation methodology.
+
+Authors introduced equivalence modulo inputs (EMI) for compiler validation.
+EMI variants can be used to stress-test the compiler and find out the deviant behaviors.
+It is a powerful technique for discovering miscompilations in compiler.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors implemented 'Orion' tool based on "profile and mutate" strategy 
+that detects compiler bugs by applying EMI on source programs.
+
+The workflow of Orion:
+  - Derive EMI variants from a program.
+      - Profile executions of program and extract coverage information.
+      - Perform pruning, inserting, or modifying on unexecuted code.
+  - Feed these variants to target compiler. 
+  - Detect deviant behaviors in the compiler by differential testing or cross checking.
+  - Test case reduction with meta-process:
+      - Use Delta to repeatedly reduce the test case until a fixpoint.
+      - Run C-Reduce on the fixpoint output from Delta.
+      - Repeat until reaching a fixpoint.
+  - Filter out undefined behavior from deviant behaviors.
+  
+Use tool:
+  - Use GNU's 'gcov' tool to extract coverage information.
+  - Use LLVM’s LibTooling library to parse a C program into an AST.
+  - Prune a statement by removing all tokens including child statements in AST subtree.
+  - Use 'CompCert' for detecting and rejecting invalid code.
+  - Use 'gzip' to reduce GCC crashing bug triggered by an EMI variant.
+  - Use 'Delta & C-Reduce' for test case reduction.
+  - Use 'Clang' to filter out undefined behavior.
+
+Use algorithm:
+  - Traverse all the statements in the original program.
+  - Randomly prune the unexecuted 'dead' statements.
+  - Use 'FlipCoin' function to decide whether an unexecuted statement should be removed.
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors evaluated their tool in  3 widely-used C compilers: GCC, LLVM, and ICC.
+  - Stop evaluation for ICC due to lack of communication with developers.
+  - Continue for GCC and LLVM as those have transparent open bug repositories. 
+  - Also test a bit for CompCert.
+  
+Choose test suites: 
+  - GCC and LLVM regression test suites
+  - GNU build utilities
+  - CSmith generated codes
+
+Summary results:
+  - Found a total of 195 bugs and confirmed 147 unique bugs in GCC and LLVM in 11 months of testing: 110 of the bugs have already been resolved.
+  - Found a total of 95, 33 and 19 wrong code, crash and performance bug respectively but in several years of testing.
+  - Found a total of 25, 39 and 83 bugs in 32-bit, 64-bit and both environment respectively.
+  - Most of the bugs found in GCC are optimizer bugs and developers didn't classify bug for LLVM.
+  - Found bugs of diverse kinds (i.e. wrong code, segfault, crash, performance bug etc.).
+
+Whether the compiler defects triggered by randomly pruning unexecuted code matter in practice:
+  - most of our reported bugs have been confirmed and fixed by the developers.
+  - some of our reported bugs were later reported by others when compiling real-world programs.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Using gcov we can find code coverage information. Then we can generate variants by pruning the unexecuted 'dead' statement.
+The generated variants program can be used to stress-test compilers and detect deviant behaviors in compilers.

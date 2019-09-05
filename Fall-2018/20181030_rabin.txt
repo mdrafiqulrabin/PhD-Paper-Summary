@@ -1,0 +1,92 @@
+Title: Code Vectors: Understanding Programs Through Embedded Abstracted Symbolic Traces
+
+Authors: Jordan Henkel, Ben Liblit, Shuvendu K. Lahiri, Thomas Reps
+
+Published in: ESEC/FSE 2018
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+Using programs as data objects is an increasing interest in machine learning field.
+But those data are not in suitable representation because programs have different structure and charactreristics.
+So it is necessarly to process data objecte in order to apply in learning techniques.
+Authors proposed word-vector learner toolchain for learning word embeddings.
+They used abstracted traces from symbolic execution as a suitable representation for embeddings.
+
+They also showed that embedded semantic abstractions provide better accuracy than syntactic abstractions.
+The abstracted symbolic traces and learned vectors are good for predictive capabilities.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors proposed word-vector learner toolchain and evaluate some Research Questions.
+
+The proposed word-vector learner toolchain has been designed in following ways:
+  - Symbolic Trace: Extrac traces from the symbolic execution on the procedure in an intraprocedural manner.
+  - Abstracted Trace: Perform an abstraction operation on symbolic traces to reduce number of tokens by user-defined set of abstractions.
+  - Encoded Trace: Encode the abstracted traces as words and sentences, but jointly not fine grained.
+  - Word2Vec: Use GloVe to learn word vectors for which the dot-product of two vectors is close to the logarithm of their probability of co-occurrence.
+  
+The following are Research Questions for evaluation:
+  - RQ1: Are vectors learned from abstracted symbolic traces encoding useful information?
+  - RQ2: Which abstractions produce the best program encodings for word-vector learning?
+  - RQ3: Do abstracted symbolic traces at the semantic end of the spectrum provide more utility as the input to a word-vector-learning technique compared to ones at the syntactic end of the spectrum?
+  - RQ4: Can we use pre-trained word-vector embeddings on a downstream task?
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+RQ1: ARE LEARNED VECTORS USEFUL?
+  - Experiment 1: Code Analogies
+      - Check for analogies for different categories.
+      - Create test suites of 19,042 code analogies by manually and searching search as standard test suites not exist.
+      - Use the analogy solver of Levy and Goldberg when solving analogies with word-vectors.
+      - Result: 
+          - Eembeddings achieve greater than 90% top-1 accuracy on 13/20 categories.
+          - Accuracy suffers for interprocedural behaviors in some categories.
+  - Experiment 2: Simple Similarity
+      - Given a word, find the closest word.
+      - Given a word, find the five closest words.
+      - Result: 
+          - Find expected closest word(s).
+          - Accuracy suffers by prefix dominance.
+  - Experiment 3: Queries Via Word-Vector Averaging
+      - Restricted query to search only for words in the subspace of the embedding space that contains kernel erro codes.
+      - Check for the relation allocation failure and returning error.
+      - Average query for allocator vector with error/end token and check error as closest word.
+      - Result: 
+          - 10% accuracy when only query for allocator.
+          - 70% accuracy when avg query for allocator with error token.
+          - 80% accuracy when query for allocator with end token.
+          - 90% accuracy when query for allocator with error & end token.
+ 
+RQ2: ABLATION STUDY
+  - Evaluate total eight different configurations on single settings.
+  - Use the tset suite of 19,042 code analogies as benchmark.
+  - Set the vocabulary minimum to 0 for word-frequency-based filtering a fair comparison.
+  - Lowering the iterations change the top-1 accuracy from 93.9% to 85.8%.
+  - Dataflow-based abstractions(ParamTo/ParamShare) have better effect than state abstractions(RetEq/Error) on quality.
+  
+RQ3: SYNTACTIC VERSUS SEMANTIC
+  - Compare word-vector learner with AST/Token based approach.
+  - Use syntactic abstraction, configuration without symbolic execution [FunctionStart+FunctionEnd+AccessPathStore+Called].
+  - Achieve 44% accuracy for syntactic-based approach but top-1 accuracy is 93.9% with semantic consideration.
+  
+RQ4: USE IN DOWNSTREAM TASKS
+  - Select error-code misuse domain as downstream task.
+  - Training dataset for model:
+      - Gather a collection of failing traces.
+      - Remove ERR token from failing traces and use as label.
+      - Trimmed traces as ML technique accepts fixed-length inputs. 
+      - Attach one-hot encoding to this preprocess dataset. 
+  - Test dataset for model:
+      - Search for real bug-fixing commits applied to the Linux kernel.
+      - Kepp traces generated before fix and after fix.
+  - Model: Use a recurrent neural network with long short-term memory(LSTM).
+  - Evaluate test set for 1) Bug Finding and 2) Repair/Suggestion
+  - Result:
+      - Identify an incorrect error code in 57/68 tests.
+      - The top-3 accuracy is 76.5% for learned model.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Leverage the word vector embedding concept into test case clustering/generation (but not clear about how).

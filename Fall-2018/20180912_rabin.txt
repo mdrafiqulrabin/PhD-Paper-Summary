@@ -1,0 +1,88 @@
+Update: https://github.com/alipourm/rabin-reports/blob/master/rabin_paperform_09182018.txt
+
+-------------x-------------x-------------x-------------
+
+Title: Taming Compiler Fuzzers
+
+Authors: Yang Chen, Alex Groce, Xiaoli Fern, Chaoqiang Zhang, Weng-Keen Wong, Eric Eide, John Regehr
+
+Published in: 34th ACM SIGPLAN conference on Programming language design and implementation - PLDI '13
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+The main take away from this paper is to formulate and address the fuzzer taming problem. Authors aim to order a potentially
+large number of random test cases that trigger failures so that diverse and interesting test cases are highly ranked, also place those interesting bugs first in the list, and place bugs previously flagged as undesirable late in the list.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Fuzzer may result in many error inducing test cases those produce redundant bugs. Even a case study by authors in this paper shows that some of the bugs were triggered thousands of times more frequently than others. It is time consuming and takes lot of effort from engineers to figure it out. And before any release, development team wants to fix critical bugs with having lots of known low-priority bug unfixed. So diverse and interesting test cases should be highly ranked.
+
+•	What are the previous solutions and why are they inadequate?
+
+- jsfunfuzz detects more than 1,700 previously unknown bugs in SpiderMonkey, the JavaScript engine used in Firefox. 
+- LangFuzz discover more than 500 previously unknown bugs in the same SpiderMonkey JavaScript engine. 
+- Google’s proprietary ClusterFuzz identify 95 unique vulnerabilities in Chrome V8 JavaScript engine.
+- Csmith found more than 450 previously unknown bugs for C compilers.
+
+Taming a fuzzer differs from previous efforts in duplicate bug detection, ranking bugs as opposed to clustering, diverse inputs as opposed to just predicates or coverage information, and in its overall goal of taming a fuzzer.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+Workflow for a fuzzer tamer:
+
+- define a distance function between test cases
+- map any pair of test cases to a real number that serves as a measure of similarity
+- sort the list of test cases in furthest point first (FPF) order
+
+Then, te resulting list, an approximate solution to the fuzzer taming, has been applied to C compiler and JavaScript engine.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+During the experiment to solve fuzzer taming problem:
+
+- 3799 test cases triggering 46 bugs in a C compiler.
+- 2603 test cases triggering 28 bugs in a JavaScript engine.
+
+In comparison to a developer who examines cases in a random order, the developer who inspects in ranked order will be 4.6× faster.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+- If developers examine the ranked tests instead of randomly chosen tests, they will see more distinct bugs in less time.
+- Levenshtein distance on the test-case text plus compiler output worked so well than their separate effects.
+- FRF is less expensive, less complex than clustering and also clustering missed more bugs.
+- Reduced test cases triggered different bugs while unreduced test cases triggered many redundant bugs.
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+Yes. Its good. Ignoring known bugs and put rank on test cases will save engineers time that will help them to focus on important area instead of doing time-consuming redundant test case filtering task.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+- TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- frame the fuzzer taming problem (has not yet been addressed by the research community)
+- observe that automatic triaging of test cases is strongly synergistic (combined effect) with automated test-case reduction.
+- show that furthest point first (FPF) is both faster and more effective than clustering to find the same type of test cases that are more likely to trigger similar bugs
+- effectively solve the fuzzer taming problem for JavaScript engine and C compiler.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- TBD
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+- jsfunfuzz, LangFuzz, ClusterFuzz. (I will read those paper also)
+- turning off features in the test-case generator
+- grep tool to filter out test cases triggering bugs
+- tokens in output from Valgrind
+- "several industrial compiler developers who stopped using Csmith not because it stopped finding bugs, but because sift through the new failure inducing test cases, creating a bug report became - time consuming and unrewarding - uneconomical." (really ?)

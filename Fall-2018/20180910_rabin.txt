@@ -1,0 +1,106 @@
+Update: https://github.com/alipourm/rabin-reports/blob/master/rabin_paperform_09142018.txt
+
+-------------x-------------x-------------x-------------
+
+Title: Fuzzing with Code Fragments
+
+Authors: Christian Holler, Kim Herzig, Andreas Zeller
+
+Published in: 21st USENIX Security Symposium, 2012
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Authors introduce a language independence framework called LangFuzz in this paper, that allows black-box fuzz testing of engines based on a context-free grammar. 
+It is not bound against a specific test target in the sense that it takes the grammar as input and generates programs.
+Authors compare LangFuzz against jsfunfuzz on JavaScript and PHP. And baed on the evaluation, LangFuzz detects several issues which jsfunfuzz misses.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Fuzzing web browsers and their components is a promising field. Jsfunfuzz is a black-box fuzzing tool for the JavaScript engine that had a large impact when written in 2007. 
+Jsfunfuzz not only searches for crashes but can also detect certain correctness errors by differential testing. Since the tool was released, it has found over 1,000 defects in the Mozilla JavaScript Engine and was quickly adopted by browser developers. 
+jsfunfuzz was the first JavaScript fuzzer that was publicly available (it has since been withdrawn) and thus inspired LangFuzz.
+
+•	What are the previous solutions and why are they inadequate?
+
+- jsfunfuzz (work by Ruderman) is the most popular black-box fuzzing tools for JavaScript but it is hardcoded to target a specific interpreter with specific knowledge.
+- CSmith (work by Yang et al.) is a language specific fuzzer operating on the C programming language grammar for testing compilers but it targets correctness bugs instead of security bugs.
+- crossfuzz tool (work by Zalewski) target different functionality in many popular browsers and have found severe vulnerabilities.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+The workflow of LangFuzz:
+- Phase I: Parse code fragments from sample code and test suite using the language grammar.
+- Phase II: Generate (mutated) test cases by incorporating those code fragments.
+- Phase III: Feed test case into interpreter and check for crashes and assertions.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+During the experiment with LangFuzz:
+- Detect a total of 105 new severe vulnerabilities when tested on the Mozilla JavaScript interpreter.
+- Found 18 new defects causing crashes when applied on PHP interpreter.
+So, LangFuzz is an effective tool for security testing.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+External comparison - LangFuzz vs. jsfunfuzz:
+Q1. To what extend do defects detected by LangFuzz and jsfunfuzz overlap?
+Main Takeaway: LangFuzz and jsfunfuzz detect different defects (overlap of 15%) and thus should be used complementary to each other.
+Q2. How does LangFuzz’s detection rate compare to jsfunfuzz?
+Main Takeaway: A generic grammar-based fuzzer like LangFuzz can be 53% as effective as a language-specific fuzzer like jsfunfuzz.
+
+Internal comparison - Generation vs. Mutation:
+Q3 + Q4. How important is it that LangFuzz generates new code? How important is it that LangFuzz uses learned code when replacing code fragments?
+Main Takeaway: The combination ofcode mutation and code generation detects defects not detected by either internal approach alone. Combining both approaches makes LangFuzz successful.
+
+Field test: Applying LangFuzz to: Mozilla TraceMonkey (JavaScript), Google V8 (JavaScript), and the PHP engine:
+Q. Can LangFuzz detect real undetected defects?
+Main Takeaway: LangFuzz detected 164 real world defects in popular JavaScript engines within four months, including 31 security related defects. On PHP, LangFuzz detected 20 defects within 14 days.
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+- Web browser interpreters like JavaScript and PHP are practically prone to security issues. So its a good target.
+- LangFuzz generated inputs are semantically correct and can be used to test other respective interpreters.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- LangFuzz is a pure black-box approach so code coverage indication has ignored.
+- Authors use reasonable values as parameters but cannot guarantee that these values deliver the best performance.
+- Running LangFuzz and jsfunfuzz on different targets or testing windows might change comparison results.
+- Setups with less test cases or biased test suites might decrease LangFuzz’s performance.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- LangFuzz language independence in the sense that it takes the grammar as input and generates programs.
+- Authors compare LangFuzz against jsfunfuzz on JavaScript and PHP.
+- Provide study case of Generation vs Mutation.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Improve approach by overcoing the mentioned Threats to Validity.
+- Leverage with-box testing to consider code coverage.
+- Apply in other interpreters for different languages.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+- uses a persistent shell for running test
+- use the delta debugging algorithm and the delta tool to filter out irrelevant test cases
+- Figure 6: violate an internal assertion that produced by code generation
+- etc

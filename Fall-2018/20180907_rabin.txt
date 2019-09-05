@@ -1,0 +1,92 @@
+Title: Learn&Fuzz: Machine Learning for Input Fuzzing
+
+Authors: Patrice Godefroid, Hila Peleg, and Rishabh Singh
+
+Published in: 32nd IEEE/ACM International Conference on Automated Software Engineering, ASE 2017
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+This paper shows how to automate the generation of an input grammar suitable for input fuzzing using sample inputs and neural-network-based statistical machinelearning techniques. 
+Authors present complex input format such as PDF and a large complex security-critical parser for this format such as Microsoft’s new Edge browser.
+The goal is to leverage a neural-network-based learning techniques to learn a grammar automatically for non-binary complex data objects like PDF.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Blackbox and whitebox fuzzing are fully automatic but grammer-based fuzzing is not fully automatic as it requires an input grammar typically written by programmers to specify the input format of the application.
+Grammer-based fuzzing is most effective fuzzing but hand-made input grammer is time consuming and error prone.
+Thats why authors consider the problem of automatically generating input grammars for grammar-based fuzzing.
+
+•	What are the previous solutions and why are they inadequate?
+
+Previously traditional automata and context-free-grammar learning algorithms were used but those are not well suited for complex formats such as PDF objects.
+Moreover, this paper first presents the neural-network-based learning techniques, unlike prior work, this technique is fully automatic and does not require any format-specific customization.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+- Extracted about 63,000 non-binary PDF objects out of a diverse set of 534 PDF files (provided by the Windows fuzzing team).
+- Trained sequence-to-sequence (seq2seq) network model in an unsupervised manner with those PDF objects to learn a generative model to generate new PDF objects.
+- Learn, generate and fuzz PDF objects to the Edge PDF parser for testing and evaluate result.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+During the experiment with Sample+Random, 100,000 objects and 300,000 PDF files (which took nearly 5 days), a stack-overflow bug was found in the Edge PDF parser.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+- Randomly select 1000 objects and measure their coverage of Edge PDF parser. Then choose 3 small PDF host and measure the coverage individually and combinedly.
+Main Takeaway: Even though coverage varies across hosts because objects may interact differently with each host, the re-combined PDF file is always per- ceived as well-formed by the Edge PDF parser.
+
+- Train the RNN for 10, 20, 30, 40, and 50 epochs, respectively. And generate 1,000 unique PDF objects after training and compare with the 63,000 trained objects.
+Main Takeaway: Found no exact matches, so the input generation is perfect !
+
+- Sample the distribution at every character position (Sample mode) and sample the distribution only after whitespaces (SampleSpace mode). And generate the top predicted character for other positions and compair.
+Main Takeaway: SampleSpace has a better pass rate than Sample, but Sample has a better overall coverage than SampleSpace.
+
+- Sample and SampleSpace is applied from 10 to 50 epochs for 3 small pdf host (individually and combinedly) and basline, and compare the coverage.
+Main Takeaway: The best overall coverage is obtained with Sample 40-epochs and is almost a superset of all other coverage sets.
+
+- Blackbox random fuzzing algorithm is used with 40-epochs Sample-40e, SampleSpace-40e, and baseline. Then recombined with 3 host files, to obtain three sets of 30,000 new PDF files. And compare the coverage.
+Main Takeaway: All the learning-based algorithms considered here are com- petitive compared to baseline+Random, and three of those beat that baseline coverage.
+
+5. What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+• What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+- This is very good to become first to adapt neural-network-based learning techniques to learn a grammar because it will assist others to think more in this area.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- PDF format specification contains 1300 pages, so their should be numerous rules that will make the grammer generation process complex.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Adapt neural-network-based fuzzing that is well suited for complex formats such as PDF objects.
+- Discuss and measure the tension (the learn&fuzz problem) between the conflicting learning and fuzzing goal.
+- Introduce a new algorithm (the learn&fuzz algorithm) to intelligently guide where to fuzz inputs by using a learnt input probability distribution.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Consider binary object like image as well and execute the test.
+- Use reinforcement learning to guide the learning of seq2seq models with coverage feedback to guide the learning more explicitly towards increasing coverage.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+- Why grammer-based fuzzing is most effective fuzzing?
+
+•	What do you find difficult to understand? List as many as you can.
+
+- softmax that computes the output probability distribution
+- analysis of result and conclude the decision
+- etc

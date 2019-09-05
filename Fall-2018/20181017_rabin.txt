@@ -1,0 +1,63 @@
+Title: Swarm Testing
+
+Authors: Alex Groce, Chaoqiang Zhang, Eric Eide, Yang Chen, John Regehr
+
+Published in: International Symposium on Software Testing and Analysis (ISSTA) 2012
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+Many generated test cases have low code coverage and so many bugs are undetected in the uncovered area.
+Also, some features don't allow systems to trigger vulnerabilities (i.e. pop() may prevent Stack to encounter a bug in overflow).
+So, authors introduce swarm testing to address this limitation.
+
+Swarm testing is feature omission diversity approach to increases the diversity of generated test cases.
+The aim is to generate a different kind of diverse test cases that will explore the different part of program state space and will trigger interesting bugs.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Assume:
+C  -> test configuration set of features {f1 . . . fn}.
+CD -> includes all features.
+Ci -> omitting some features.
+
+Testing with a fixed swarm set:
+- Use a randomly generated large fixed-size features set C.
+- Generate a new feature set Ci by 'toss a fair coin' to determine feature presence or absence in C.
+- Running test with Ci.
+
+Testing without a fixed swarm set:
+- Genearte a Ci randomly until a timeout.
+- Running test with Ci.
+
+Example:
+Let a file system crashes for 64 calls to open() but no close() call.
+Then test with CD (all features that include both open() and close()) will not trigger a bug
+but test with Ci (many set omits open() but keeps close()) will trigger a bug.
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors evaluated swarm testing using three case studies.
+
+Case Study - 01: YAFFS Flash File System YAFFS2: [72 hours]
+Swarm killed every mutant killed by CD and 3 mutants that CD did not. 
+CD killed each mutant on average 1,173 times whereas Swarm only killed an average of 725 times.
+
+Case Study - 02: C Compilers Csmith: [1 week]
+Csmith configuration (enables all features) found only 73 compiler crashes in the test suite 
+whereas swarm testing (feature omission diversity) found 104 ways to crash.
+
+Miniature Case Study - 03: Sglib RBTree Our
+Test-case execution time varied only trivially with C and perform 20,000 tests for each experiment.
+Swarm outperformed CD for every kind of coverage.
+
+And, on the 32-element stack:
+Average 370,000 test cases will trigger a bug in overflow-detection logic if select push and pop with equal probability.
+On the other hand, swarm testing triggers this bug in about 1 of every 16 cases.
+
+Main takeaway: Diverse configuration outperformed default configuration by a respectable margin.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Swarm Testing idea can help us to generate feature diverse test cases for fuzzing.

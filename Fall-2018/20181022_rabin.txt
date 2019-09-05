@@ -1,0 +1,70 @@
+Title: Finding Deep Compiler Bugs via Guided Stochastic Program Mutation
+
+Authors: Vu Le, Chengnian Sun, Zhendong Su
+
+Published in: 2015 ACM SIGPLAN International Conference on Object-Oriented Programming, Systems, Languages, and Applications.
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+Equivalence Modulo Inputs (EMI) is a recent promising field for compiler validation. 
+Orion is a simple realization of EMI by only randomly deleting unexecuted statements.
+But the limitation of Orion tool are:
+    - blind mutation strategy as it randomly prune unexecuted statements
+    - limited number of variants when unexecuted statements are low
+    - limited control and data flow diversity when low unexecuted statements
+So, authors introduce a guided mutation approach using MCMC sample to generate diverse EMI variants.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors implemented 'Athena' tool to discover bugs in C compilers.
+
+    - Extract statement candidates from existing code:
+        - Traverse the AST of the program.
+        - Extract all the statements at all levels with the required context.
+        - Construct the database with <context, statement> pairs of all available statements.
+    - Generating New Variant:
+        - Perform a breadth-first traversal on the AST of the program.
+        - Support code insertion into unexecuted regions besides code deletion according to proposal distribution probability.
+        - Select insertion candidate from the database statements whose required contexts satisfied by the local context.
+        - Delete the statement or insert a new statement for each unexecuted statement based on probability.
+        - Maintain ergodicity by extracting statements from the seed and adding them to the statement database.
+        - Create unlimited number of variants having different control and data flow.
+        - Transform any EMI variant of a program to any other EMI variant of that program.
+    - Guide the generation process using MCMC to uncover deep bugs:
+        - Formulate optimization problem: maximize the difference between a variant and the seed program.
+        - Use Markov Chain Monte Carlo (MCMC) techniques to sample the program space for diverse variants.
+        - Generate variants with different control and data flow.
+
+Library for Athena:
+    - Implement 'stmt-extractor' to extract all the statements using LLVM’s Libtooling library.
+    - Implement 'transformer' to transform variants using LLVM Libtooling library.
+    - Use  existing random program generator such as Csmith.
+    - Use existing reduction tools such as Berkeley’s Delta and C-Reduce.
+    - Use program from SPEC CINT2006 benchmarks for candidate statements.
+    
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors evaluated Athena on two open source compilers GCC and LLVM for 19 months:
+
+    - Athena reported 83 bugs; 44 bugs for GCC and 39 bugs for LLVM.
+        - Authors found 72 new bugs in GCC and LLVM. 
+        - Developers confirmed all 72 bugs and fixed 68 bugs.
+        - GCC developers marked 17 out of 40 GCC bugs as P1 (release blocking bug).
+    - 28, 39 and 5 bugs are Miscompilation, Crash and Performance bugs respectively among 72 confirmed bugs.
+    - Athena detected many deep bugs besides shallow bugs that requires sophisticated mutation sequences.
+    - Athena found 15 long latent bugs in old versions of the two compilers.
+
+Orion vs Athena:
+    - Athena is more powerful than Orion in terms of bug detection.
+    - Athena variants yields better coverage than Orion variants.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Guided mutation approach instead of blind mutation strategy will help to generate more diverse EMI variants.
+
+-------------x-------------x-------------x-------------
+
+Unknown topics:
+    - Markov Chain Monte Carlo (MCMC): MCMC Sampling, MCMC Bug Finding

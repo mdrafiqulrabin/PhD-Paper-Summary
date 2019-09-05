@@ -1,0 +1,109 @@
+Title: Guide Fuzzing with Multi-Factor Potential Analysis
+
+Authors: Luhang Xu, Liangze Yin, Wei Dong, Qiuxi Zhong
+
+Published in: 2018 IEEE International Conference on Software Quality, Reliability and Security Companion
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Authors propose Multi-Factor Potential Analysis (MPA), a new search strategy that enables fuzzing to traverse more paths based on symbolic execution. 
+The goal is to make fuzzing be able to achieve higher path coverage and generate more interested inputs which have higher possibility of triggering program crashes in a limited times.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+The traditional way of mining binary vulnerabilities is to manually analyze machine codes or fulfill black-box testing.
+But manual work is inefficient for most of the time because machine codes are huge and complicated. 
+And black-box testing is blind and generate lots of invalid test input because the test cases are randomly generated.
+
+•	What are the previous solutions and why are they inadequate?
+
+The state-of-the-art fuzzers combine many popular technologies to overcome the shortcomings of fuzzing but it leaves a lot to be desired.
+Symbolic execution can help fuzzer to generate effective input, but it brings heavy loads. 
+Other technologies are difficult to support fuzzing to accurately generate inputs that satisfy constraints.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+Tinker, as a symbolic-based fuzzing, combines dynamic execution with symbolic execution to generate valid input efficiently.
+Tinker mainly includes two primary procedures, Fuzzing and Symbolic Analysis Based Intervention. It uses Growth Rate of Path Coverage (GRPC) to evaluate when to call the intervention process. 
+According to GRPC, when fuzzing is in the low-speed state, symbolic-based analysis will select an input from fuzzing as the basis, and then find an unexplored branch to generate a new input to stimulate the fuzzing to the high-speed state.
+But selecting an unexplored path directly or randomly to traverse may only increase the path coverage very little but take a long time.
+If the unexplored branch is at the end part of the target program, the generated test case will not be helpful to the heuristic mutation of fuzzing.
+It may lead Fuzzing into the low-speed state for a long time, hence results fuzzing fail to find the vulnerabilities of the program within a limited time.
+MPA to help fuzzer resolve the impact of this problem...
+MPA sets a weight for each unexplored branch. The weight will determine the traversal order. The branch with the highest weight will be traversed first. 
+Through this search strategy, symbolic execution can generate more interested input to guide fuzzing to explore more paths which contain high-risk functions within a limited time.
+
+MPA contains two main steps: (a) Path Exploration and (b) Potential Analysis. 
+(a) In path exploration, they find three factors which are high−risk function, local path coverage and the path location.
+(b) Potential analysis synthesizes these three factors to calculate weights that represent the potential of each unexplored path. 
+
+This weights guide auxiliary analysis to make a better selection.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+MPA improves the search strategy of Tinker, so that Tinker-MPA can traverse more paths in a limited time. 
+Moreover, MPA can speed up the mining of vulnerabilities.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+Tinker-MPA is implemented based on open source tools AFL, Angr, dyninst and Z3. 
+Experiments on DARPA CGC benchmark show that Tinker-MPA traverses more path in a limited time duration than the other state-of-the-art fuzzing tools such as AFL and Tinker. 
+Moreover, Because MPA takes the risk of the path into consideration, Tinker-MPA can find the vulnerabilities faster.
+
+Through the experiments, authors want to answer following two questions:
+
+RQ1: Can MPA improve the performance of the symbolic-based fuzzing?
+
+To verify the effectiveness of approach, they perform a comparison experiment: they run AFL, Tinker, and Tinker-MPA on 60 programs of CB-multios with two hours as a time duration limit. 
+In the experiment, Tinker found 6 more programs that contain vulnerabilities than AFL because of using auxiliary analysis. And 8 more programs that have vulnerabilities were found by Tinker-MPA.
+So, Tinker-MPA has a better performance than AFL and Tinker.
+
+RQ2: Can MPA speed up the mining of vulnerabilities?
+
+To verify that MPA enables Fuzzing to find vulnerabilities faster, they run AFL, Tinker, and Tinker-MPA on CGC “Hang game” and check result every 15 minutes. 
+In the experiment, Tinker found crash about 30 minutes earlier than AFL. And Tinker-MPA found crash about 30 minutes earlier than Tinker. 
+So, Tinker-MPA can help fuzzing locate the path that may trigger crashes faster than AFL and Tinker.
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+•	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+- Traverse unexplored path based on weighted order speed up the mining of vulnerabilities.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+- Ignoring low weight branch can miss important test inputs if the software vulnerability is in low weight branch.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Propose a new search strategy, Multi-Factor Potential Analysis(MPA), based on symbolic execution. The candidate branch’s weight is generated according to three factors, which are high-risk function, local path coverage and path location.
+- Build a binary analysis tool named Tinker-MPA which is developed from Tinker. Tinker-MPA can analyze x86/x64 binaries on Linux.
+- Evaluate Tinker-MPA on DARPA CGC benchmark. The experiment results show that, compared with AFl and Tinker, Tinker-MPA is usually more efficient for unexplored path exploration.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Study other factors that have effects on path selection.
+- Test the method on larger programs.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+- Candidate branch’s weight generation
+- AFl and Tinker, DARPA CGC benchmark
+- coarse-grained selection method
+- Angr, Dyninst, Z3

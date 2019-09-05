@@ -1,0 +1,82 @@
+
+Title: Finding Compiler Bugs via Live Code Mutation
+
+Authors: Chengnian Sun, Vu Le, Zhendong Su
+
+Published in: Oopsla 2016
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+Equivalence Modulo Inputs (EMI) is a recent promising field for compiler validation. 
+Orion and Athena is the simple realization of EMI by randomly deleting unexecuted statements and guided deleting/inserting in unexecuted area, respectively.
+
+But those approaches have some limitations:
+    - The variants generation limited by the size of dead code
+    - Compiler someties remove the dead code so its poinless in that case
+    - Miscompilation bug is not obserable as dead code region is not executable
+
+The goal of this paper is improve the mutation strategies of the pervious EMI variants techniques.
+In this regards, authors applied mutation not only on dead code but also on live code to improve the mutation strategy.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+Authors implemented 'Hermes' tool to mutate on live code but with preserving the original semantics.
+It works with the following two steps:
+    - Profiling Stage:
+        - Profile the execution of the seed program.
+        - Determine the possible values of scope variables at all execution points.
+    - Mutation Stage:
+        - Synthesizes a statement that does not have any side effect to the program.
+        - Inserts the statement into the program.
+
+Insert 3 types of code snippets into the live code regions:
+        - Always False Conditional Block (FCB)
+        - Always True Guard (TG)
+        - Always True Conditional Block (TCB)
+
+Algorithm:
+    - Compute the output of a target program on a specific input
+    - Create a EMI variant from this input:
+        - Choose candidate statement by FlipCoin or profiling probability
+        - Randomly selects FCB, TG or TCB
+        - Insert before choosen statement
+    - Compute the output of the generated variant on same input
+    - Report bug if output mismatch otherwise continue until max iteration
+
+Library for Athena:
+    - Use Clang’s LibTooling library for profile execution.
+    - Use Csmith as the seed program generator.
+    - Use Berkeley’s Delta and C-Reduce as reduction tools.
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors evaluated Hermes on two open source compilers GCC and LLVM for 13 months:
+    - Hermes reported 217 bugs; 124 bugs for GCC and 93 bugs for LLVM.
+        - Developers confirmed 168 valid bugs and fixed 132 bugs.
+        - 48 bugs are duplicate bugs and 1 bug is invalid for undefined behavior.
+        - 49 bugs are very new and yet to be confirmed.
+    - 76, 90 and 2 bugs are Miscompilation, Crash and Performance bugs respectively among 168 confirmed bugs.
+    - Athena detected many deep bugs besides shallow bugs that requires sophisticated mutation sequences.
+    - Hermes found 29 long latent bugs in old versions of the two compilers.
+
+Hermes vs Athena:
+    - The number of generated variants per seed is high.
+    - The time cost of Hermes to derive an EMI variant is low.
+    - Hermes is more effective at finding bugs than that of Athena.
+    - Hermes variants yields better coverage than Athena variants.
+    
+FCB vs TG vs TCB:
+    - FCB : 21 bugs, TG: 6 bugs, TCB: 12 bugs
+    - FCB+TCB: 2 bugs, TG+TCB: 1 bug, FCB+TG: 0 bug
+    - FCB + TG + TCB: 4 bugs
+
+[4] How was it related to your research? (10 to 20 words)
+
+Randomly inserting a code snippet into a live code region will create diverse variants that will help to stress the compiler.
+
+-------------x-------------x-------------x-------------
+
+Unknown topics:
+    - (4.3) Predicate, Expression and TCB Synthesis

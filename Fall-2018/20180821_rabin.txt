@@ -1,0 +1,94 @@
+Engineering Research Paper Question–Answer Form
+
+Name: RABIN
+
+-------------x-------------x-------------x-------------
+
+Title: Are Code Examples on an Online Q&A Forum Reliable? A Study of API Misuse on Stack Overflow
+
+Authors: T Zhang, G Upadhyaya, A Reinhardt, H Rajan, M Kim.
+
+Published in: ICSE 2018	
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+To evaluate the reliability of code examples on Stack Overflow by checking them against desirable API usage patterns mined from GitHub.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? 
+
+Programmers often use online Q&A forum such as Stack Overflow to learn new APIs. But many snippets in Stack Overflow are insecure which raises a big security concern.
+
+•	Why doesn’t the people problem have a trivial solution? 
+
+People in general choose solution which solve their purpose but don't think deeply about the effeciency of the solution with alternatives.
+
+•	What are the previous solutions and why are they inadequate?
+
+Previous solutions mainly focused on compile ability, ambiguous and deprecated API, unchecked obsolete usage, comprehension issues, security related issues, etc. But those didn’t cover the reliability of code examples. 
+
+Regarding API mining, compare to others, ExampleCheck mines not only API call ordering but also guard conditions using predicate mining.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)?
+
+Authors design ExampleCheck framework that extracts API patterns from GitHub and reports potential API misuses in Stack Overflow posts.
+
+•	Why is it believed it will work?
+
+Novice programmer may not easily recognize the potential limitation of given Stack Overflow examples. In this case, ExampleCheck scans GitHub repositories and finds relevant snippets that indicates what must be contained in the example.
+
+•	How does it represent an improvement? 
+
+TBD
+
+•	How is the solution achieved?
+
+-	Searches over high quality GitHub repositories and retrieves code snippets for a given API by using an ultra-large-scale mining software. 
+-	Performs program slicing to remove statements that are not related to the given API, which improves accuracy in the mining process. 
+-	Retains important API usage features by combining frequent subsequence mining and SMT-based guard condition mining techniques.
+-	In terms of study scope, authors target 100 Java and Android APIs that are frequently discussed on SO and then inspect all patterns learned by ExampleCheck (create a data set of 180 desirable API usage patterns for the 100 APIs, and study the extent of API misuse in SO).
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+TBD
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+•	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? 
+
+It seems good to me on following perspectives:
+-	Authors target high quality GitHub repositories to retrieve code snippets of a given API, so those snippets are likely to be more standard.
+-	Authors examine the guard conditions and blocks, ignore irrelevant statements from snippets and maintain the ordered path of API call which enriching the code snippets.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+Some APIs support alternative usage.  But ExampleCheck consider the high frequency approach from GitHub and ignore the low frequency approach which increase the FALSE POSITIVE. 
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+TBD
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+-	To improve the accuracy (current precision is 72%).
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+- ultra-large-scale mining software
+- frequent subsequence mining and SMT-based guard condition mining techniques
+

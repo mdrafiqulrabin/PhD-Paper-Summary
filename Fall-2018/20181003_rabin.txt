@@ -1,0 +1,49 @@
+Title: T-Fuzz: fuzzing by program transformation
+
+Authors: Hui Peng, Yan Shoshitaishvili, Mathias Payer
+
+Published in: S&P 2018
+
+-------------x-------------x-------------x-------------
+
+[1] What is the main problem that paper attempts to solve? (80 to 100 words)
+
+The fuzzer struggles with code coverage and fails to trigger vulnerabilities if program contains complex sanity check.
+Because the complex sanity check prevents fuzzer to execute some portion of the code that may contain buggy behavior. 
+The existing state-of-art approaches used heavyweight program analysis techniques (i.e. symbolic execution or taint analysis) to bypass the sanity check.
+But it is time-consuming and also gets stuck to find input for complex sanity check (i.e. checksum).
+So authors introduce the Transformational Fuzzing (T-Fuzz) to address this issue.
+
+[2] What is the proposed solution? (80 to 100 words)
+
+The proposed solution is to disable the input checks instead of bypassing it. 
+T-Fuzz produces transformed program after disabling input check that increases the executable area of code.
+As a result, the more vulnerabilities are likely to be triggered.
+The overall workflow of T-Fuzz:
+- T-Fuzz uses an existing coverage guided fuzzers (i.e. AFL) to generate test inputs.
+- T-Fuzz keeps track and checks real time information to get the 'stuck' status of AFL.
+- When the AFL stucks to generate new coverage input, the T-Fuzz invokes Program Transformer to generate transformed inputs.
+- The Program Transformer traces the program and finds the sanity check, then generates multiple transformed programs by disabling those sanity checks.
+- The generated transformed inputs are then placed in a queue to feed the fuzzers to check vulnerabilities.
+- The triggered vulnerabilities by transformed programs may contain some false positive bugs.
+- T-Fuzz uses a Crash Analyzer (a symbolic-execution based analysis technique) to filter out the false positive bugs.
+- This flow continues until a threshold coverage point or timeout.
+
+[3] How they evaluated the technique? (50 to 80 words)
+
+Authors implemented the T-Fuzz based on a set of open source tools: Fuzzer (AFL), Program Transformer (angr tracer & radare2) and Crash Analyze (angr).
+Then they performed the T-Fuzz on three different dataset: DARPA CGC dataset, LAVA-M dataset, and 4-real-worlds programs (pngfix, tiffinfo, magick, and pdftohtml).
+Then they compared T-Fuzz against a set of state-art-fuzzers: AFL, Driller, FUZZER, SES, VUzzer, Steelix, 
+
+DARPA CGC dataset (24 hours): T-Fuzz found bugs in 166 binaries whether Driller found in 121 binaries and AFL found in 105 binaries.
+LAVA-M Dataset (5 hours): T-Fuzz compare to Steelix found more bugs in md5sum, less bugs in who and almost same bugs in base64,uniq. Steelix and Vuzzer performed well for NCC sanity check whether T-Fuzz outperformed others in NC sanity check.
+4-real-worlds programs: TFL found 3 new bugs (2 in magick and 1 in pdftohtml) that others failed to trigger. AFL got stuck and did not trigger any crashes in pngfix-magick-pdftohtml and only found half crashes that T-Fuzz found in tiffinfo.
+
+False Positive:
+Crash Analyzer detected crash in 3 binaries as false alerts in DARPA CGC dataset, and showed an average false negative rate of 15% in LAVA-M dataset.
+
+In summary, T-Fuzz shows significantly better performance for complex sanity checks in the target program.
+
+[4] How was it related to your research? (10 to 20 words)
+
+Disabling sanity check of the test cases will uncover the more executable code that will increase the code coverage and may find more bug in a deeply hidden path.

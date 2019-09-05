@@ -1,0 +1,107 @@
+Title: NEUZZ: Efficient Fuzzing with Neural Program Learning
+
+Authors: Dongdong She, Junfeng Yang, Kexin Pei, Baishakhi Ray, Dave Epstein, Suman Jana
+
+Published in: arXiv:1807.05620v1 [cs.CR] 15 Jul 2018
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+Authors presented NEUZZ, an efficient learning-enabled fuzzer that uses a differentiable surrogate neural program to closely approximate a target program. 
+The goal is to select a sequence of mutations that maximize the achieved code coverage for a given target program and find more software vulnerabilities. 
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? 
+
+Most popular fuzzers use coverage guided evolutionary algorithms to generate new inputs and maximize their chances of finding new security vulnerabilities. 
+These fuzzers start from a set of seed inputs, apply random mutations to the seeds to generate new test inputs, execute the target program for these test inputs,
+and only keep the “promising” new inputs for further mutation so that those can achieve new code coverage.
+But evolutionary fuzzers often tend to get stuck in long sequences of futile mutations without reaching any new code.
+Moreover, customizing mutation strategies for different programs manually is a challenging task, as the mutation operators and strategies are more black magic than science.
+The key observation is that coverage guided fuzzing can be expressed as an optimization problem whose goal is to select a sequence of mutations that maximize the achieved code coverage for a given target program.
+
+•	What are the previous solutions and why are they inadequate?
+
+Coverage guided evolutionary fuzzers often get stuck at fruitless sequences of random mutations. 
+Systematic techniques like symbolic and concolic execution incur significant performance overhead and struggle to scale to larger programs.
+The performance overhead of utilizing more heavyweight context-aware instrumentation or program analysis techniques like taint tracking, symbolic execution, etc is prohibitive for large real-world programs.
+Unfortunately, none of these techniques result in any significant increase in the number of detected bugs or achieved code coverage compared to state-of-the-art evolutionary fuzzers.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)? How is the solution achieved?
+
+Authors design, implement, and evaluate NEUZZ, an efficient fuzzer that guides the fuzzing input generation process using deep neural networks. 
+NEUZZ efficiently learns a differentiable neural approximation of the target program logic. The differentiability of the surrogate neural program allows 
+to use efficient optimization techniques like gradient descent to identify promising mutations that are more likely to trigger hard-to-reach code in the target program.
+
+NEUZZ has two main steps: 
+
+(i) Training NN to approximate neural program network such that it can:
+
+-- predicts a target program’s behavior by learning a latent representation of the target program’s logic.
+-- predict the control flow edges taken by the target program for a given raw input. 
+-- maximize edge coverage using gradient descent by computing the gradient of different uncovered edges.
+
+(ii) Optimize mutation with gradient descent and produce mutate:
+
+-- feed the seed input to the NN 
+-- compute the gradient of the output neuron
+-- mutate the bytes at locations based on gradient value in each input neuron
+
+Then authors evaluate the effectiveness of NEUZZ compared to AFL regarding code coverage, crashes and new bugs found on a variety of real-world programs and also compare NEUZZ (CNN-based fuzzing) with an existing RNN-based.
+
+•	Why is it believed it will work? How does it represent an improvement? 
+
+NEUZZ significantly outperformed the state-of-the-art fuzzer AFL both in edge coverage and numbers of detected bugs.
+It can achieve on average 70× more edge coverage than AFL given a fixed amount of time budget. 
+It finds 36 new bugs in the tested program that AFL fails to find. 
+It also outperforms other neural-network-based fuzzers relying on RNNs by achieving 9× more edge coverage while taking 16× less training time.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+Authors evaluate NEUZZ on 10 popular real-world programs and through the experiments, authors want to answer following two questions:
+
+RQ1. Can NEUZZ explore more code than AFL?
+Result 1: Neuzz can achieve significantly higher edge coverage (70 times, on average) than AFL. Even with increased time budget, AFL is unable to match Neuzz.
+
+RQ2. Does NEUZZ find more crashes and bugs than AFL?
+Result 2: Neuzz found 36 previously unknown bugs in 6 different programs that AFL could not find.
+
+RQ3. How does NEUZZ compare against am RNN-based fuzzer?
+Result 3: Neuzz, a CNN-based fuzzer, significantly outperforms the RNN-based fuzzer by achieving 1.5 to 126 times more edge coverage across different projects.
+
+So, NEUZZ consistently outperforms AFL both at finding new bugs and achieving higher edge coverage.
+Their results also demonstrate that NEUZZ can achieve more edge coverage while taking ess training time than other learning-enabled fuzzers.
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+TBD
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+- Introduce a novel lightweight approach of learning and leveraging a differentiable surrogate neural program for efficient fuzzing of a target program. This approach uses gradient descent on the differentiable neural program to efficiently find a mutation strategy that maximizes code coverage in the target program.
+- Present an efficient way of learning surrogate neural programs using convolutional neural networks (CNNs) that, given a test input, predicts the control flow edges exercised in the target program by the input.
+- Design, implement, and evaluate the technique as part of NEUZZ and demonstrate that it achieves, on average, 70× more edge coverage than AFL and finds 36 previously unknown bugs that AFL cannot detect, also demonstrate that NEUZZ achieves 9× more edge coverage while taking 16× less training time than other neural-network-based fuzzers.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+- Study other factors that have effects on customized mutation.
+- Test the method on larger programs.
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+•	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? 
+
+TBD
+
+•	What do you find difficult to understand? List as many as you can.
+
+- AFL, CNN fuzzer, RNN fuzzer
+- Coverage guided evolutionary algorithm
+- Differentiable surrogate neural program
+- Taint tracking, symbolic execution
+- Methodology of gradient guided mutation
+- etc

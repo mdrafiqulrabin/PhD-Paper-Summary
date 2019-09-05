@@ -1,0 +1,103 @@
+Title: Compiler Fuzzing through Deep Learning
+
+Authors: Chris Cummins, Pavlos Petoumenos, Hugh Leather, Alastair Murray
+
+Published in: ISSTA 2018
+
+-------------x-------------x-------------x-------------
+
+1.	What is your take-away message from this paper?
+
+This paper introduces DeepSmith machine learning approach that generates random test cases for discovering bugs in compilers with reducing cost and human efforts.
+
+2.	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution? What are the previous solutions and why are they inadequate?
+
+•	What is the motivation for this work (both people problem and technical problem), and its distillation into a research question? Why doesn’t the people problem have a trivial solution?
+
+Modern compilers are large and complex, and their input space is huge. Hand designed suites of test programs are inadequate for covering such a large space and will not touch all parts of the compiler. Generating test cases is hard because compilers’ inputs are highly structured, and doing such thing requires expert knowledge and a significant engineering effort, which has to be repeated from scratch for each new language.
+
+•	What are the previous solutions and why are they inadequate?
+
+CSmith (consists of over 41k lines of handwritten C++ code) approach generates large random programs by defining and sampling a probabilistic grammar which covers a subset of the C programming language. It requires a thorough understanding of the target programming language. For example, lifting CSmith from C to OpenCL — a superficially simple task — took 9 months and an additional 8k lines of code. Given the difficulty of defining a new grammar, typically only a subset of the language is implemented.
+
+3.	What is the proposed solution (hypothesis, idea, design)? Why is it believed it will work? How does it represent an improvement? How is the solution achieved?
+
+•	What is the proposed solution (hypothesis, idea, design)?
+
+-	Collect sample programs code and pre-process them to uniform style.
+-	Create neural network based model program code.
+-	Feed the samples to model for generating new test programs.
+-	Use the test harness to run the generated test programs.
+-	Use voting heuristics for differential testing to expose compiler defects.
+
+•	Why is it believed it will work?
+
+Random test case generation fuzzing is a well-established and effective method for identifying compiler bugs. When fuzzing, randomly generated valid or semi-valid inputs are fed to the compiler. Any kind of unexpected behavior, including crashes, freezes, or wrong binaries, indicates a compiler bug.
+
+•	How does it represent an improvement? 
+
+In 1,000 hours of automated testing of commercial and open source compilers, they discover bugs in all of them, submitting 67 bug reports. Their test cases are on average two orders of magnitude smaller than the state-of-the-art, require 3.03× less time to generate and evaluate, and expose bugs which the state-of-the-art cannot. Their random program generator, comprising only 500 lines of code, took 12 hours to train for OpenCL versus the state-of-the-art taking 9 man months to port from a generator for C and 50,000 lines of code. With 18 lines of code they extended their program generator to a second language, uncovering crashes in Solidity compilers in 12 hours of automated testing.
+
+•	How is the solution achieved?
+
+-	Collect sample of OpenCL handwritten programs code: Mined 10k OpenCL kernels from open source repositories on GitHub and used an oracle compiler (LLVM 3.9) to statically check the source files, discarding files that are not well formed.
+-	Create uniform code style with encoder: Each source file is preprocessed to expand macros and remove conditional compilation and comments. Then, all user-declared identifiers are renamed using an arbitrary, but consistent pattern based on their order of declaration.
+-	Define Neural Network: Use the Long Short-Term Memory (LSTM) architecture of Recurrent Neural Network to model program code.
+-	Program Generation: The trained network is sampled to generate new programs.
+-	Used the test harness of CLSmith to run the generated OpenCL programs.
+-	Employ established Differential Testing methodologies to expose compiler defects and voting on the output of programs across compilers has been used to circumvent the oracle problem.
+
+4.	What is the author's evaluation of the solution? What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+•	What is the author's evaluation of the solution?
+
+Authors report on the results of DeepSmith testing of the 10 OpenCL systems in which each ran for 48 hours. They found bugs in all the compilers they tested — every compiler crashed, and every compiler generated programs which either crash or silently compute the wrong result. To date, they have submitted 67 bug reports to compiler vendors. DeepSmith is able to identify a broad range of defects, many of which CLSmith cannot, for only a fraction of the engineering effort.
+
+•	What logic, argument, evidence, artifacts (e.g., a proof-of-concept system), or experiments are presented in support of the idea?
+
+-	Authors conducted testing of 10 OpenCL systems and covered a broad range of hardware: 3 GPUs, 4 CPUs, a coprocessor, and an emulator. 7 of the compilers tested are commercial products, 3 of them are open source. Suite of systems includes both combinations of different drivers for the same device, and different devices using the same driver.
+-	For each OpenCL system, authors create two testbeds. In the first, the compiler is run with optimizations disabled. In the second, optimizations are enabled.
+-	For each generated program authors create inputs as two test cases, one using one thread, the other using 2048 threads.
+-	Authors compare both Fuzzer and CLSmith, and allow both to run for 48 hours on each of the 20 testbeds. CLSmith used its default configuration.
+-	Provide a qualitative analysis of compile-time and runtime defects found, followed by a quantitative comparison of our approach against the state-of-the-art in OpenCL compiler Fuzzing — CLSmith.
+-	Provide a quantitative analysis of compiler robustness over time, using the compiler crash rate of every LLVM release in the past two years as a metric of compiler robustness.
+-	Comparison to State-of-the-art: An average of 15k CLSmith and 91k DeepSmith test cases were evaluated on each Testbed, taking 12.1s and 1.90s per test case respectively. DeepSmith generation time is on average 2.45× faster than CLSmith and Test case execution is on average 4.46× faster than CLSmith. The average DeepSmith kernel is 20 lines long where the average CLSmith program is 1189 lines long (excluding headers).
+-	Comparison of Results: Both testing systems found anomalous results of all types. In 48 hours of testing, CLSmith discovered compile-time crashes (bc) in 8 of the 20 testbeds, DeepSmith crashed all of them. DeepSmith triggered 31 distinct compiler assertions, CLSmith 2. Both of the assertions triggered by CLSmith were also triggered by DeepSmith. DeepSmith also triggered 3 distinct unreachable. Compile-time crashes, CLSmith triggered 0. The ratio of build failures is higher in the token-level generation of DeepSmith (51%) than the grammar-based generation of CLSmith (26%).
+
+5.	What is your analysis of the identified problem, idea and evaluation? Is this a good idea? What flaws do you perceive in the work? What are the most interesting or controversial ideas? For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+•	What is your analysis of the identified problem, idea and evaluation? Is this a good idea?  Yes, Good.
+
+-	Does not require expert knowledge on target language.
+-	Cover more are of compilers and produce new more bugs.
+-	Average test case size is smaller without any logical reduction.
+
+•	What flaws do you perceive in the work? What are the most interesting or controversial ideas? 
+
+-	Any training candidate which triggers a bug in the LLVM 3.9’s front end will not be included.
+-	Some bugs in the preprocessor or front-end might no longer be discoverable for encoding.
+-	Test program will be ignored if all testbeds misclassify a test program.
+-	DeepSmith allows floating point operations but since it cannot apply differential testing on the outputs, it can detect all results except for the results anomalous wrong-output.
+
+•	For work that has practical implications, ask whether this will work, who would want it, what it will take to give it to them, and when might it become a reality? 
+
+By posing the generation of random programs as an unsupervised machine learning problem, authors dramatically reduce the cost and human effort required to engineer a random program generator.
+
+6.	What are the paper's contributions (author's and your opinion)? Ideas, methods, software, experimental results, experimental techniques? 
+
+-	This approach does not require expert knowledge of the target language and is only a few hundred lines of code.
+-	Authors discover a similar number of bugs as the state-of–the-art, but also find bugs which prior work cannot, covering more components of the compiler.
+-	Average test case size is two orders of magnitude smaller than state-of-the-art, without any expensive reduction process.
+
+7.	What are future directions for this research (author's and yours, perhaps driven by shortcomings or other critiques)?
+
+TBD
+
+8.	What questions are you left with? What questions would you like to raise in an open discussion of the work (review interesting and controversial points, above)? What do you find difficult to understand? List as many as you can.
+
+-	Any training candidate which triggers a bug in the LLVM 3.9’s front end will not be included.
+-	Some bugs in the preprocessor or front-end might no longer be discoverable for encoding.
+-	Use the Long Short-Term Memory (LSTM) architecture of Recurrent Neural Network to model program code.
+-	The trained network is sampled to generate new programs.
+-	Example kernels and Testbed +/- (fig3-fig6,fig8)
+-	Etc.
