@@ -1,0 +1,17 @@
+Title: Code Vectors: Understanding Programs Through Embedded Abstracted Symbolic Traces
+
+Authors: Jordan Henkel, Shuvendu K. Lahiri, Ben Liblit, Thomas Reps
+
+Published in: ESEC/FSE 2018 
+
+Keywords: Word Embeddings, Analogical Reasoning, Program Understanding, Linux
+
+Link: https://dl.acm.org/citation.cfm?id=3236085
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
