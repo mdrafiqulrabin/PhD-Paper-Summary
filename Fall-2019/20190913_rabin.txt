@@ -1,0 +1,17 @@
+Title: Import2vec Learning Embeddings for Software Libraries
+
+Authors: Bart Theeten, Frederik Vandeputte, Tom Van Cutsem
+
+Published in: MSR 2019
+
+Keywords: machine learning, software engineering, information retrieval
+
+Link: https://dl.acm.org/citation.cfm?id=3236085
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
