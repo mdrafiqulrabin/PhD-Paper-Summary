@@ -12,6 +12,35 @@ Link: https://dl.acm.org/citation.cfm?id=3196424
 
 [1] Problem:
 
+Deep Learning (DL) has become very popular in software engineering and very useful for high dimensional data such as CNN 
+for text mining. However, this is very expensive in terms of efforts and CPU resources. Moreover, DL takes a long time to
+train the model and makes it difficult to further validate or improve the model. Furthermore, DL is not always the best
+solution in all cases because a simple learner is faster to train than complex learner but performs similarly. Therefore,
+a simple learner can beat or perform similarly to a DL but comparatively faster and cheaper to build. In this paper, 
+authors explore a case study of SO text mining or finding semantic relatedness between Stack Overflow posts. The task is
+to find linkable knowledge between 2 SO posts. The link between 2 posts can be of 4 types: duplicate, direct, indirect 
+and isolated. Authors cluster dataset and tune simple learners within each cluster. This simpler approach performs nearly
+as good as the state-of-the-art deep learner but is 500 times faster.
+
 [2] Solution:
 
+The following are the steps: (1) Explore the state-of-the-art deep learner: (a) Use the same training and testing dataset
+which is balance over both training and testing examples. (B) Use the same word2vec model for finding the word embedding
+of SO post. (2) Compute the task using SVM and KNN model on all of the data, separately. (3) Apply Differential Evolution
+(DE) for hyper-parameter tuning to select the best control parameters for SVM and KNN. (4) Divide the data into several
+small pieces with the KMeans algorithm, build one model per piece, and then apply tuning to each learner within each
+cluster. (5) Evaluate global/local models with/without hyper-parameter tuning in terms of both training time and
+performance. (6) Evaluate the results: (a) Performance evaluation with precision, recall, and F1 Score. (b) Statistical
+analysis with significance tests and effect size tests.
+
 [3] Evaluation:
+
+Authors target a recent study for finding semantic relatedness of Stack Overflow posts.  Authors have applied both complex
+learner (CNN) and simpler learner (SVM/KNN/DE/KMeans) for this task. The CNN took 14 hours to train while the differential
+tuned SVM and KMeans are 84 and 500 times faster than CNN, respectively. The authors also explored the following research
+questions: (RQ1) Whether the results can be reproduced for tuning SVM with differential evolution (DE): the result shows
+that the DE+SVM performs similarly to the state-of-the-art deep learner. (RQ2) Whether the local models compare with global
+models in both tuned and untuned versions in terms model training time: The result shows that the local models perform are
+570 times faster in training time than the corresponding global models. (RQ3) Whether the performance of local models
+compares with global models and state-of-the-art deep learner for SVM and KNN: the result shows that the local models
+perform very almost similarly (within 2% F1 Score) as corresponding global models and the state-of-the-art deep learner.
