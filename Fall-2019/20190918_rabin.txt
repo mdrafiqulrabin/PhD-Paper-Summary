@@ -1,0 +1,17 @@
+Title: 500+ Times Faster Than Deep Learning
+
+Authors: Suvodeep Majumder, Nikhila Balaji, Katie Brey, Wei Fu, Tim Menzies
+
+Published in: MSR 2018
+
+Keywords: Deep learning, parameter tuning, DE, KNN, local versus global, KMeans, SVM, CNN
+
+Link: https://dl.acm.org/citation.cfm?id=3196424
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
