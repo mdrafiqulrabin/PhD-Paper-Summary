@@ -12,6 +12,33 @@ Link: https://dl.acm.org/citation.cfm?id=3236085
 
 [1] Problem:
 
+Machine learning has achieved great attention in the programming tasks by treating programs as data. In several NLP 
+tasks, the program has already been used as a plain text. However, some special characteristics of the program (i.e.
+syntactic structures, semantics meaning, type constraints, etc.) are not mineable if we only use the program as a 
+string. On the other hand, the AST-based technique has a gap between syntax and semantics (i.e. a==b vs !(a!=b)). 
+Therefore, it is highly necessary to transform the program into a suitable representation so that it could be learned
+by models. In this paper, the authors use an abstraction of traces from the symbolic execution of a program as word
+embedding of the program (Code Vector) to represent the semantic information of the program. The evaluation with code
+vector embedding shows that the model trained on these semantic abstractions is very suitable for different programming tasks.
+
 [2] Solution:
 
+The code vector toolchain consists of three phases: (a) transformation, (b) abstraction, and (c) learning.  
+Phase-I (Transformation): In this phase, authors unroll loops and enumerate all paths of a program. After that, they 
+apply an intra-procedural symbolic executor on each procedure. This phase is to gather the symbolic traces.
+Phase-II (Abstraction): In this phase, authors introduce a set of abstractions (i.e. call/access for events, return/error 
+for status, etc.) to create abstracted symbolic traces. Then, they encode these abstractions as words using GloVe. The 
+phase is to reduce the number of tokens by the user-defined set of abstractions. 
+Phase-III (Learning): In this phase, authors use the embeddings to answer various research questions such as code 
+analogies. The embedding is now suitable for learning as it discards unwanted explanations and contains important information. 
+
 [3] Evaluation:
+
+The authors evaluate the code vector embeddings with four research questions. They perform several experiments to answer the research questions.
+(RQ1) The usefulness of learned vector: 
+Experiment 1 (Code Analogies): Authors create test suites of 19K+ code analogies and check for analogies of different categories. The result shows that the code vector embedding achieves greater than 90% top-1 accuracy on 13/20 categories. 
+Experiment 2 (Simple Similarity): Next authors try to perform similarity experiments for code vector embedding with the following two queries: (i) given a word, find the closest word, and (ii) given a word, find the five closest words. The embedding is significant to find the expected closest word(s). 
+Experiment 3 (Queries Via Word-Vector Averaging): In this experiment, the authors aim to capture a relationship between allocation failure and returning error code with code vector embedding. They perform four types queries for error code that is closest to allocator vector (i) A, (ii) (A+ERR)/2, (iii) (A+END)/3, (iv) (A+ERR+END)/3. 
+(RQ2) Ablation study to examine the impact of different parameterizations: Authors evaluate a total of eight different configurations where baseline contains all parameters. The result shows that data flow-based abstractions have higher significant in code vector embeddings. 
+(RQ3) Syntactic versus Semantic: Authors generate a corpus of traces with only the syntactic abstractions and compare with the baseline abstractions. The result shows that the semantic abstractions provide almost three times more accuracy than the syntactic abstractions.
+(RQ4) Use code vector embedding in a downstream task: Authors build an error-code-misuse model for finding/suggesting error code in the Linux kernel.  They implement the model with RNN+LSTM and evaluate with (i) Bug Finding (detect invalid error code) and (ii) Repair/Suggestion (predict most likely error code). The model identifies an incorrect error code in 57/68 tests and achieves 76.5%  top-3 accuracy.
