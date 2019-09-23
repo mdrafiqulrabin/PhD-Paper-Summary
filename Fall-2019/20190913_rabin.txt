@@ -12,6 +12,46 @@ Link: https://dl.acm.org/citation.cfm?id=3236085
 
 [1] Problem:
 
+The number of lines in open source code, the number of library packages and modules are growing exponentially in recent 
+years. This exponential growth makes it difficult for developers to find the most relevant library for a given task. 
+Although publishing and sharing the relevant libraries by developers are approaching, the huge amount of libraries remain 
+the tail libraries untouchable to developers. Therefore, a machine learning approach will be useful for developers to solve
+this problem. However, a suitable mathematical semantic representation of libraries is required so that similar libraries
+have similar embeddings. In this paper, the authors apply word embeddings of NLP on library packages where they embed the
+library as ‘library vector’ by importing statements from source code. The library embeddings are then useful for performing
+tasks such as the relationship between frameworks, plug-ins, and libraries.
+
 [2] Solution:
 
+The import2vec approach consists of two main phases: (1) Collecting library imports,  and (2) Learning embedding for 
+library imports. Authors apply the following steps to collect the library imports: (A) Data Acquisition and Extraction: 
+They collect GitHub open source projects having at least 2 stars and all library packages on main public package repository
+for 6 languages. After that, the projects having the same set of imports have been removed. Then only language-specific
+files are considered in each project. Finally, static imports are collected and extracted as raw imports. (B) Import
+filtering and Extracting relevant imports: Authors only concern about relevant imports and for this reason, the imports 
+have been filtered based on global reuse threshold (R>=10) and import popularity class (C=[2~4]). R represents how many
+times an import is used in different projects while C represents the order of magnitude for all imports with R. 
+(C) Import granularity: Authors focus on the library-level imports rather than the class-level imports as it helps to
+capture the information about which libraries are often combined. (D) Library import co-occurrence analysis: Authors 
+only consider the source files having at least 2 unique imports and the imports have reused in at least 2 projects. 
+Authors use the concept of word embeddings as library embeddings. First, the dataset is formulated as triples as 
+(project, file, [imports]). Then, the authors generate a pair [target-library, context-library]  for each combination 
+of 2 libraries of a source file. Finally, to learn the embedding of library imports, authors adapted the skip-gram model
+where the embedding layer (same as word embedding) generates library vectors, DotProduct unit computes the dot product 
+on target and context library vector, and sigmoid activation predicts the result as 0 or 1 where 1 means target-library 
+co-occurred with context-library and 0 means not co-occurred.
+
 [3] Evaluation:
+
+The goal of this paper is to cluster libraries based on their semantic similarity which will suggest researches to choose 
+a relevant library.  The authors trained the model in 3 languages (Java, Python, JavaScript). For evaluation, they use the
+embedding for contextual search which means finding the relevant libraries given a number of libraries. The search engine
+takes libraries as input, creates a context vector by adding those and returns the nearest libraries which are semantic in
+context.  Authors first visual the embedding and neighbors with t-SNE and then use cosine similarity for finding top-5
+nearest neighbors. They also use the search as a prediction task whether the task calculates k nighest project vectors 
+and then top-n most frequently libraries among them. The result shows that the precision is better for trained vector 
+rather than random vector which concludes that the training vector encodes information related to the context. Authors 
+also evaluate the embeddings for analogical reasoning (a is to a* as b is to b*) where b* is the prediction. The result
+shows that the prediction rank of b* from x*(=a*-a+b) is better than the nearest rank of b* from only-b. Therefore, the
+library vectors are useful to exhibit the semantic similarity among libraries.
+
