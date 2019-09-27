@@ -12,7 +12,40 @@ Link: https://dl.acm.org/citation.cfm?id=3339559
 
 [1] Problem:
 
+Testing is essential for ensuring the effectiveness of the software. However, various testing techniques have resulted 
+in a huge amount of test data. Testing software with huge amount of data or selecting effective test cases is costly.
+Therefore, research on test reduction has gained great attraction in recent years. Some techniques such as test priorities
+and test selection have already been studied. The testing technique has an analysis phase, an execution phase, and a
+collection phase. However, state-of-the-art approaches only talk about the execution, and rarely in other phases, 
+especially the last phase. Therefore, the authors in this paper propose a family of efficient test reduction techniques.
 
 [2] Solution:
 
+Authors propose the FAST-R technique for reducing test suite which is consists of 4 approaches: FAST++, FAST-CS, FAST-pw,
+and FAST-all. Authors first transform the test cases into n-dimensional points using vector-space-model where n
+corresponding to the number of different terms used in the test cases. After that, the authors perform random projection 
+on transform data using sparse-random-projection to reduce dimensions of test cases as the computation of Euclidean 
+distance is huge when n is large. Finally, to reduce the test cases into a fixed size (B) dataset, authors perform k-means++
+clustering with k=B. The k-means++ cluster results in k centroids where points within each cluster are closed to its centroids.
+Authors follow different reduction rules for different approaches and scenarios. In the FAST++ technique, the greedy
+selection of k-means++ has been applied where the next point is selected based on the probability of distance to the already
+picked list.  For the FAST-CS, the point has been selected based on the importance of sampling distribution. Both FAST++ and
+FAST-CS have also been adapted to be adequate for fixed coverage. In this version, the test case is ignored if there is no
+extra coverage. The adequate version is stopped when the reduction achieves fixed coverage instead of stopping after finding
+a fixed size. The authors also adapted two state-of-the-art FAST family techniques (FAST-pw and FAST-all) for two testing
+scenarios (fixed budget and fixed coverage).
+
 [3] Evaluation:
+
+To evaluate the FAST-R technique, the authors address two research questions. (RQ1) The effectiveness of test suite
+reduction (what is the fault detection loss and how much test suite reduction achieved) compared to the state-of-the-art.
+(RQ2) The effectiveness of computation time (preparation time + reduction time). Authors evaluate the FAST-R technique in 2
+main scenarios: (a) budget scenario (fixed number of test cases) and (b) adequate scenario (preserving fixed coverage). 
+It has been compared with 3 state-of-the-art approaches (ART-D, ART-F, and GA) where the state-of-the-art approaches have
+been applied to the coverage of function, statement, and branch. The authors consider 5 C program (Flex v3, Grep v3, Gzip
+v1, Sed v6, and Make v1)  from SIR dataset and 5 Java program (Closure Compiler, Commons Lang, Commons Math, JfreeChart, 
+and Joda-Time) from Defects4J database to evaluate the budget scenario and the adequate scenario. The evaluation metrics is
+fault detection loss and computation time. The results show that the FAST-R approach is comparable to the state-of-the-art
+for fault detection but highly efficient in terms of computation time. Especially for RQ2, authors also consider the 
+large-scale scenarios where they collect 500K+ test cases from GitHub and apply varying budgets range from 1% to 30% of 
+the full size.  The result shows that the most efficient approach is FAST-CS and reduces test cases in less than 10 seconds.
