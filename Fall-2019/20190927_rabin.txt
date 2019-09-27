@@ -1,0 +1,18 @@
+Title: Scalable Approaches for Test Suite Reduction
+
+Authors: B. Miranda, E. Cruciani, R. Verdecchia, and A. Bertolino
+
+Published in: ICSE 2019
+
+Keywords: Clustering, Random projection, Similarity-based testing, Software testing, Test suite reduction.
+
+Link: https://dl.acm.org/citation.cfm?id=3339559
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+
+[2] Solution:
+
+[3] Evaluation:
