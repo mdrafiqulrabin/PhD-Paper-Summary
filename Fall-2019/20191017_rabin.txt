@@ -1,0 +1,41 @@
+Title: Assessing the Generalizability of code2vec Token Embeddings
+
+Authors: Hong Jin Kang, Tegawende F. Bissyande, David Lo
+
+Published in: ASE 2019
+
+Keywords: Code Embeddings, Distributed Representations, Big Code
+
+Link: https://2019.ase-conferences.org/details/ase-2019-papers/75/Assessing-the-Generalizability-of-code2vec-Token-Embeddings
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Many NLP tasks (i.e. semantic analysis, syntactic parsing) are using the word embedding model and have been shown that
+the word embeddings are generalizable to different tasks. Therefore, many researchers have used the embedding of source
+code for software engineering tasks (i.e. code2vec model to predict the method name given method body). However, the 
+embedding of source code only shows its usefulness in the example task and fails to demonstrate its generalizability. In 
+this paper, the authors point out this important concern of the generalizability of word embedding in source code. They 
+experiment with some downstream tasks using word embedding of source code to assess the generalizability of token embedding. 
+Authors aim to investigate whether the embeddings of source code tokens can be useful for other tasks except for the task in 
+which it's already trained.
+
+[2] Solution:
+
+To assess the generalizability of token embedding, authors target the recent code2vec embedding which is showed its success 
+in predicting method name from method body. The authors identify three downstream tasks: (1) code comment generation, (2) code
+authorship identification, and (3) code clone detection. For each task, authors choose one of the recent techniques (i.e. 
+DeepCom by Hu et al. for code comment generation, TF-IDF by Abuhamad et al. for code authorship identification, and SourcererCC
+by Sajnani et al. for code clone detection)  having the dataset, setting of model and evaluation metrics available to comparison.
+After that, the authors adopt those techniques to use the code2vec token embedding of source code. Authors also used an NLP word 
+embedding (GloVe) as the baseline. For each task, they use the same dataset. Settings and evaluation metrics to compare the 
+state-of-the-art with code2vec and GloVe.
+
+[3] Evaluation:
+
+The result shows that the code embedding doesn’t improve the state-of-the-art techniques. The evaluation reveals several 
+insights. First, in code comment generation and code authorship identification, the use of embedding degrades the performance.
+In code clone detection, the use of embedding increased the Recall and F1 by a small margin but decreased the Precision by a 
+large margin. Second, the simpler approach like TF-IDF and SourcererCC run faster and outperform the complex code embedding 
+technique. Finally, it has been shown that the code embedding is not generalizable as it fails to improve the new tasks.
