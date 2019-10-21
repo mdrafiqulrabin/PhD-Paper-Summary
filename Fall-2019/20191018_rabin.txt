@@ -1,0 +1,51 @@
+Title: Do People Prefer “Natural” code?
+
+Authors: Casey Casalnuovo, Kevin Lee, Hulin Wang, Prem Devanbu, Emily Morgan
+
+Published in: arXiv 2019
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1910.03704
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Programming languages are very expressive such that there are many different ways to code a given simple computation. 
+Each way is equivalent to each other in meaning but different in form. However, the code is repetitive even though there 
+is plenty of options to write it differently. This is called ’naturalness’ and useful for an application like code completion.
+One reason for this naturalness could be grammar or syntax but this is not always the case. For example, the increment of a 
+variable can be written as a = a + 1 or a = 1 + a, but the developers always prefer to use  a = a + 1 for increment. Therefore,
+naturalness comes from the preference of developers.  The developers prefer to write their code in a similar fashion to read. 
+The code is bimodal (execute by machines but read by humans) and so the natural code is repetitive. In this paper, the authors
+investigate the familiarity using language model and then study the surprisal through transformation and human subject.
+
+
+[2] Solution:
+
+The center question of this paper is “why is code so repetitive?” that later formulated as “For a given computation, do 
+developers prefer some implementations over others, and to what degree?”. To get the appropriate findings of the center 
+question, authors apply the following experiments: (1) Using language models (n-gram) to capture the frequency of elements 
+in a corpus, (2) Applying meaning-preserving transformation in unseen data and calculate surprisal score, (3) Adapting human 
+subject to test whether the surprisal score predicts the human preference. Doing this experiment authors try to answer seven 
+research questions: (RQ1) To what degree the model finds the transformed code more surprisal, (RQ2) Whether the experiment 
+with Java also observable in Python, (RQ3) Do cache-based language models discriminate the original code more strongly? 
+(RQ4) The effect of the transformation in the original surprisal, (RQ5) Whether the preferences of human align with language 
+model surprisal.
+
+[3] Evaluation:
+
+Authors mainly use the topmost 1K Java projects from GitHub. Additionally, they also use a small corpus of Python from 
+GitHub for RQ2. They use 4 n-gram models (6-gram, ngram-cache, SLP-Core, and LSTM). They mainly use the 6-gram but authors 
+need the ngram-cache to answer the RQ3 and rely on SLP-Core for RQ4. Furthermore, they use 1-LSTM to validate the robustness 
+of n-gram. To perform the meaning preserving transformation, they implement 3 types of transformation (swapping, parenthesis,
+and renaming). In total, they form 12 different transformations (swap: arithmetic(*,+) and relational(==,!=,<,<=,>,>=), 
+parenthesis: add and remove, rename: within types and between types). They answer RQ1 using language models on Java corpus 
+and RQ2 with Python corpus by calculating the surprisal scores. The evaluation of RQ3 is the same as RQ1 but with a 
+cache-based language model. The comparison of surprisal scores before and after transformation is used to answer the RQ4. 
+For RQ5, authors use AMT with MTurker to measure the surprisal score and compare it with the original score, both before 
+and after transformation. The significant of scores are measured by non-parametric Wilcox tests with 95% confidence level. 
+The evaluation result shows that the language model prefers the original code, and the cached-based model is more powerful, 
+and the language models agreed with humans more than 60% of the time. Finally, the authors state that “Even given many forms
+for coding a computation, developers still prefer it to be coded in more familiar forms.”
