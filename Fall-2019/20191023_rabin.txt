@@ -1,0 +1,20 @@
+Title: Adversarial Examples for Models of Code
+
+Authors: Noam Yefet, Uri Alon, Eran Yahav
+
+Published in: arXiv 2019
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1910.07517v1
+
+-------------x-------------x-------------x-------------
+
+In this paper, the authors mainly focus on two parts: (1) semantic-preserving adversarial attack, and (2) defense against 
+adversarial attack. In a semantic-preserving adversarial attack, they perturbed programs to make incorrect predictions by 
+model. They apply two type of adversarial strategies: (1) variable renaming (choose a random variable to rename), and 
+(2) dead code insertion (insert an unused variable declaration). They focus on two types of adversarial examples: 
+(1) targeted attack (generating example that force model to predict a specific incorrect label), and (2) non-targeted 
+attack (generating example that force model to predict any incorrect label). Authors achieved the desirable adversarial 
+examples with gradient-based exploration in program space.
+
