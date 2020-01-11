@@ -1,0 +1,44 @@
+Title: Neural Machine Translation by Jointly Learning to Align and Translate
+
+Authors: Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio
+
+Published in: ICLR 2015
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1409.0473
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The translation system is used to automatically translate a source sentence to a target translation. The traditional 
+phrase-based translation system (Moses) consists of several sub-components. Each component has been tuned separately 
+and then used together to read a sentence and output a correct translation. On the other hand, the recent neural machine 
+translation system only trains a single neural network consisting of a set of encoder-decoder where the encoder encodes 
+a source sentence to a fixed-length vector and the decoder outputs a target translation from that conceded vector. The 
+system is trained jointly for each language pair. But the fixed-length vector is the bottleneck for translation performances.
+Therefore, a further improvement is expected, and authors in this paper extend the neural machine translation to automatically
+search the relevant parts of the source sentence during predicting the target word.
+
+[2] Solution:
+
+The proposed solution consists of a bidirectional RNN (BiRNN) as an encoder and a decoder. In Encoder, the BiRNN consists 
+of both forward and backward RNNs, and therefore the annotation of each word is formulated by concatenating both forward and 
+backward states.  The annotation hi holds the information of entire input sequences but puts a strong focus on the surrounding
+of i-th word. This sequence of annotations is used by the decoder to compute the context vectors. In Decoder, the weight of 
+each annotation is computed with an alignment model (jointly trained with the system to get how well the j-th inputs match 
+with i-th output). After that, the context vector is computed as the weighted sum of annotations, and the context vector is 
+distinct for each target word. Finally, the model defines an conditional probability of yi with the hidden state si of RNN 
+at the time i, which is conditioned on a distinct context vector ci for each target word yi.
+
+[3] Evaluation:
+
+The authors evaluated the proposed approach on the task of English-to-French translation and use the corresponding WMT’14 
+dataset. They train two kinds of models: 1) RNNencdec (encoder-decoder without the proposed search approach), 2) RNNsearch 
+(encoder-decoder with the proposed search approach). Also authors train model with the sentences of length up to 30 words 
+and 50 words, separately.  Additionally, authors also performed evaluation with sentences having no unknown words and 
+sentences having any words, separately.  The results show that the proposed RNNsearch outperforms the traditional 
+RNNencdec, and also comparable to the phrase-based translation system (Moses) for sentences having known words only. 
+Because of the fixed-length context vector, the RNNencdec underperforms with long sentences (even RNNsearch-30 
+outperforms RNNencdec-50) while RNNsearch shows robustness to the length of sentences. 
