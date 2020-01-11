@@ -1,0 +1,51 @@
+Title: code2seq: Generating Sequences from Structured Representations of Code
+
+Authors: Uri Alon, Shaked Brody, Omer Levy and Eran Yahav
+
+Published in: ICLR 2019.
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1808.01400
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The neural machine translation models (i.e. seq2seq model) have been using to compute the programming task such that code 
+summarization, code retrieval, code captioning, code documentation, etc. But that only concerns about the textual structure
+and overlooks the syntactical structure. This model may confuse when different codes have the same functionality but 
+different implementation, as the model reads different textual representations. To address this type of limitation and 
+leverage the syntactic structure of the program, the authors propose an alternative approach, code2seq. The code2seq model 
+samples the paths in the AST of the code snippet, apply embedding and encoding and use attention over relevant paths to 
+generate the target sequence. Authors claim this is the pioneer study on the AST path for the generation of sequences that 
+represent code snippets. The authors evaluate the model on various programming tasks that outperforms state-of-the-art 
+NMT models. 
+
+[2] Solution:
+
+The code2seq model works as follows: (1) Take code snippet and the corresponding summary and caption as input. (2) Represent 
+code snippet into an Abstract Syntax Tree (AST). (3) Extract a set of compositional paths between two terminal nodes in its 
+AST. (4) Represent path as a sequence of nodes where the first and last node of the AST path is terminal token value. 
+(5) Embed the path to vector representation with a learned embedding matrix and encode the entire sequence of path vector 
+using a bi-directional LSTM. (6) Split two tokens separately into subtokens, then embed to vector representation with a 
+learned embedding matrix and encode as a full token by summing separately the subtoken vectors. (7) Combine the encoded 
+path and encoded tokens with the fully connected layer. (8) Average the combination representation of k paths as decoder 
+initial state. (9) Attend over all of the combined representation and generate target sequence through the decoder. 
+(10) Apply on various programming tasks.
+
+[3] Evaluation:
+
+Authors evaluate the code2seq model on two programming tasks: (1) Code Summarization: predict a method’s name given a body 
+of Java program, and (2) Code Captioning: predict natural language description given a C# program. For code summarization 
+task, authors use three datasets: (1) Java-small (11 projects as 9+1+1, 700k examples), (2) Java-med (1000 projects as 
+800+100+100, 4M examples), and (3) Java-large (9500 projects as 9000+250+300, 16M examples). Authors compare code2seq with 
+ConvAttention, Paths+CRFs, code2vec, 2-layer BiLSTM (split token & full token), TreeLSTM, and Transformer. The result shows 
+that code2seq significantly outperforms the baselines in precision, recall and F1 score over small to a large dataset. For
+the code captioning task, authors use the CodeNN dataset (66015 pairs of Q/A from SO, 3 titles for each code snippet). 
+Authors compare code2seq with MOSES, IR, SUM-NN, 2-layer BiLSTM, Transformer, TreeLSTM, and CodeNN. The result shows that 
+code2seq significantly outperforms the baselines in the BLEU score. Authors also perform another task: Code Documentation 
+(generate Javadocs from code snippet) where authors compare code2seq with the seq2seq approach and report more than 50% 
+gain in the BLEU score. Additionally, authors also perform ablation study (No AST nodes, No decoder, No token splitting, 
+No tokens, No attention, No random) on code summarization with Java-med dataset to understand the importance of model’s 
+component.
