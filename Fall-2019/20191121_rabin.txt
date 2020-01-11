@@ -1,0 +1,12 @@
+Title: AutoFocus: Interpreting Attention-based Neural Networks by Code Perturbation
+
+Authors: Nghi D. Q. Bui, Yijun Yu, Lingxiao Jiang
+
+Published in: ASE 2019
+
+Keywords: attention mechanisms, neural networks, algorithm classification, interpretability, code perturbation, program comprehension
+
+Link: https://bdqnghi.github.io/files/ASE_2019_NIER.pdf
+
+-------------x-------------x-------------x-------------
+
