@@ -1,0 +1,40 @@
+Title: Software Engineering for Machine Learning: A Case Study
+
+Authors: Saleema Amershi, Andrew Begel, Christian Bird, Robert DeLine, Harald Gall, Ece Kamar, Nachiappan Nagappan, Besmira Nushi, Thomas Zimmermann.
+
+Published in: ICSE-SEIP 2019
+
+Keywords: AI, Software engineering, process, data
+
+Link: https://dl.acm.org/citation.cfm?id=3339967
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Machine learning has been widely used for developing applications in the information technology sectors. As a result, 
+there is a suppressed demand of integrating AI into software engineering for software organizations. Microsoft teams 
+also put significant effort into developing AI applications by software engineering with machine learning. This is 
+conjectured that there might be a process to follow for doing this. The authors of this paper, therefore, conducted a 
+study on Microsoft teams on the basis of AI-based application development. They gather information and synthesized those 
+pieces of information for finding various observations and best practices to adapt.
+
+[2] Solution:
+
+Authors analyze the findings from their study on Microsoft teams regarding software engineering for machine learning. In 
+their study, they looked at the issues and challenges evolved from the development and deployment of machine learning-based 
+applications. After that, they synthesized a set of best practices to address those findings. The process includes nine-stage 
+workflow:  (1) model requirements, (2) data collection, (3) data cleaning, (4) data labeling, (5) feature engineering, 
+(6) model training, (7) model evaluation, (8) model deployment, and (9) model monitoring.
+
+[3] Evaluation:
+
+The authors of this paper collected data in two phases: (a) interview and (b) survey. By the interview, they selected the 
+major topics related to research, and then by the survey they collected the large-scale information reading those selected 
+topics. After that the authors summarize their findings in three sections: (a) data discovery and management: The software 
+engineering is mostly about code, but ML is mostly about data. Although there are techniques to design and version tracking 
+for code, that is not the same data as data may come from several different sources and rules. (b) customization and reuse: 
+The code can be forked and can be used to extend for slightly different purposes. For data, reusing a model running on a 
+particular domain to a different domain requires significant changes. (c) ML modularity: Different modules of software 
+interact between them with different APIs. On the other hand, a model can not be used with another model, for this, two 
+models had to train jointly. 
