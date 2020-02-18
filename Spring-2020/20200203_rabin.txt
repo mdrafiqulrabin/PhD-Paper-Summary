@@ -1,0 +1,45 @@
+Title: DeepFuzz: Automatic Generation of Syntax Valid C Programs for Fuzz Testing
+
+Authors: Xiao Liu, Xiaoting Li, Rupesh Prajapati, Dinghao Wu.
+
+Published in: AAAI 2019.
+
+Keywords: N/A.
+
+Link: https://aaai.org/ojs/index.php/AAAI/article/view/3895
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Compilers are very important programming tools to build software but they remain buggy. Thus far around 4K bugs in GCC have 
+been found and the over 15 million lines of code make it difficult to achieve full code coverage. On the other hand, for 
+grammar-based fuzzing, grammar is encoded as rules but the C11 standard has 696 pages of specification. Therefore, a good 
+amount of time or human effort is required to design a test suite and conduct the testing. To address this problem, in this 
+paper, the authors consider the automated generation of valid programs with grammar-based fuzzing. The idea is to feed a 
+corpus of seed programs to the learning model and generate new syntax valid, coverage gaining and bug inducing test inputs. 
+Authors use this new generated C programs to fuzz C compilers (GCC and Clang/LLVM). The result provides evidence that DeepFuzz
+can benefit testing efficacy in regards to the pass rate, code coverage and the number of bugs.
+
+[2] Solution:
+
+DEEPFUZZ works on two main stages: Program Generation and Compiler Testing. On the program generation stage, authors first 
+collect 10K small C programs from the GCC test suite that covers most of the features. After that, they remove all the 
+comments, extra whitespaces, and macros from programs. Then, the authors split the program into multiple sequences of 
+fixed-size inputs with the next character is output. Finally, they train the learnt Sequence-to-Sequence model with train data. 
+The model is supposed to learn the grammar from seed data and should generate valid interesting programs. To signify the 
+sequence of programs, authors use three types of generation strategy: G1, G2, G3. To signify the diversity of programs, authors
+use three type of sample variants: NoSample, Sample, and SampleSpace. In the compiler testing phase, authors feed the newly 
+generated test programs to the compilers for different optimizations and examine the compilation message and coverage 
+information (statement, method, and branch).
+
+[3] Evaluation:
+
+Authors focus on three objectives: (a) Generating syntax valid programs, (b) Improving code coverages, and (c) Detecting new 
+bugs. The evaluation metrics used are pass rate, coverage information, and bug detection. The authors also evaluate the 
+effect of various generation strategies and sampling variations. The validity of programs has been measured after compiling 
+programs using command line gcc - a program passes if no error is reported. The coverage information of statements, methods, 
+and branches has been analyzed using command line gcov. The bug in compilers is triggered if any crash or code error is 
+reported for various optimization and version. In this paper, authors fuzz GCC and Clang/LLVM. The pass rate of the generated
+program is higher than 70%, NoSample performs best in terms of the pass rate, and G2 performs best in terms of coverage. 
+The fuzz testing also reports 8 bugs in GCC.
