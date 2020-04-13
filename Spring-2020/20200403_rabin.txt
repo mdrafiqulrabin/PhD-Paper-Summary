@@ -1,0 +1,42 @@
+  
+Title: Semantic Robustness of Models of Source Code
+
+Authors: Goutham Ramakrishnan, Jordan Henkel, Zi Wang, Aws Albarghouthi, Somesh Jha, Thomas Reps
+
+Published in: arXiv 2020
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/2002.03043
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Deep neural network (DNN) has emerged as one of the most important approaches for solving tasks in recent decades. 
+However, models have been shown as vulnerable to adversarial examples - a small perturbation in input may result in 
+incorrect predictions. The authors define the robustness of the model by saying that the neural network should be 
+robust to source code modification. The expected behavior is that the model should not change the prediction on a 
+test input for semantic modification (i.e. replacing a while loop by a for loop or renaming variables). In this paper,
+the authors aim to study the semantic robustness of the model in the context of source code.
+
+[2] Solution:
+
+The authors implement seven semantic transformation for generating adversarial examples. Those are 1) RenameLocalVariables,
+2) RenameParmeters, 3) RenameFields, 4) ReplaceTrueFalse, 5) InsertPrintStatements, 6) ShuffleLocalVariables, and 
+7) ShuffleParameters. They define the notion of k-robustness. Given an input program, they select up to k transformations 
+from the set of semantic transformations and apply them to the input program to create a modified example. The modified 
+example will be considered as an adversarial examples if it changes the prediction of model compared to the original input. 
+After exposing the robustness issue, the authors train the model with k transformed programs and showed that the model is 
+robustness to l transformation where l > k. They also conducted an interpretability study to calculate attribution scores 
+of adversarial examples towards semantic features.
+
+[3] Evaluation:
+
+The authors considered the task of automatic code summarization (i.e. method name prediction) using the Seq2seq-based 
+BiLSTM model and the AST-based model code2seq. They also studied two programming languages: Java (statically and explicitly
+typed language) and Python (dynamically typed language). They designed three research questions, whether adversarial 
+training improves the model robustness in RQ1, whether weak adversaries are sufficient for robustness on strong adversaries
+in RQ2, whether adversarially trained models focused on semantic features in RQ3.  The result showed supporting evidence 
+regarding their RQs on adversarial analysis.
+
