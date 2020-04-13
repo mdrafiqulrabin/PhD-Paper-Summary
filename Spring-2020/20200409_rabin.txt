@@ -1,0 +1,46 @@
+  
+Title: Testing Machine Learning Algorithms for Balanced Data Usage
+
+Authors: Arnab Sharma, Heike Wehrheim
+
+Published in: ICST 2019
+
+Keywords: ML classifier, fairness, balancedness, metamorphic testing
+
+Link: https://ieeexplore.ieee.org/document/8730187
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+ML algorithms are being used in everywhere,  even non-technical persons are also using many ML library. However, Most 
+of them have a lack of understanding about the underline implementation of those ML algorithms. Therefore, the question
+of fairness of such algorithms came into the focus in recent years by researchers for the increased application of ML 
+to decision-making processes, This paper investigated the fairness of ML algorithms in the learning phase and terms that
+as balance data usage.ML algorithms are being used in everywhere,  even non-technical persons are also using many ML 
+library. However, Most of them have a lack of understanding about the underline implementation of those ML algorithms. 
+Therefore, the question of fairness of such algorithms came into the focus in recent years by researchers for the 
+increased application of ML to decision-making processes, This paper investigated the fairness of ML algorithms in the 
+learning phase and terms that as balance data usage.
+
+[2] Solution:
+
+The authors introduce a metamorphic testing approach for checking balanced data usage. The objective is to check whether
+the learner is only learning training data or it is biased in terms of the design of data. They define the metamorphic 
+relation as the ML algorithms should return the same model when trained on the same inputs which are related in a specific
+way. The authors first fixed the hyper-parameters of ML classifiers to default values. Then they create a model (M1) using
+the original dataset for a particular classifier. After that, they apply some metamorphic transformations to generate 
+modified datasets. Then they train the same classifier on modified datasets (M2). Finally, they check the equality 
+(model’s representation and/or outcome) between two models (M1 and M2). The model is balanced if it passes the systematic
+equivalence checking.
+
+[3] Evaluation:
+
+The authors select choose 14 ML classifiers from Python scikit-learn library and collect 9 training sets from the UCI 
+machine learning repository. Follows are the metamorphic transformations: (1) permutation of data instance, (2) columns
+of feature set, (3) shuffling feature names, and (4) renaming feature values.  The permutation strategies are (a) Random,
+(b) Ordering, (c) Alternating, (d) Reversing, and (e) Batch-flipping. The authors develop a (metamorphic) testing approach
+called TILE for checking balanced data usage. The major finding is that 12 out of 14 classifiers of the scikit-learn ML
+repository are unbalanced (RQ1). The TILE can detect unbalancedness in classifiers (RQ2) and nonequivalent predictive models 
+(RQ3). It has been also shown that the ‘Reversing’ permutation strategy is most effective for finding non-balancedness (RQ4).
+
