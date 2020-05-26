@@ -1,0 +1,48 @@
+Title: Global Relational Models of Source Code
+
+Authors: Vincent J. Hellendoorn, Petros Maniatis, Rishabh Singh, Charles Sutton, David Bieber
+
+Published in: ICLR 2020
+
+Keywords: N/A
+
+Link: https://vhellendoorn.github.io/PDF/iclr2020.pdf
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The initial representation of programs with sequential models (i.e. n-gram, RNN) failed to capture the properties of programs.
+Models of code (i.e., code2vec, GGNN) learn more precise representation (i.e., graph, tree, path) of the program’s syntax and 
+semantics to predict properties of the program (i.e. variable name, method name). However, models, like GGNN, highly rely on 
+the heavy weighted message-passing mechanisms to collect the syntactical and semantical relations from programs. This becomes 
+more expensive for the growing size of programs. Therefore, the authors in this paper, focused on implementing hybrid models 
+that include the benefits of global and structural bias but faster in training and improves the accuracy significantly.
+
+[2] Solution:
+
+The GGNN model is structured but local, on the other hand, the sequence model (i.e. RNN, Transformer) is global but 
+unstructured. Therefore, the research question comes to what extent the global information helps the GGNN, or to what extent
+the structural information helps the sequence model. The authors started their study by replacing the sequence encoder of 
+state-of-the-art sequence-to-pointer model with a GGNN. In this approach, the author wraps the gated-graph message passing 
+layers in the sequential message-passing layer, yielding a new graph-to-mutlihead-pointer model that propagates information
+globally in contras to the locality(!) of GGNN. Motivated by this result, the authors implemented two hybrid models: 
+(1) Graph-sandwich model, and (2) GREAT model. The authors propose a leaves-only graph representation that represents the 
+sequential and semantic information but not syntax. In the Graph-sandwich model, the initial state of nodes is initialized
+using an RNN, then the states are being updated with three steps of message-passing using a GGNN, and then again the states
+are updated with another RNN. Although the global information is incorporated with GGNN, still in the Graph-sandwich model,
+the structural information is captured indirectly using the message-passing mechanism. Therefore, the authors study the 
+state-of-the-art transformers-based architecture to directly encode the structural information into sequence model. In this
+approach, named as GREAT, the authors incorporate the relational information from graph edge types. Although they didn’t 
+mention how they incorporate information into the sequence model, they made their source code available to study.
+
+[3] Evaluation:
+
+The authors evaluated their implementation for the VarMisuse task on ETH Py150 python dataset. They mainly used two 
+metrics: localization accuracy (whether the model could find the location of bug) and repair accuracy (whether the model 
+could point to the correct variable). They compared among GGNN, RNN, Transformer, RNN-sandwich, Transformed-sandwich, and
+GREAT in terms of training time, training samples, hyper-parameters, full/leaves-only syntax, and single/many RNN before 
+message passing. They also evaluated their metrics both individually and jointly on both test sets and real buggy sets. 
+The result shows that their hybrid model outperforms the state-of-the-art models on the VarMisuse bug localization and 
+repair task by over 30%, use fewer parameters, and faster in training.
+
