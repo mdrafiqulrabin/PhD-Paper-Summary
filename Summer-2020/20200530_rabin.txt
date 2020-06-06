@@ -1,0 +1,64 @@
+Title: A Closer Look at Memorization in Deep Networks
+
+Authors: Devansh Arpit, Stanisław Jastrzębski, Nicolas Ballas, David Krueger, Emmanuel Bengio, Maxinder S. Kanwal, Tegan Maharaj, Asja Fischer, Aaron Courville, Yoshua Bengio, Simon Lacoste-Julien
+
+Published in: ICML 2017
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1706.05394
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+This is already known that given a dataset and neural model, the model tries to generalize the label. Even models can fit 
+noisy data to generalize, although the reason is unknown. Increasing the number of data, or increasing the capacity of the 
+model, the model can fit any dataset. However, the effect should not be the same on real data and noisy data. To study what 
+extend this differs, in this paper, the authors study the effect of memorization in deep learning and how it is connected 
+with the capacity, generalization, and adversarial robustness. The result suggests some important trends in determining the 
+degree of memorization.
+
+[2] Solution:
+
+The authors design the experiment to investigate the effect of generalization, capacity, critical sample, and regularization
+in leaning. They checked the effect between real data and random noisy data. In dataset, they mainly generated two kind of 
+noise: (a) randY where they replaced the labels with random labels, and (b) randX where they added noise into inputs. They 
+also introduced noise with 20% to 100% random change. First, they trained model on random data and real data separately and 
+observed the prediction to study the behavior of brute-force memorization and pattern learning for easy examples and hard 
+examples in random and real data. Second, they computed the loss-sensitivity in real data and random data via gradients and 
+checked the difference in loss value using Gini-coefficient to study the proxy for memorization effect. Third, they 
+investigated the effect of capacity in real data and noisy data with respect to the validation accuracy and 
+time-to-convergence. Later, they defined the Critical Sample Ration (CSR) in DNNs and measured the complexity of the 
+hypothesis by considering the CSR value found by some search strategies. Finally, they compared the performance under 
+different regularization techniques for real data and noisy data to see the effect of regularization in learning.
+
+[3] Evaluation:
+
+The authors performed the analysis on two real-world datasets using two types of models: (a) MLPs with ReLUs on MNIST 
+dataset, and (b) CNNS on CIFAR10 dataset.  For generalization, they trained an MLP on MNIST for a single epoch 100 times 
+with different initializations and compute the average for each example of 1000 examples. They found that the difference
+in estimated prediction is larger for real data than noisy data which suggests that the model learns some pattern for easy
+examples and failed for hard examples, on the other hand, the models tried to brute-force memorize the noisy data. 
+Further, they computed the loss-sensitivity via gradients for each example after each SGD update. Using the 
+Gini-coefficient they measured the inequality among values and observed that the difference is sensitive for random 
+data. This supports that the model doesn’t memorize on real data, at least not like the random data. This experiment was 
+conducted on 1000 MNIST examples.  In the next section, the authors investigated the effect of capacity on real data and
+random data.  They observed that the higher capacity is needed for noisy data to achieve maximal validation accuracy, 
+therefore,  optimal performance can be achieved using a lower capacity model on a clean dataset.  They observed the
+consistent result for MNIST noisy label, MNIST noisy output, CIFAR10 noisy input but not in CIFAR10 noisy label. In the
+next experiment, they measured the effect of data size on time-to-convergence to achieve maximum accuracy. They observed
+that if the size decreses then models on both the real data and noisy data take a longer time to convergence, however,
+the effect is less severe for real data. In both cases after a certain amount of model, ever the data size increases 
+model takes less time to convergence as it already gets enough pattern to converge early.  This suggests that the model 
+is extracting pattern rather than memorizing in real data. After that authors studied the effect of CSR on CIFAR10 data 
+for real and noisy data using the LASS algorithm. They observed that the number of critical samples for noisy data is 
+much higher than the real data which suggests that the learning surface becomes more complex for noisy data for both 
+random inputs and random labels. Another observation is that the model got maximum accuracy on the validation data 
+before achieving high accuracy on training data, and also as noise increased the critical samples also increased. 
+Finally, the authors studied the effect of regularization in training. They checked the performance of CNNs on 
+CIFAR10 data for various regularization techniques such as dropout, Gaussian noise, weight decay, adversarial, etc 
+for different values and combinations. They checked the effect of different regularizers on train accuracy on noisy 
+data and validation accuracy on the real data. The result suggests that the regularization can reduce memorization 
+of noisy data without impacting the real data.  Although different regularization affects the analysis to a 
+different extent (i.e. dropout is most effective), they all convey the same message.
