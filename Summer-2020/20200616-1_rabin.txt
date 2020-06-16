@@ -1,0 +1,46 @@
+Title: Understanding deep learning requires rethinking generalization
+
+Authors: Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, Oriol Vinyals
+
+Published in: ICLR 2017
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1611.03530
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+DNNs model having massive size may exhibit small generalization error -  the difference between training error and test 
+error. On the other hand, the state-of-the-art CNN models can fit unstructured random noisy data.  The traditional 
+approaches (such as VC-dimension, Rademacher, or uniform stability) failed to explain why large DNNs generalize well. 
+Authors conducted several experiments to answer the question - what distinguishes neural networks that generalize well 
+and that don’t. The experiments support that the effective capacity of the model is sufficient for memorizing the entire 
+dataset, optimization on random data is also easy, and randomized data is a kind of data transformation that keeps the 
+learning almost unchanged. Authors also described a theoretical construction showing that simple depth two neural networks 
+already have perfect finite sample expressivity as soon as the number of parameters exceeds the number of data points.
+
+[2] Solution:
+
+Authors take a candidate model and train it separately on true data and randomly replaced label data. For randomly replaced
+label data, there is no connection between input and output, therefore, the intuition is that the training may not converge
+or slow down extremely. Authors experimented with different levels of randomization (true labels, partial labels [0-1], 
+random labels, shuffled pixels, random pixels, gaussian pixels) to get wider insights. Later they showed the difference of 
+their approach with traditional approaches such as   Finally, they investigated the effect of regularizations, both explicit
+(data aug, weight decay, dropout) and implicit (early stopping, batch normalization). Authors also described a theoretical 
+construction showing that simple depth two neural networks already have perfect finite sample expressivity as soon as the 
+number of parameters exceeds the number of data points.
+
+[3] Evaluation:
+
+The authors run the Inception V3 model on the CIFAR10 dataset, and AlexNet and MLPs model on the ImageNet dataset. They 
+trained different randomized data and found that SGD with unchanged hyper-parameters can fit the random data. Initially, 
+training loss is high for all data settings but after a few thousand steps models start to fit the data perfectly and 
+converge to zero loss on the training set. However, the loss is sensitive to the degree of randomization. Another 
+observation is that the converge time increases with increasing the level of noise. Note that the test errors are the 
+same as generalization error as the training errors are zero. Their experiments show that the generalization error 
+increases with increasing the random level. Finally, the experiment on both explicit and implicit regularizers suggested 
+that - for real data, the regularization may improve the generalization performance, however, the model also performs 
+comparatively the same without regularization, and for noisy data, the generalization error is higher whether with or 
+without regularization.
