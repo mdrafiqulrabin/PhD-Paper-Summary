@@ -60,5 +60,5 @@ Finally, the authors studied the effect of regularization in training. They chec
 CIFAR10 data for various regularization techniques such as dropout, Gaussian noise, weight decay, adversarial, etc 
 for different values and combinations. They checked the effect of different regularizers on train accuracy on noisy 
 data and validation accuracy on the real data. The result suggests that the regularization can reduce memorization 
-of noisy data without impacting the real data.  Although different regularization affects the analysis to a 
+of noisy data without impacting the real data. Although different regularization affects the analysis to a 
 different extent (i.e. dropout is most effective), they all convey the same message.
