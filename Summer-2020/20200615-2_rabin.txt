@@ -1,0 +1,41 @@
+Title: Deep Nets Don't Learn via Memorization 
+
+Authors: David Krueger et al.
+
+Published in: ICLR 2017 (Workshop Track)
+
+Keywords: N/A
+
+Link: https://openreview.net/forum?id=rJv6ZgHYg
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The authors study the memorization in training. They argued that DNNs do not memorize real data, instead, models use 
+simple hypnosis to fit real data.  To support their views, they demonstrated the qualitative differences in DNNs training 
+for both real data and noisy data, separately. The result supports that more capacity is needed to fit noisy data, time 
+to converge is high for noisy data, and the sharpness of the loss function at convergence increases with the noise ratio.
+
+[2] Solution:
+
+Authors created noisy datasets and conducted several experiments in terms of capacity, time-to-converge, sharpness, and 
+regularization. First, they checked the capacity needed to achieve maximal validation performance given different amounts 
+of noise in the dataset. Second, they changed the capacity and the size of the dataset and checked how many epochs are 
+needed for 100% training accuracy. Third, they investigated the norm of the Hessian’s largest eigenvalue as the 
+sharpness/flatness of learned function around the local minima given different amounts of noise in the dataset. 
+Forth, they checked the ability of various regularization techniques to degrade training performance on random labels 
+without degrading the performance on real data.
+
+[3] Evaluation:
+
+The authors created noisy datasets separately by replacing labels randomly and replacing inputs with Gaussian distribution.
+They trained 2-layer ReLU-MLPs on the MNIST dataset for 100 epochs using SGD with a learning rate of 0.01. They observed 
+the following for corresponding experiments: 1) More the examples are replaced with noise, more the capacity is needed for 
+maximal validation performance. This indicated that the model can learn real data with fewer parameters.  2) Reducing the 
+capacity or increasing the dataset may increase the training time for both real and noisy data, but the effect is more 
+sensitive to noisy data. 3) Fitting noise crates more complex scenarios as the sharpness around the local minima of the 
+learned function increase with the increase of noisy data. 4) Here they trained a small Alexnet-style CNN on CIFAR-10,
+and compared various regularization techniques: dropout, input dropout, Gaussian noise, weight decay. The dropout is 
+superior among others to hinder the memorization without reducing the performance on real data.
+
