@@ -1,0 +1,39 @@
+Title: The Secret Sharer: Evaluating and Testing Unintended Memorization in Neural Networks
+
+Authors: Nicholas Carlini, Chang Liu, Úlfar Erlingsson, Jernej Kos, Dawn Song
+
+Published in: arXiv 2020
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1802.08232
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Memorization is very hard to avoid when training a neural network. Unintentional memorization may have severe consequences 
+such as privacy. A well-trained neural model on private data may expose sensitive information. The task like keyboard 
+suggestion or auto test completion may disclose secrets if trained on sensitive data. For example, “my social-security number 
+is. . . ” may autocomplete to some valid SSN but not their own. The authors in this paper describe a testing methodology on 
+this memorization issues of a neural network like generative text models.  Authors show that unintended memorization is not 
+only a matter of academic interest but also the practical concern.
+
+[2] Solution:
+
+The authors introduce a quantitative metric of exposure. They implemented an algorithm that is guided by the exposure metrics.
+Given a pertained model, the target of this algorithm is to extract secret sequences. They propose the testing methodology 
+as a threat model to be queried a large number of times.  Authors aim to answer the question - “Is my model likely to 
+memorize and potentially expose rarely- occurring, sensitive sequences in training data?”. In this regard, they insert 
+randomly-chosen sequence multiple times in training data and measure the difference in perplexity between the inserted and 
+non-inserted random sequences. Having the same accuracy the models differ dramatically in unintended memorization for the 
+random occurrences of sequences. 
+
+[3] Evaluation:
+
+The authors show the effectiveness of the proposed algorithm by extracting credit card numbers from a language model trained
+on the Enron email data. They also target Google’s Smart Compose that is trained on the user’s email message and show that 
+the exposure-based testing strategy can help to remove the privacy risk. The evaluation supports that the unintended 
+memorization is both commonplace and hard-to-prevent. Memorization is not sensitive to overfitting, it may happen in a 
+smaller model and data. Regularizations such as early-stopping or dropout are insufficient to prevent unintended 
+memorization. Only the differentially-private training technique is able to eliminate the issue of memorization.
