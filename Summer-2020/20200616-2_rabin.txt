@@ -1,0 +1,38 @@
+Title: Does Learning Require Memorization? A Short Tale about a Long Tail
+
+Authors: Vitaly Feldman
+
+Published in: STOC 2020
+
+Keywords: Generalization, Interpolation, Long-tailed Distribution, Overfitting, Privacy-preserving Learning.
+
+Link: https://dl.acm.org/doi/abs/10.1145/3357713.3384290
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+The state-of-the-art image recognition models can fit both the training data and random data well with an over-parameterized
+learning algorithm. This tendency of learning random data is known as memorization. The memorization can expose severe privacy
+risk when training on sensitive personal information. Therefore, it is very important to understand whether memorization is
+necessary for training. However, it is not explained by existing theoretical analyses. The authors, in this paper, provide a 
+simple conceptual and theoretical demonstration and show that memorization is necessary to achieve close-to-optimal 
+generalization error. 
+
+[2] Solution and [3] Evaluation:
+
+DNNs achieve lower training error but higher testing error, and this is more sensitive when the model is trained on random 
+data - this is because of memorization as the label can not be predicted based on the rest of the data. However, the 
+insufficient amount of data to predict accuracy on rare data is the main barrier to learning - known as “long tail”. 
+Authors conducted the following experiment to formalize the effect of the long tail: (a) data distribution of each class 
+as a mixture of distinct subpopulations, for example, images of birds include different species from different perspectives 
+and different conditions and all referred as same label bird. (b) data distribution of each class as long-tailed mixtures 
+of subpopulations, for example, 10K fine-grained labels (different species of birds as different labels) and where the number
+of examples per class is long-tailed. In the second scenario, it may happen that the training dataset only has single 
+instances for some labels. And, the only way to fit those examples is to memorize. Thus, in the case of long-tailed 
+distribution of frequencies, an algorithm needs to be able to memorize the labels in order to achieve close-to-optimal 
+generalization. The memorization is necessary on the training set to accurately predict the labels of examples from the 
+same subpopulations in the dependent test set. The accuracy in the dependent test set drops significantly when the 
+corresponding example is removed from the training set. The authors discussed several state-of-the-art image recognition 
+models on MNIST, CIFAR-10/100, SVHN, and ImageNet datasets. Another evidence discussed by the authors is that models train 
+with differentially private (DP) algorithms can not memorize individual labels and thus, less threat to privacy risk.
