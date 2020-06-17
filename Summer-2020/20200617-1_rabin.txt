@@ -1,0 +1,17 @@
+Title: Memorize or generalize? Searching for a compositional RNN in a haystack
+
+Authors: Adam Liška, Germán Kruszewski, Marco Baroni
+
+Published in: ICML 2018
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1802.06467
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+[2] Solution:
+
+[3] Evaluation:
