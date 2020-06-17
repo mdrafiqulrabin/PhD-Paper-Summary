@@ -12,12 +12,28 @@ Link: https://arxiv.org/abs/1802.06467
 
 [1] Problem:
 
-The compositional way of learning is to discover the skills shared by different tasks and combine them to solve a new task. However, deep neural networks (DNNs) do not learn in a compositional way, as a result, they do not generalize from one task to another task despite of the powerfulness of learning to a specific task. The authors, in this paper, explore the decomposition learning of recurrent neural networks (RNNs).
+The compositional way of learning is to discover the skills shared by different tasks and combine them to solve a new task.
+However, deep neural networks (DNNs) do not learn in a compositional way, as a result, they do not generalize from one task
+to another task despite of the powerfulness of learning to a specific task. The authors, in this paper, explore the
+decomposition learning of recurrent neural networks (RNNs).
 
 [2] Solution:
 
-In theory, the RNNs trained on standard gradient descent can behave compositionally but in the presence of additional supervision (!). The authors first introduce the lookup table composition set up to test the compositional behaviors of RNNs. After that, they demonstrate that the RNNs can learn compositional behavior if explicit supervision is given on hidden layers. Finally, they attempted to find a compositional solution via standard example-driven gradient-descent- based training. The authors search over a large number of models to investigate the portion of models that can behave compositionally without additional supervision, and found that a small non-negligible portion of models still can reach a compositional solution. This supports the concept that a combination of gradient descent and evolutionary strategies may help to setup compositionally in RNNs. 
+In theory, the RNNs trained on standard gradient descent can behave compositionally but in the presence of additional
+supervision (!). The authors first introduce the lookup table composition set up to test the compositional behaviors of
+RNNs. After that, they demonstrate that the RNNs can learn compositional behavior if explicit supervision is given on hidden
+layers. Finally, they attempted to find a compositional solution via standard example-driven gradient-descent- based
+training. The authors search over a large number of models to investigate the portion of models that can behave
+compositionally without additional supervision, and found that a small non-negligible portion of models still can reach a
+compositional solution. This supports the concept that a combination of gradient descent and evolutionary strategies may
+help to setup compositionally in RNNs. 
 
 [3] Evaluation:
 
-The authors experimented with a 2 hidden layer recurrent model having an LSTM layer with 60 units and a sigmoid layer with 10 units.  More details of the model and training are given in section 3. They conducted two experiments: (Experiment 1) Can an RNN encode a compositional solution through a finite-state automaton? (Experiment 2) Search for a compositional RNN over model initializations. The task mentioned here is an FSA-based 3-bit string lookup: atomic and composed. I’m skipping how the task is implemented (section 4) for difficulties in understanding and summarized the result directly. The result shows that an RNN can learn to solve a function composition task compositionally by storing the constituent functions and combining them to solve new problems in a zero-shot fashion.
+The authors experimented with a 2 hidden layer recurrent model having an LSTM layer with 60 units and a sigmoid layer with
+10 units.  More details of the model and training are given in section 3. They conducted two experiments: (Experiment 1) Can
+an RNN encode a compositional solution through a finite-state automaton? (Experiment 2) Search for a compositional RNN over
+model initializations. The task mentioned here is an FSA-based 3-bit string lookup: atomic and composed. I’m skipping how
+the task is implemented (section 4) for difficulties in understanding and summarized the result directly. The result shows
+that an RNN can learn to solve a function composition task compositionally by storing the constituent functions and
+combining them to solve new problems in a zero-shot fashion.
