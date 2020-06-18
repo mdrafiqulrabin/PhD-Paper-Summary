@@ -1,0 +1,49 @@
+Title: DNN or k-NN: That is the Generalize vs. Memorize Question
+
+Authors: Gilad Cohen, Guillermo Sapiro, Raja Giryes
+
+Published in: NIPS 2018
+
+Keywords: N/A
+
+Link: https://arxiv.org/abs/1805.06822
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Deep neural network is a powerful learning tool that shows its effectiveness in solving a target task. One of the important
+properties of DNN is to generalize well in new data. The generalization error is the difference between training error and
+test error, that measures the ability of generalization to correctly predict new unseen data. The authors study the relation
+between deep neural networks (DNNs) and various classical classifiers such as support vector machine (SVM), Logistic
+Regression (LR), and k-nearest neighbor (k-NN). This comparison provides new insights of neural networks to the ability of
+memorizations of training data and generalization to new data. Traditionally memorization and generalization are considered
+to contradict each other, however, authors in this paper aim to study how these two can co-exist in DNNs.
+
+[2] Solution:
+
+Authors compare the softmax predictions of DNNs to the predictions of SVM, LR, and k-NN. Note that k-NN is known as a
+perfectly memorize model on training data, and k-NN behavior in DNN is a sign of generalization. Authors use the KL
+divergence metrics to measure the distance (D_KL) between decisions between DNNs and classical classifiers, as an average of
+all examples. Authors also measure how close the predictions (P_SAME) of DNN softmax to classical classifier by computing
+another probability	metrics where the predictions are the same. The authors first calculated the test accuracy and P_SAME
+value, and observed high agreement between the models, especially for the deeper networks. Later, authors fitted the 
+k-NN/SVM/LR models on feature vector of every layer after training the neural network and computed the train and test
+accuracies to see how well the DNN generalizes as a function of the depth of the layer, and they found that generalization
+improves gradually along with the network layers. The same experiment was also conducted with random labels, and the authors
+observed that memorization occurs only within the last layers. Another experiment was run by checking the D_KL trend for the
+training set and test set, and authors found the same trend before memorization point (where the training accuracy reaches
+100.0% for the first time) but D_KL trends differ upon memorization point, both for non-randomized and randomized data, but
+more sensitive to randomized data. In this scenario, the D_KL values for the training approach zero whereas for the testing
+increase to a constant value, that serves as an indicator for overfitting, where the network memorizes the training set
+excessively.
+
+[3] Evaluation:
+
+The authors compare the memorization and generalization effect among DNN, SVM, LR, and k-NN. Authors experimented with 
+Wide-Resnet, LeNet, and a simple MLP on CIFAR-10, CIFAR-100, and MNIST data where the network used for image classification.
+The result suggests that DNN is comparable to SVM and LR on the training data and test data (accuracy, P_SAME regardless of
+whether the network is generalized. On the other hand, the similarity between DNN and k-NN based on D_KL holds in the
+absence of overfitting. Finally, the authors conclude that memorization and generalization are not contradicting to each
+other rather they are compatible and complementary. The detailed study supports that DNNs memorize the feature space of
+training data and generalizes by learning a new metric space.
