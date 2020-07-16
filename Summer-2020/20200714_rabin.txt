@@ -12,9 +12,27 @@ Link: https://2020.esec-fse.org/details/fse-2020-papers/21/When-Does-My-Program-
 
 [1] Problem:
 
+To understand why a program is failed, the first step is to learn about the environment and features are related to the failure. Finding such circumstances 
+is necessary as this is key to understand the failures, to suggest a precise fix, and to create new failure-inducing tests. In this paper, the authors 
+introduce an approach (ALHAZEN) to automatically determine the circumstances for certain behaviors by analyzing relevant features. The goal is to start 
+with a failure-inducing input and determines the input features associated with this failure.
 
 [2] Solution:
 
+The ALHAZEN mainly works in the following way: Parse inputs and Extract features, and  Train a hypothesis and Refine it with new tests. Parse inputs and 
+Extract features: Using the CFGs (Context-Free Grammars) of the input language, a producer generates a parse tree for the input. Applying a pre-order 
+traversal of the parse tree to get the devotion sequence in the order of nodes in the tree. The authors use the presence and absence of non-terminal symbols 
+in the grammar, the length of individual nodes in the path tree, the maximal code point of characters in nodes, and the numeric interpretation of parse tree
+nodes as input features. Additional alternatives from complex real-world examples are also added in grammar using a rewrite step to enhance the feature
+extraction. The authors use an Earley Parser to get all possible parse trees and get the max value among each feature. Train a hypothesis and Refine it with 
+new tests: A decision tree learner is used to learn the association between the input features and program behavior. At each iteration, the ALHAZEN trains 
+the learner to learn from all known inputs and generate more inputs to refine the tree in the next iteration. 
 
 [3] Evaluation:
 
+The authors evaluate the ALHAZEN in three different scenarios:  1) predict whether an input triggers the bug, 2) produce more inputs that trigger the bug, 
+3) reduce the search space in debugging. They stated the experimented with nine bugs found in Google Closure Compiler, Mozilla Rhino, and Genson JSON parser,
+where they used the ANTLR grammars.  Later, they also conducted the experiment on grep and find common line utils where they wrote grammars by themselves. 
+They mainly looked for the crash, timeout, and regression. They also generated data set for evaluation. The result shows that the ALHAZEN predicts 92% of all
+inputs correctly, produces several new failure-inducing inputs (on average 68.5% generated inputs trigger failures), and the decision tree only uses less 
+than 5% of input features which indicates that more than 95% features are irrelevant.  
