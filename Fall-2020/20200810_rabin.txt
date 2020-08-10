@@ -1,0 +1,40 @@
+Title: Big Code != Big Vocabulary: Open-Vocabulary Models for Source Code
+
+Authors: Rafael-Michael Karampatsis, Hlib Babii, Romain Robbes, Charles Sutton, Andrea Janes
+
+Published in: ICSE 2020
+
+Keywords: Naturalness of code, Neural Language Models, Byte-Pair Encoding
+
+Link: https://arxiv.org/pdf/2003.07914.pdf
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Neural models are being used to assist software engineering tasks such as code completion or bug identification. Models analyze large amounts of source code,
+learn to represent the properties of source code for a machine learning points of view such as code embedding. Source code introduces new identifier names at 
+a far higher than natural languages. Thus, the major concern is how to model the vocabulary of source code. Both large vocabularies and out-of-vocabularies 
+are major issues to be noted. In this paper, to address this issue, the authors (a) study the choice of modeling vocabulary and its impacts, (b) build an 
+open-vocabulary NLM for source code, and (c) show that the model outperforms state-of-the-art models on three different code corpora (Java, C, and Python).
+
+[2] Solution:
+
+They study different choices for modeling of vocabulary and its impact on Java dataset in terms of scalability (vocabulary size and corpus size), information
+loss (out-of-vocabulary in unfiltered vocabulary, and most frequent vocabulary), and frequent word count such as 10 or less in vocabulary. The baseline has 
+been set with unsplit tokens and whitespace split on comments and strings, where the OOV in unfiltered vocabulary is 42%. The filtering with removing non-English
+words, whitespace, comments, and strings reduced the OOV to 39%. The word splitting with camelCase or snake_case, and adding case information in separator tokens
+reduced the OOV to 9%. The subword splitting with removing numbers and using Spiral token splitter further reduced the OOV to 3%. The most effective one is BPE
+(Byte-Pair Encoding) that shrinks the vocabulary significantly (1% compared to baseline) and reduced the OOV to 0%. Using this BPE as vocabulary, authors train
+the NLM (Neural Language Model) with single layer GRU and evaluate (Cross-Entropy and MRR: Mean Reciprocal Rank) the code completion task in three datasets of
+different language (Java, C, and Python).
+
+[3] Evaluation:
+
+Authors evaluate the open-vocabulary BPE NLM with five RQs: (RQ1) Compared to state-of-the-art LMs for code, (RQ2) Performance with additional data, 
+(RQ3) Across different programming languages, (RQ4) Effectiveness of dynamic updating, and (RQ5) Bug identification. They compared BPE NLM with different 
+n-gram and NLM models in terms of different approaches (cache, nested, nested cache, close, heuristic), different scenarios of code completion (Static, 
+Dynamic,  Maintenance, Identifiers), diffident size of train set (small and large), different feature size (512  0r 2048), different marge limit (2K, 5K, 10K),
+different language (Java, C, and Python) and bug detection (entropy is higher in buggy code than fixed code). The result shows that the open-vocabulary BPE NLMs
+are effective models of source code, can scale in terms of resource, results hold on different languages, can adapt to the global model, and better bug 
+detectors compared to state-of-the-art language models.
