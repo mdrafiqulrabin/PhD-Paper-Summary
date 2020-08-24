@@ -1,0 +1,42 @@
+Title: Suggesting Natural Method Names to Check Name Consistencies
+
+Authors: S. Nguyen, H. Phan, T. Le, T. N. Nguyen. 
+
+Published in: ICSE 2020
+
+Keywords: Naturalness of Source Code; Program Entity Name Suggestion; Deep Learning
+
+Link: https://ml4code.github.io/publications/nguyen2020suggesting/
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Misleading name of methods may confuse developers about the functionality, and lead to API misuses. The authors aim to mitigate the inconsistency of the 
+method name and its implemented body. They proposed a model (MNire) to check this consistency. The MNire uses the tokens of context (implementation, 
+interface, and enclosing) that better represents the tokens of a good method name. They draw the idea from an empirical study on the nature of the method 
+name that confirms that the high portions of tokens in method names are likely to appear in the mentioned context of the program. Therefore, using tokens 
+from those three contexts outperforms state-of-the-art models for abstract summarization of method.
+
+[2] Solution:
+
+The authors first perform an empirical study on (a) uniqueness and sizes of method names and (b) conditional occurrence of tokens in method names on the 
+contexts. The findings from (a) implied that state-of-the-art approaches have several limitations such as searching for less frequent methods for 
+Lie et al.[32], method name and body may differ in a different contexts for code2vec[12], and token of entities name and method name should be in the same 
+space for Allamanis et al.[6,7]. The findings for (b) supports the principle of naturalness — common tokens are shared among method name and context, and the 
+tokens of the method’s name and program entities in the contexts appear more regularly. Based on the motivation and observations, authors build a tool called 
+MNier that takes the tokens from three contexts as a contextual sequence: implementation, interface (input/output), and closing class. An Encoder-Decoder 
+seq2seq model [17] encodes the contextual sequence and use attention to pick the relevant parts for predicting target embeddings of the method name. For a 
+given body, the model extract context, predict abstract summarization as a candidate, and finally compares the given name against the candidate for 
+consistency checking or recommendation.
+
+
+[3] Evaluation:
+
+The authors evaluated MNire in two tasks: MCC (Method Consistency Check) against Liu et al. [33] and MNR (Method Name Recommendation) against code2vec[12]. 
+For a fair comparison, the authors collected the corresponding Java dataset, removed duplicate projects/files, and trained and tested separately. In both tasks, 
+the MNire significantly performs better against corresponding models by a margin of more than 10% in precision and recall. They also confirmed the impact of
+context and representation for MCC and MNR. The experiment with size and length of token, size of training data, and similarity threshold also showed its 
+sensitivity in results. According to time complexity, the MNier is also efficient than code2vec. The authors also confirmed that their model found inconsistencies
+in real projects and applied  50 pull requests and most of them have been fixed or agreed.
+
