@@ -1,0 +1,48 @@
+
+Title: Deep Learning Type Inference
+
+Authors: Vincent J. Hellendoorn, Christian Bird, Earl T. Barr, Miltiadis Allamanis
+
+Published in: ESEC/FSE 2018
+
+Keywords: Type Inference, Deep Learning, Naturalness
+
+Link: https://dl.acm.org/doi/abs/10.1145/3236024.3236051
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Developers are using various programming languages but the choice of such programming languages strongly depends on the design and quality. 
+Dynamically typed language such as Python and JavaScript are becoming much popular and also have statically typed information. For example, 
+Python supports type annotations and programs like TypeScript (a strict superset of JavaScript) are being added with type systems to allow 
+partially typed programs. Researchers found that the static information is very useful, for example, Hanenberg et al. showed that the 
+undocumented typed languages have better maintainability and readability, Gao et al. found that the 15% of reported JavaScripts bugs can be 
+fixed if type information is available, and Ray et al. found that the open-source typed projects have fewer fault incidents. However, static 
+typing is costly for adding type annotations and checking type systems to fix type errors. In this situation, the authors proposed a deep 
+learning model called DeepTyper to predict the type of certain variables or methods in programs that could be beneficial for statically 
+typed transition and richer compile-time information.
+
+[2] Solution:
+
+The approach consists of three phases: data gathering, learning from aligned types, and evaluation. The authors collected 1K top starred JS/TS 
+projects from Github. They parsed the files using the TypeScript compiler(tsc) and created a dataset with tokens and types after preprocessing, 
+filtering, and splitting. The token and type vocabularies are created from the training set (seen at least 10 times), and the less frequent 
+tokens/types in the training set and the unseen tokens/types in validation and test sets are replaced by generic UNKNOWN/any term.  All types 
+are used for training data and the useful annotation types (parameters, variable, return types) are used for testing. The proposed DeepTyper by 
+the authors is a deep learning model that can understand the type in a certain context and provide type suggestions, which can be verified with 
+type checker. The authors implemented DeepTyper on the RNN-based seq2seq model that is an extension to the standard biRNN with an additional 
+consistency layer. The consistency layer is used to concat the context representation of the token with the average over the token representations 
+from all locations. The DeepTyper model is being trained on a corpus of tokens and types and used to predict annotations of parameters, variables, 
+and return types. A hybrid model is also implemented where the state-of-the-art tool is first queried and DeepTyper is only used if the query 
+cannot provide a type.
+
+[3] Evaluation:
+
+The authors compared the results of the DeepTyper model with the plain-RNN model, CheckJS, and JSNice. The top-k accuracy, confidence threshold, 
+precision/recall, and type inconsistency measures are used as evaluation metrics. Based on the results, the DeepTyper proved to be complementary 
+to CheckJS and JSNice. The authors found that the context is key to correctly predict the type annotations, and also studied to avoid the overfitting 
+in local cues. An evaluation ob a large body of real-world code shows that the DeepTyper can suggest type annotations with 80% precision and 50% recall. 
+The results also show that the model can interact with the compiler and predict 4K+ additional type annotations with 95% precision that could not be 
+found without the aid of the DeepTyper model. The DeepTyper in a hybrid model could predict thousands of annotations with high precision.
+
