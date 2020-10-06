@@ -1,0 +1,24 @@
+Title: Adversarial Robustness for Code
+
+Authors: Pavol Bielik, Martin Vechev
+
+Published in: ICML 2020
+
+Keywords: -
+
+Link: https://arxiv.org/abs/2002.04694
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Deep learning models have been used for programming tasks such as bug finding/repair or program properties prediction (i.e. code completion, variable name, type inference). Recently model shows more than 90% accuracy for such tasks, but the robustness study has been overlooked. Like other domains (i.e. image, sound), the model of programs is also vulnerable to adversarial attacks. However, training both robustness and accurate model for programs have several key challenges such as structured and long code, and simple perturbation can affect the prediction. To address these problems, the authors of this paper proposed a novel approach that combined several key components to achieving accurate and robust models of code.
+
+[2] Solution:
+
+In this work, the authors instantiated and studied the adversarial attacks for programs, and proposed a novel approach (refine representation) to improve robustness while preserving high accuracy. Their approach combined three key components such as (a) learning to abstain, (b) adversarial training, and (c) refine representation. In learning to abstain, the model is only allowed to make a prediction if the confidence score is higher than a threshold, otherwise, the model will not make any prediction if uncertain. Adding abstain leads models to be simpler as learning to abstain is easier than learning to predict the correct label. In adversarial training, several valid label preserving modified programs are generated with adversarial attacks such as word substitution (i.e. change constants/operators), word renaming (i.e. rename variable/method names), or sequence substitution (i.e. add dead code or reordering sentences). Then models are training to minimize the expected adversarial loss (the worst case loss among the adversarial examples of the original program). Only the adversarial training alone is not sufficient, and so the authors combined all components together. In representation refinement, programs are considered as graphs and define an optimization problem to minimizes the number of edges of graphs. The authors implement the ILP (Integer Linear Problem) encoding to solve this optimization problem of learning to refine representation. The goal is to minimize the expected size of refinement for reducing the edges in graphs such that the expected loss of the model stays approximately the same. The key idea is that only the relevance part from programs will be captured for making predictions of each node. It reduces the search space and leads to easier optimization. After running the process a robust model is trained for type prediction, however, the model only provides the prediction for a subset of data having enough confidence. Therefore, the authors generate a new dataset by annotating the predicted programs and removing successfully predicted samples. After that, a new model is being trained on the new dataset and the process is continued (one by one) as long as the new model predicts more samples.
+
+[3] Evaluation:
+
+The target task used in this work is type inference where the models aim to predict the type of a token given the input program and the position of that token in the program. The authors train multiple adversarially robust models where each of which learns to make predictions for a different subset of the dataset. Five types of models are evaluated (LSTM, DeepTyper, GNT, GCN, GGNN) on two datasets (TypeScript and JavaScript). The result shows that, on average, the process improves the robustness of models by 15% while preserving approximately the same accuracy.
+
