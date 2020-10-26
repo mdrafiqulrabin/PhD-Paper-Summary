@@ -1,0 +1,37 @@
+Title: Software Testing for Machine Learning
+
+Authors: Dusica Marijan, Arnaud Gotlieb
+
+Published in: AAAI 2020
+
+Keywords: -
+
+Link: https://aaai.org/ojs/index.php/AAAI/article/view/7084/6938
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+ML systems play an important role in many innovative domains. However, the vulnerability of such ML systems may lead to severe failures. 
+Therefore, comprehensive testing of ML systems needs to be performed, especially in safety-critical domains. On the other hand, software 
+testing of ML systems is susceptible to a number of challenges compared to the testing of traditional software systems. In this paper, the 
+authors provide a summary, limitation, and future directions of the current state-of-the-art of software testing for machine learning.
+
+[2] Solution:
+
+In this paper, authors aim to 1) identify and discuss the most challenging areas in software testing for ML systems, 2) synthesize the most
+promising approaches to these challenges, 3) spotlight their limitations, and 4) make recommendations for further research efforts. It 
+discusses six key challenge areas for software testing of ML systems, summarizes current approaches, and highlights their limitations. Those 
+are [KC-1] Missing Test Oracles, [KC-2] Infeasibility of Complete Testing, [KC-3] Quality of Test Datasets for ML Models, [KC-4] Vulnerability
+to Adversaries, [KC-5] Evaluating the Robustness of ML Models, and [KC-6] Verifying Ethical Machine Reasoning. 
+
+[3] Evaluation:
+
+Software testing of ML has a range of open research challenges, and further research work focused is needed on addressing these challenges. 
+Followings are the main summary and future directions: 1) Further work is needed to automate the creation of metamorphic relationships as test 
+oracles are often missing in testing ML systems. 2) Adaptation of combinatorial testing techniques is a promising approach as neuron coverage 
+can lead to the input space explosion. 3) Domain-specific operators are required as common mutation operators are insufficient for mutation 
+testing of DNNs. 4) Generation and countering strategies for adversarial examples need further advancing to reduce computational complexity. 
+5) Metrics for robustness evaluation of ML models and effectiveness evaluation of adversarial attacks need further advancing. 6) Formal 
+verification and certification of ethical machine reasoning are uniquely challenging.
+
