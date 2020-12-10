@@ -1,0 +1,44 @@
+Title: Dynamic Slicing for Deep Neural Networks
+
+Authors: Ziqi Zhang, Yuanchun Li, Yao Guo, Xiangqun Chen, Yunxin Liu
+
+Published in: ESEC/FSE 2020
+
+Keywords/CCS: Neural networks, Dynamic analysis
+
+Link: https://arxiv.org/pdf/2009.13747.pdf
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Program slicing has been widely applied in a variety of software engineering tasks, i.e. debugging, testing, verification, etc. 
+However, existing program slicing techniques only deal with traditional programs that contain instructions and variables, and 
+overlook neural networks that include neurons and synapses. Therefore, the authors propose NNSlicer for slicing deep neural 
+networks based on data flow analysis.  The authors evaluated NNSlicer on CIFAR-10 dataset (image size 32×32, 10 output classes) 
+with CNN models (LeNet, ResNet10, and ResNet18). The result shows that the usefulness and effectiveness of NNSlicer with three 
+applications (adversarial detection, model pruning, and model protection)  significantly outperforms other baselines that do not
+rely on data flow analysis.
+
+[2] Solution:
+
+A program slice is a subset of the whole program that may be relevant to specific output but much smaller in size than the whole
+program, thus much easier to analyze. Similarly, NNSlicer computes a subset of neurons and synapses that may significantly affect
+the values of certain interested neurons. The working process of  NNSlicer consist of three phases: a) profiling phase, b) forward
+analysis phase, and c) backward analysis phase. In the profiling phase, the average neuron activation value over the whole training
+dataset is calculated for each neuron. In the forward analysis phase, the relative activation value of each neuron is calculated. 
+In the backward analysis phase, recursively compute the contributions of preceding neurons and synapses from back to front, and slice
+the network by removing neurons/synapses with zero contribution.
+
+[3] Evaluation:
+
+The authors demonstrate the usefulness and effectiveness of NNSlicer on three applications: adversarial input detection, network 
+simplification and pruning, and selective model protection. For adversarial input detection, the reasoning is that the normal image 
+and the adversarial one are indistinguishable for a human, but slices are different. Therefore, given a new input, if its slice is 
+distinctly different from the normal slices, it is very likely an adversarial input. For network simplification and pruning, the 
+reasoning is that the computation of executing the model may be reduced with redundant weights trimmed off. Therefore, given a set 
+of targeted classes, NNSlicer prune trivial synapses of a large model and generate a smaller model with higher model accuracy. 
+For selective model protection, the reasoning is that NNSlicer can differentiate the important and non-important part of networks. 
+Therefore, NNSlicer can protects a limited ratio of synapses that is important from attacker. In all applications, NNSlicer significantly 
+outperforms other baselines that do not rely on data flow analysis.
+
