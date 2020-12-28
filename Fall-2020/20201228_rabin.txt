@@ -1,0 +1,38 @@
+Title: Axiomatic Attribution for Deep Networks
+
+Authors: Mukund Sundararajan, Ankur Taly, Qiqi Yan
+
+Published in: ICML 2017
+
+Keywords/CCS: N/A
+
+Link: https://arxiv.org/abs/1703.01365
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Interpretability of deep neural networks is critical to debug/understand the behavior of networks. In this paper, the authors study 
+the problem of attributing the prediction of a deep network to its input features. Any attribution methods should satisfy the two 
+fundamental axioms (Sensitivity and Implementation Invariance) but are not satisfied by most known state-of-the-art attribution 
+methods. Therefore, the authors propose a new attribution method, Integrated Gradients (IG), satisfying the fundamental axioms, 
+that requires no modification to the original network and simple to implement with few calls to gradients operators. IG demonstrates 
+its ability to debug networks, to extract rules from a network, and to enable users to engage with models better.
+
+[2] Solution:
+
+Suppose, F is a function that represents a deep network, x = (x1, . . . , xn) is an input, and x’ = (0, . . . , 0)  is a baseline 
+input. Attribution of the prediction at input x (relative to a baseline input x’) is a vector AF(x, x0) = (a1, . . . , an) where 
+ai is the contribution of xi to the prediction F(x). For instance, in an object recognition network, an attribution method could 
+tell us which pixels of the image were responsible for the prediction. Integrated gradients are defined as the path-integral of 
+the gradients along the straight-line path from the baseline x’ to the input x. It can be defined as follows: a) Consider the 
+straight-line path from the baseline x’ to the input x. b) Compute the gradients at all interpolated points along the path. 
+c)Integrated gradients are obtained by accumulating these gradients.
+
+[3] Evaluation:
+
+The primary contribution of this paper is a method called integrated gradients that attributes the prediction of a deep network to 
+its inputs. It can be implemented using a few calls to the gradients operator. It has a strong theoretical justification and satisfies 
+fundamental axioms such as Sensitivity, Invariance, Linearity, Completeness, and Symmetry-Preserving. It can be applied to a variety of 
+deep networks such as image models, text models, and chemistry models. 
+
