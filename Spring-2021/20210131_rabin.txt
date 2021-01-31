@@ -1,0 +1,39 @@
+Title: InferCode: Self-Supervised Learning of Code Representations by Predicting Subtrees
+
+Authors: Nghi D. Q. Bui, Yijun Yu, Lingxiao Jiang
+
+Published in: ICSE 2021
+
+Keywords/CCS: N/A
+
+Link: https://arxiv.org/abs/2012.07023
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Learning code representations (a.k.a. embeddings) and building a prediction model for programs have been found useful in many software engineering tasks,
+i.e., code clustering, code clone detection, bug prediction, etc. Different representations of code in tokens, abstract syntax trees, dependency graphs, 
+paths in trees, or the combinations of their variants have been proposed, but, training requires a large number of labeled datasets for specific downstream
+tasks, and the code representations may not be suitable for other tasks. To overcome the limitation, the authors of this paper propose InferCode, which adapts
+the self-supervised learning idea to the ASTs of code. The key idea is predicting subtrees automatically identified from the context of ASTs, and use the 
+learned vector representation of any code, and fine-tuning learned weighted for other tasks.
+
+[2] Solution:
+
+InferCode works by using a Tree-based CNN (TBCNN) to encode the ASTs into a code vector and use it to predict the subtrees. The steps of InferCode are as 
+follows: Step-1) Identify Subtrees from SrcML: Parse code snippet, visit a node, and check if nodes are of the types {expr_stmt, decl_stmt, expr, condition}.
+Step-2) Learning Source Code Representation with TBCNN: The information of the tree will propagate from bottom to top, i.e., a parent node will accumulate the
+information of its descendant in the AST. a) Learning Nodes Representation: type and token, b) Aggregating Nodes Information: attention. Step-3) Predicting 
+Subtrees: The probability that a subtree appears in the AST using softmax-normalization. Step-4)  Usage of the Model after Training: a) Vector representation
+of each node/code: The trained TBCNN encoder of InferCode can be used to produce an embedding vector by (1) parsing the code into an AST and (2) feeding the AST
+through the encoding step. b) Weights that have been learned by model: The weights in the trained TBCNN model can also be used for the prediction models in 
+downstream supervised learning tasks to save training costs and potentially improve their prediction accuracies.
+
+[3] Evaluation:
+
+Authors trained an instance of InferCode for five downstream tasks: a) Three unsupervised tasks: 1) code clustering (OJ, SA), 2) code clone detection 
+(BigCloneBenc, OJ), 3) cross-language code search (Rosetta), b) Two supervised tasks: 4) code classification (OJ), 5) method name prediction (java-small). 
+It can map the AST of any code snippet into an embedding that can be used for other downstream tasks, such as code clustering, code clone detection, or 
+code-to-code search. Its weights can be used under the notion of self-supervised pre-training followed by supervised fine-tuning, such as code classification, 
+method name prediction. The results using InferCode outperform the best baseline in these downstream tasks by a significant margin.
