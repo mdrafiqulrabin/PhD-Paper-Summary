@@ -1,0 +1,44 @@
+Title: RobOT: Robustness-Oriented Testing for Deep Learning Systems
+
+Authors: Jingyi Wang, Jialuo Chen, Youcheng Sun, Xingjun Ma, Dongxia Wang, Jun Sun, Peng Cheng
+
+Published in: ICSE 2021
+
+Keywords/CCS: N/A
+
+Link: https://arxiv.org/abs/2102.05913
+
+
+-------------x-------------x-------------x-------------
+
+
+[1] Problem:
+
+In recent years, ML communities have seen several approaches for testing DL systems. A popular direction among these is robustness testing where the target 
+is finding or generating adversarial examples through fuzzing or guided search. Most of these approaches have used the neural coverage metric, however, 
+recent studies revealed that neural coverage is not correlated to model robustness, hence, not an efficient metric for robustness testing. To overcome this 
+gap, the authors of this paper proposed a novel approach of Robustness-Oriented Testing (RobOT), that quantitatively evaluate the value of the test suite 
+and the convergence quality in improving model robustness. The experiment results show that the RobOT is highly correlated with the model's robustness and 
+could improve the robustness effectively.
+
+
+[2] Solution:
+
+There are two key elements when it comes to testing DL systems: 1) Test case selection: A testing metric to evaluate the quality of a test case or a test 
+suite. i.e. neuron coverage, neuron activation, etc. 2) Test case generation: An approach to generate test cases with the guidance of the testing metric. 
+i.e.  DeepXplore, DeepHunter, etc. Following on this, the key intuition of authors is that: given a seed, if we modify the seed following gradient direction, 
+the loss around it often first increases and eventually converges. Thus, a criterion that measures how well the loss converges can serve as the testing metric.
+As a result, the authors introduce First-Order Stationary Condition (FOSC) to provide a measurement on the loss convergence quality of the generated test cases.
+Based on FOL, they proposed FOL Guided Test Case Selection, and FOL Guided Fuzzing. First, they compute the FOL value for test cases and select test cases based
+on the FOL value (K-Multisection Strategy or Bi-End Strategy). Then, they fuzz seed inputs by guiding perturbation towards changing the original label whilst 
+increasing the FOL value.
+
+
+[3] Evaluation:
+
+The authors try to answer the following RQs: [RQ1] What is the correlation between the FOL metric and model robustness? [RQ2] How effective is the FOL metric
+for test case selection? [RQ3] How effective and efficient is the FOL-guided fuzzing algorithm? They run the experiments on four popular models and datasets:
+MNIST, Fashion-MNIST, SVVHN, CIFAR10; one state-of-the-art test case selection: DeepGini; three coverage-guided test case generation: DeepXplore, DLFuzz, ADAPT;
+two adversarial attacks: FGSM (weak), PGD (strong). The experiment results show that [RQ1] FOL is strongly correlated with model robustness. A more robust model
+has smaller FOL values for adversarial examples. [RQ2] FOL-guided test case selection is able to select more valuable test cases to improve the model robustness
+by retraining. [RQ3] FOL-Fuzz is able to efficiently generate more valuable test cases to improve the model robustness. Therefore, the experiments on multiple benchmark datasets verify the effectiveness and efficiency of RobOT in improving DL model robustness.
