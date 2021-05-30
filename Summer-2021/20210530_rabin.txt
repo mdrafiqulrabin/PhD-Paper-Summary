@@ -1,0 +1,31 @@
+Title: Probing Model Signal-Awareness via Prediction-Preserving Input Minimization
+
+Authors: Sahil Suneja, Yunhui Zheng, Yufan Zhuang, Jim Laredo, Alessandro Morari
+
+Published in: ESEC/FSE 2021
+
+Keywords: machine learning, model signal-awareness, signal-aware recall
+
+Link: https://arxiv.org/abs/2011.14934
+
+-------------x-------------x-------------x-------------
+
+Summary:
+
+In recent years, new models are being proposed that show significant improvement over state-of-the-art models of source code. It may be the case that the
+model is actually learning noise, not the relevant features from the dataset for making correct predictions. To verify the quality of source code models,
+this work presents a novel approach to capture correct task-specific signals from a model’s prediction. This approach uses an input minimization technique
+(Delta Debugging [Zeller et al. 2002]) to reduce a vulnerable program and iteratively keeps reducing the vulnerable program as long as the model maintains
+the same vulnerability prediction. The approach first reduces the original input program into a minimal code snippet without changing the model’s prediction
+and then verify whether the minimal snippet has the same vulnerability condition as the original program. If the corresponding vulnerability from the original
+program is present in the minimal snippet, it signals that the model is learning features relevant to the vulnerabilities (learning correct signal).
+Otherwise, the model is capturing noise or features not relevant to vulnerabilities (learning incorrect signal). The authors evaluate their approach with
+different models and datasets for vulnerability detection in source code. The results show that models of source code often learn noise or irrelevant
+features for achieving high prediction performance.
+
+- Task: They present an approach to capture real vulnerability signals from a model's prediction. This approach uses an input minimization technique (Delta Debugging [Zeller et al. 2002]) and iteratively keeps reducing each vulnerable program as long as the model maintains the same vulnerability prediction.
+- Importance: This work will suggest whether a model captures noises or real vulnerable signals.
+- Contributions: This work requires no knowledge about the target model and defines a new metric called signal-aware recall to measure how well a model captures task-specific signals.
+- Strengths: This work can measure how signal-aware a model is and how much impact it can have on its performance.
+- Weakness: This work only evaluates the signal-awareness of vulnerability detection models and does not explain how to integrate for other types of models.
+
