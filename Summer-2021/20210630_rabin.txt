@@ -1,0 +1,32 @@
+Title: Demystifying Code Summarization Models
+
+Authors: Yu Wang, Fengjuan Gao, Linzhang Wang
+
+Published in: arXiv 2021
+
+Keywords: Code Summarization Models, Explanability
+
+Link: https://arxiv.org/abs/2102.04625
+
+-------------x-------------x-------------x-------------
+
+Summary:
+
+Black-box neural models can not be explained efficiently with the state-of-the-art approaches which indicate a threat to the usage of machine learning models in
+various safety-critical systems.  Some techniques have been used in literature for the explainability of models such as attribution, attention, and saliency maps.
+However, those approaches often focus on the very low-level information, i.e. pixel/token, that does not cover high-level concepts understood by humans. 
+Considering the challenges of existing works, the authors propose a novel approach to explaining the predictions of models through the properties of training data.
+This work provides insights on how to explain and interpret predictions of source code models. The authors propose a reduce and mutate approach to find key 
+features that the model uses for predicting the label of programs. This approach removes unimportant statements from an input program and mutates the expression
+of the program to pinpoint the key elements for the prediction. It reveals that code snippets that make the same predictions often share common syntactic
+structures, as a result, the key input features can be extracted by reducing input programs. The extracted key input features help to understand the reasoning
+of prediction by a model. The authors evaluate this work for explaining the prediction of code summarization models. They use four models (extreme summarizer,
+code2vec, code2seq, and sequence GNN) and three datasets (Java-small, Java-med, and Java-large) in their experiments. They have shown the usefulness of our technique
+by identifying key features, explaining predictions of models, and conducting a user study.
+
+- Task: They propose a reduce and mutate approach to find key features that the model uses for predicting the label of programs. This approach removes unimportant statements from an input program and mutates the expression of the program to pinpoint the key elements for the prediction.
+- Importance: This work will provide insights on how to explain and interpret predictions for source code models.
+- Contributions: The authors introduce an approach for identifying defining features and a mechanism for explaining predictions of models.
+- Strengths: This work reveals that code snippets that make same predictions often share common syntactic structures, as a result, the key input features can be extracted by reducing input programs.
+- Weakness: This work only demystifies the code summarization models and does not consider other models and tasks.
+
