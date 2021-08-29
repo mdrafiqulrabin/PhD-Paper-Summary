@@ -1,0 +1,31 @@
+[ML Paper]: Testing fairness of machine learning algorithms
+Refs: https://doi.org/10.1109/ICST.2019.00022
+
+In recent years, machine learning (ML) algorithms are excessively being applied for various decision-making systems.
+However, we barely know how data are being used, is there any bias in data usage? Fairness testing can help to detect
+biases in ML algorithms. It aims to find whether an ML algorithm fairly learns training data or is biased to some
+protected attributes (i.e., address or sex). For example, an ML system (such as hiring suggestion or loan approval)
+should not take any crucial decisions just for changing the value of address or sex. Similarly, it should use all
+data in the training set equally regardless of the ordering of instances and features in data. Hence, the study of
+fairness in ML algorithms is an active area of research. I find this topic very interesting because an ML system
+cannot be trustworthy if it has been proven as bias. Even many non-technical persons are using ML algorithms
+despite having a lack of understanding about the underline implementation of those algorithms. Therefore, testing
+the fairness of ML algorithms can draw researchers' attention to developing fair algorithms.
+
+
+
+[COVID-19 paper]: The concern of privacy while using COVID-19 related apps
+Refs: https://www.nature.com/articles/s41591-020-0928-y
+
+The whole world is now suffering from the outbreak of novel coronavirus. Governments and organizations are taking multiple
+actions to slow down the spread of COVID-19. Contact tracing and digital surveillance can play an important role to control
+the outbreak of COVID-19. For example, if someone tests positive for COVID-19, it will notify their close contact and asks
+them to self-quarantine and monitor their health for possible signs and symptoms. Many tracking apps have been released to
+provide real-time alerts, instructions to check symptoms, and guides for self-isolation.  However, it becomes a concern of
+privacy because these apps usually access numerous features of users' mobile devices including contact, message, camera,
+storage, network, settings, and so on. Thus, researchers are looking into what data is being used by these apps, whether
+the data is stored securely, and how the data will be handled. I find this topic very interesting because governments can
+easily track the movement of the entire community with personal data, or a third party can use health-related data for a
+better recommendation system. As a result, it's worth knowing what data these apps may access and how that data will be
+treated now and after the pandemic.
+
