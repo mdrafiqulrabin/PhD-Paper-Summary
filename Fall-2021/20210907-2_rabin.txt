@@ -1,0 +1,69 @@
+Project: Testing fairness of machine learning algorithms
+
+- What are you trying to do?
+
+The goal of this project is to develop a framework for testing the fairness of machine learning (ML) classifiers.
+The authors are trying to investigate whether ML classifiers fairly use training data or are biased to some particular
+attributes (i.e., address or sex). They consequently aim to implement a tool that, given an ML classifier and dataset,
+will automatically check the fairness of the ML classifier on the dataset.
+
+- How is it done today, and what are the limits of current practice?
+
+The state-of-the-art approaches for fairness testing mainly target the prediction phase of ML classifiers. They all
+refer to the same basic concept: First, train a classifier with an ML algorithm and a labeled dataset. Then, check if
+a change to the value of a feature in an instance leads to a change in the classifier’s prediction. For instance, an ML
+classifier for hiring decisions is called unfair and bias if it changes the decision for a change in the applicant's
+address. As opposed to, the concern of fairness in ML classifiers can also arise in its learning phase. For example, the
+training data itself can be biased and the biased training data can lead to an unfair classifier apparently. Nevertheless,
+the state-of-the-art approaches often overlook the learning phase of ML classifiers for fairness testing.
+
+- What's new in your approach and why do you think it will be successful?
+
+The authors propose a novel approach called “balanced data usage” for testing the fairness of ML classifiers in its learning
+phase. While state-of-the-art approaches focus on the prediction phase, the authors look at the learning phase of ML classifiers.
+The intuition states that an ML classifier should use all data in the training set equally regardless of the ordering of its
+instances and features. To verify it for an ML classifier and a dataset, the approach includes several data transformation techniques
+such as row permutation, column permutation, and feature refactoring to the original dataset and generates several modified equivalent
+datasets. The classifier is called fair and balance if it passes the systematic equivalence check among the original dataset and the
+modified equivalent datasets. There is a high chance that the project will be successful because the ML classifiers and dataset required
+for this project are publicly available. For example, the Scikit-Learn library features various ML classifiers and the UCI Machine
+Learning Repository contains numerous datasets. Moreover, the data transformation techniques used in this approach are also known and
+proven as generating equivalent datasets.
+
+- Who cares?
+
+ML classifiers are excessively being applied for various decision-making systems by people from various fields. Even non-technical persons
+or persons having a lack of knowledge of how ML works are using ML classifiers. Therefore, anyone who uses ML classifiers to build any
+decision-making systems are the target audience of this project.
+
+- If you're successful, what difference will it make?
+
+Nowadays, a large amount of data and many ML classifiers is publicly available for implementing decision-making systems. It is sometimes
+essential to know whether an ML classifier learns these data with equal importance. If this project succeeds,  it will automatically check
+the fairness of an ML classifier with respect to the balanced data usage in its learning phase.
+
+- What are the risks and the payoffs?
+
+Risk: This project can fail if the authors are unable to handle the randomness (i.e., random initial weights, data shuffling, or seed) that
+already is present in ML classifiers. Failing to control such randomness can lead to different results for different runs.
+Payoff: This project can help developers in choosing fair ML classifiers while building decision-making systems for a dataset. The decision
+given by the ML system will be more trustworthy.
+
+- How much will it cost?
+
+In total, the cost of this project may be around 100K$. The total cost includes the cost of a graduate student for 4 months, the cost of a weekly
+two hours meeting from the advisor, and the cost of necessary software and hardware.
+
+- How long will it take?
+
+It will probably take 4 months for a graduate student to finish this project, plus a weekly two hours meeting time from an advisor.
+
+- What are the midterm and final "exams" to check for success?
+
+Midterm exams: At first the authors can choose a very small sample dataset, a very basic ML classifier, and a single data transformation technique
+for implementing the fairness testing tool. After implementing the tool, the authors can test it on a sample dataset and classifier. If everything
+works fine, the authors can add more data transformation techniques one by one. When all data transformation techniques are included, the authors
+can test with some more classifiers and collect more datasets for evaluation. Final exams: The authors can run the tool for a large number of
+datasets with various types of ML classifiers. The authors can collect a real-life known bias or unbias classifier and dataset and validate their
+approach on that. Finally, the authors can share their tool with some experts for testing.
+

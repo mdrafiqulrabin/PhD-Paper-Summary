@@ -1,0 +1,71 @@
+Project: Extracting Label-specific Key Input Features for Code Intelligence Models.
+
+- What are you trying to do?
+
+A code intelligence (CI) model is a deep neural network that takes a program as input and predicts certain properties
+ of that program as output, for example, predicting method name or bug type from a program body. In this project, we
+ are trying to adopt a syntax-guided program reduction approach for reducing the size of an input program while
+ preserving the same prediction of the CI model. The approach removes irrelevant parts from an input program and keeps
+ the minimal snippet that the CI model needs to maintain its prediction. Therefore, by reducing some input programs of
+ a class, we aim to extract relevant input features of that target class.
+
+- How is it done today, and what are the limits of current practice?
+
+Rabin et al. [2020] attempt to find key input features of a class by manually inspecting some input programs of that class.
+However, the manual inspection cannot be applied to a large dataset due to the vast number of classes. Suneja et al. [2021]
+and Rabin et al. [2021] adopt a syntax-unaware program reduction approach, Delta Debugging [Zeller et al. 2002], to reduce
+the size of input programs while preserving the same prediction of the CI model. However, this approach creates a large
+number of invalid programs as it does not follow the syntax during the reduction step. As a result, it requires an extra
+program validation check after the reduction step and backtracks if the reduced program is invalid, which increases the
+reduction steps and time.
+
+- What's new in your approach and why do you think it will be successful?
+
+While state-of-the-art approaches use a manual inspection or syntax-unaware program reduction approach, we focus on adopting
+the syntax-guided program reduction approach. In particular, we will adopt Perses [Sun et al. 2018], a syntax-guided program
+reduction approach, to reduce the size of an input program. We believe this project will be successful because the state-of-art
+approaches show that the syntax-unaware approach can reduce an input program. Therefore, it is more likely that the syntax-guided
+approach will reduce the input program significantly as it follows the syntax of the program. Moreover, my advisor and one of my
+colleagues are already using Perses although not with deep neural networks, thus, it boosts our confidence in adopting the
+approach for finding relevant input features of a class for CI models.
+
+- Who cares?
+
+In general, the software engineering researchers, and in particular, those who use deep neural networks for code intelligence
+tasks will benefit from this project. This field has witnessed a rapid advance in recent years, and we think more researchers
+will pay attention to this field in the next few years.
+
+- If you're successful, what difference will it make?
+
+As the syntax-guided approach follows the syntax of input programs, it will always produce valid input programs. Therefore, the
+approach is more likely to reach the minimal snippet in a smaller number of reduction steps, which will decrease the total
+reduction time. Moreover, following a syntax-guided approach, the approach can reveal more realistic key input features than the
+syntax-unaware approach.
+
+- What are the risks and the payoffs?
+
+Risk: ​​At this moment we do not know whether the open-source implementation of the Perses works with deep neural networks. We may
+encounter some unavoidable issues during adopting Perses with CI models, which may need some instructions from experts. Moreover,
+we have two shared GPU servers for all members of our lab. Therefore, the project may delay or even fail if we do not get the
+required instructions or resources.
+Payoff: Using this syntax-guided approach, researchers can identify relevant input features of a class in much less time. The key
+features can be used for interpreting the predictions of a CI model.
+
+- How much will it cost?
+
+The total cost for this project may be around 200K$. It takes into account the costs of a graduate student, the cost for meeting
+time with the collaborator and the advisor, and the cost for running two GPU servers.
+
+- How long will it take?
+
+It will probably take 6 months for a graduate student to finish this project, plus an additional weekly two hours meeting time
+from the collaborator and the advisor.
+
+- What are the midterm and final "exams" to check for success?
+
+Midterm exams: We will first collect a very small sample dataset and train a simple CI model on that. Next, we will adopt the
+syntax-guided reduction approach (Perses) with the CI model and will test the program reduction on some smaller input programs.
+If it reduces the size of smaller input programs, we will then test our approach on some larger input programs. If everything
+works perfectly, we will continue reducing for an entire class. Final exams: We will iteratively apply on large datasets and
+complex models, and compare the results with the syntax-unaware reduction approach (Delta Debugging).
+
