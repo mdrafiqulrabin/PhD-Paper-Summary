@@ -1,0 +1,80 @@
+[Paper #01] Suggesting Accurate Method and Class Names (https://doi.org/10.1145/2786805.2786849)
+
+Method and class names can be viewed as a high-level summarization of source code. The authors introduce a neural probabilistic language model for automatically inferring method and class names from source code. These model integrates non-local information beyond local context from source code for suggesting accurate names. The authors extract all identifiers and a set of high-level program features from the body of source code that are used to learn the global context of source code beyond the local context.
+This work is important because accurate names can improve the maintainability of source code while incorrect names often lead to software bugs.
+The main contribution is to learn context of source code for suggesting names. The authors implement a log-bilinear neural network to model code contexts that greatly improves on suggesting accurate names than n-gram model.
+The code context includes many hard-coded features which is a major weakness as those features may not be available for arbitrary code snippets and in dynamically typed languages.
+
+
+
+[Paper #02] Code2vec: Learning Distributed Representations of Code (https://doi.org/10.1145/3290353)
+
+The authors propose an attention-based neural model, code2vec, for representing any arbitrary code snippet as a single fixed-length vector. The model uses a bag of paths between leaf nodes in the abstract syntax tree (AST) of source code and aggregates them using an attention mechanism to compute the code vector.
+This work is important because it can learn the complex distributed representations of code and highlight context when making predictions.
+The main contribution is to embed source code as single vector that can be applied to various software engineering tasks. The authors open-source the artifacts including a dataset of 12M processed methods.
+The major weakness is that the authors process each path and node value as a whole token instead of applying sub-tokenization. As a result, paths or nodes that differ only a single sub-token are considered distinct tokens, which drastically increases the size of vocabularies.
+
+
+
+[Paper #03] Assessing the Generalizability of Code2vec Token Embeddings (https://doi.org/10.1109/ASE.2019.00011)
+
+The learned embeddings of words in natural language processing tasks are often generalizable to different tasks. Following the generalizability of word embeddings in different NLP tasks, the authors study the generalizability of code embeddings in various software engineering tasks. %including code comments generation, code authorship identification, and code clones detection.
+This work is important because the generalizability of code embeddings has rarely been studied in literature and such studies will highlight the usefulness of code embeddings beyond the example task.
+The main contribution is that it evaluates the generalizability of tokens embeddings learned by code2vec. The results show that the code2vec embeddings do not always generalizable to other tasks beyond the example task it has been trained for, thus need improvements.
+The main weakness is that the authors only evaluate the generalizability on one code embedding technique (code2vec) and one programming dataset (Java).
+
+
+
+[Paper #04] Embedding Java Classes with Code2vec: Improvements from Variable Obfuscation (https://doi.org/10.1145/3379597.3387445)
+The code2vec embeddings highly rely on variable names, thus often vulnerable to adversarial attacks of variable renaming. To address this problem, the authors obfuscate variable names and retrain the model with obfuscated datasets to force it on the structure of code rather than variable names.
+This work is important because it makes the model more robust with less bias towards variable names.
+The major contributions are improving the code2vec embeddings via obfuscation and extending the scope from method-level to class-level.
+The weakness is that random obfuscation can decrease the readability of code as variable names sometimes are informative.
+
+
+
+[Paper #05] Adversarial Examples for Models of Code (https://doi.org/10.1145/3428230)
+The authors develop a gradient-based targeted attack to generates adversarial examples for models of code. The authors introduce small perturbations in code by renaming variables and inserting dead code that does not change any semantics.
+This work is important for evaluating the robustness of source code models as researchers want models to be less sensitive to adversarial attacks.
+The major contributions are generating targeted adversarial examples for models of code and defending against such attacks that perturb variable names.
+The weakness is that this work does not consider any non-variable transformations and is only limited to variable naming transformations.
+
+
+
+[Paper #06] AutoFocus: Interpreting Attention-Based Neural Networks by Code Perturbation (https://doi.org/10.1109/ASE.2019.00014)
+The authors propose a code perturbation approach for interpreting attention-based neural networks of source code. It measures the importance of a statement in code by deleting it from the original code and analyzing the effect on predicted confidence and attention score.
+This task is important because the importance score of statements can be used to identify important parts of code.
+The main contribution is to interpret the prediction of source code models via the identification and visualization of important code statements.
+The major weakness is that this approach is only applicable to attention-based models and can identify only statement-level importance.
+
+
+
+[Paper #07] Towards Demystifying Dimensions of Source Code Embeddings (https://doi.org/10.1145/3416506.3423580)
+The code2vec represents a code snippet with high-dimensional embedding vectors, but the characteristics of these dimensions are unknown. The authors aims to understand the contents of code2vec embeddings. In particular, the authors attempt to find comparable handcrafted features through a comparison with code2vec embeddings.
+This task is important because it provides some insights into how the features contribute to the classification task.
+The main contribution is the in-depth analysis of dimensions in code2vec embeddings and handcrafted features.
+The weakness is that the handcrafted inspection cannot be applied to a large dataset due to the vast number of classes.
+
+
+
+[Paper #08] Probing Model Signal-Awareness via Prediction-Preserving Input Minimization (https://doi.org/10.1145/3468264.3468545)
+The authors present an approach to capture real vulnerability signals from a model's prediction. This approach uses an input minimization technique and iteratively keeps reducing each vulnerable program as long as the model maintains the same vulnerability prediction.
+This task is important because it can measure how signal-aware a model is and how much impact it can have on its robustness.
+The main contributions are that this approach requires no knowledge about the target model and defines a new metric called signal-aware recall to measure how well a model captures task-specific signals.
+The weakness is that this approach only evaluates the signal-awareness of vulnerability detection models and does not consider other types of models.
+
+
+
+[Paper #09] Understanding Neural Code Intelligence through Program Simplification (https://doi.org/10.1145/3468264.3468539)
+Researchers often need to reason about the prediction of source code models. In this regard, the authors propose a simple model agnostic approach to identify relevant input features to a model's prediction. The authors adopt a syntax-unaware program reduction algorithm, Delta Debugging [Zeller et al. 2002], to reduce the size of an input program while preserving the same prediction by a model. This substantial reduction allows to better understand and pinpoint relevant features of prediction.
+This work is important because it can help to provide better compelling explanations about the prediction of models.
+The main contribution is to remove irrelevant parts from an input program and keep the minimal snippet that a model must need to maintain its prediction. The major findings include few tokens make the difference between correct prediction and misprediction, and models often use simple syntactic shortcuts for prediction.
+The weakness of this work is that it creates a large number of invalid programs during the reduction step that increases the overhead in reduction time.
+
+
+
+[Paper #10] Demystifying code summarization models (https://arxiv.org/abs/2102.04625)
+The authors propose a reduce and mutate approach to find key features that the model uses for predicting the label of the program. The approach first removes unimportant statements from an input program and then mutates the expression of the program to pinpoint the key elements for the prediction.
+This work is important because it reveals that code snippets that make same predictions often share common syntactic structures, as a result, the key input features of a target class can be extracted by reducing some input programs of that class.
+The major contributions include an approach for identifying defining features and a mechanism for explaining predictions of models.
+The weakness is that this approach only demystifies the code summarization models and does not consider other models and tasks.
