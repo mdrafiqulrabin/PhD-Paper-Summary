@@ -1,0 +1,62 @@
+Paper: Probing Model Signal-Awareness via Prediction-Preserving Input Minimization
+Refs: https://arxiv.org/abs/2011.14934
+
+Summary:
+
+In recent years, new models are being proposed that show significant improvement over state-of-the-art models of source code. It may be the case that the model is
+actually learning noise, not the relevant features from the dataset for making correct predictions. To verify the quality of source code models, this work presents
+a novel approach to capture correct task-specific signals from a model’s prediction. This approach uses an input minimization technique (Delta Debugging [Zeller et
+al. 2002]) to reduce a vulnerable program and iteratively keeps reducing the vulnerable program as long as the model maintains the same vulnerability prediction.
+The approach first reduces the original input program into a minimal code snippet without changing the model’s prediction and then verify whether the minimal
+snippet has the same vulnerability condition as the original program. If the corresponding vulnerability from the original program is present in the minimal
+snippet, it signals that the model is learning features relevant to the vulnerabilities (learning correct signal). Otherwise, the model is capturing noise or
+features not relevant to vulnerabilities (learning incorrect signal). The authors evaluate their approach with different models and datasets for vulnerability
+detection in source code. The results show that models of source code often learn noise or irrelevant features for achieving high prediction performance.
+
+Strengths:
+
+[+] The paper introduces a novel technique to examine the quality of vulnerability detection models.
+[+] It proposes a new signal-aware metric to verify whether a model is learning relevant features.
+[+] The paper is very well-structured and easier to understand.
+[+] This approach is applicable to all models without any model-specific knowledge.
+
+Weaknesses:
+
+[-] This paper makes several overclaims without any supporting shreds of evidence.
+[-] This paper does not provide any comparison with previous works.
+[-] The evaluation is limited to vulnerability-type models.
+
+Details:
+
+[+] I found this study to exhibit significant novelty, as I have not seen any prior works that examine the effect of signal awareness on source code models using
+input minimization. It is always hard to understand what a black-box model learns, nevertheless, this work introduces an approach that can detect whether a model
+learns noises (incorrect signal) or relevant features (correct signal) for making a prediction. This work is important because it will help researchers to
+understand what the model is actually learning, thus ensures trustworthiness to sensitive tasks.
+
+[+] The authors present a new signal-aware metric to examine the quality of models. While the traditional metric fails to measure how well a model captures task-
+specific signals, it provides an alternative signal-aware metric for fair comparison among models, especially when models have comparable performance. For example,
+Table 2 clearly shows that the models are missing correct vulnerability signals ever when the performance of the model is higher (i.e. 99% F1), thus it provides an
+alternative way to measure the quality of models. The authors evaluate their approach with different vulnerability detection models and datasets and find an
+important insight - models often learn irrelevant features but still achieve high performance in terms of Accuracy/F1.
+
+[+] The paper is well-written and organized. It provides a useful introduction to the field, a strong motivation for this work, and a detailed design and evaluation
+of the proposed approach. The paper is easy to read and follow, it provides enough background information and clear examples. The authors evaluate their approach
+with a variety of models and datasets, including a real-world dataset, for the vulnerability detection task. The result section is to the point and very relevant to
+the subject. The related work is also informative and well-written.
+
+[+,-] This approach is model-agnostic and does not require any model-specific knowledge. I particularly liked the black-box approach, which tends to somewhat
+guarantee that it can be applied to a variety of similar problems. The authors also provide a detailed explanation of the workflow and algorithm. However, in this
+paper, the authors only target the vulnerability detection models. It is unknown if there are any challenges to integrating this approach for other types of models
+or tasks. Moreover, the authors do not seem to have released any of their code or experimental data making it difficult to verify the validity of their results and claims.
+
+[-] The paper makes several overclaims without providing any supporting evidence for these claims. For example, (1) At the end of the Introduction, the authors
+claim their prediction-preserving input minimization approach provides a better enhancement for interpretability of predictions than the popular perturbation-based
+approach. However, it is unclear how this paper leads to the interpretation of predictions. It does not provide any comparison of why this work is better than the
+perturbation-based approach. (2) In the third paragraph of Section 2, the authors claim this work quantifies how much impact it has on the robustness as well as the
+performance of models. Although the authors provide a detailed evaluation of models’ performance (Table 2), they do not provide any evaluation of models’
+robustness. The only thing they provide for robustness is a common example of code perturbation (Table 1).
+
+Overall recommendation: ACCEPT
+
+Although the paper makes several overclaims and has limited comparison with previous works, I believe that other researchers can benefit from hearing about this
+novel idea and build on it. The authors should soften some of their claims and make necessary changes to address the other points.
