@@ -1,0 +1,169 @@
+Metrics by Paper:
+
+[Paper #01] F1-Score, Accuracy
+[Paper #02] Precision, Recall, F1-Score, Prediction Rate
+[Paper #03] Precision, Recall, F1-Score, Accuracy, BLEU Score, Cosine Similarity
+[Paper #04] F1-Score, kappa Coefficient
+[Paper #05] Precision, Recall, F1-Score, Robustness
+[Paper #06] Confidence Score, Attention Score
+[Paper #07] Precision, Recall, F1-Score
+[Paper #08] Precision, Recall, F1-Score, Accuracy, Reduction(%), Common(%), Time Complexity
+[Paper #09] Accuracy, F1-Score, Recall, SAR, Reduction(%), Overlap(%)
+[Paper #10] Precision, Recall, F1-Score, Key Features, Time Complexity
+
+
+
+List of Metrics:
+
+    - Precision
+    - Recall
+    - F1-Score
+    - Accuracy
+    - Confidence Score
+    - Attention Score
+    - Prediction Rate
+    - BLEU Score
+    - Cosine Similarity
+    - kappa Coefficient
+    - SAR
+    - Overlap
+    - Robustness
+    - Token Reduction
+    - Common Token
+    - Key Features
+    - Time Complexity
+
+
+
+Categorize:
+
+We can categorize the metrics into some groups according to the following aspects:
+classification, prediction values, similarity measurement, quality check, and input reduction.
+
+- Classification Metrics: Precision, Recall, F1-Score, Accuracy.
+- Prediction Metrics: Confidence Score, Attention Score, Prediction Rate, Overlap Percentage.
+- Similarity Metrics: BLEU Score, Cosine Similarity, kappa Coefficient.
+- Quality Metrics: SAR, Robustness.
+- Reduction Metrics: Token Reduction, Common Token, Key Features, Time Complexity.
+
+
+Most Common and Uncommon Metrics:
+
+- Common Metrics:
+    Some metrics are widely used by research communities (i.e. F1-Score, Accuracy, Attention, etc.).
+    These types of metrics are common metrics as those are not limited to a specific type of evaluation and are often generalizable to a variety of tasks.
+    The following metrics are very common metrics:
+    Precision, Recall, F1-Score, Accuracy, BLEU Score, Cosine Similarity, kappa Coefficient, Robustness, Confidence Score, Attention Score, Time Complexity.
+
+- Uncommon Metrics:
+    Some metrics are only introduced in a specific paper (i.e. SAR) or only used for a very specific type of measure (i.e. token reduction/common token).
+    These types of metrics are uncommon metrics as those are not widely used by research communities and are limited to a specific type of evaluation.
+    The following metrics are comparatively uncommon metrics:
+    Prediction Rate, Overlap Percentage, SAR, Token Reduction, Common Token, Key Features.
+
+
+
+Define Metrics:
+
+\subsection*{Precision:}
+Precision indicates the proportion of predicted positive labels that are actually correct.
+It is the ratio of the correctly predicted positive labels to the total number of predicted positive labels.
+\[ Precision = \frac{True \; Positive}{True \; Positive \,+\, False \; Positive} \]
+
+\subsection*{Recall:}
+Recall indicates the proportion of actual positive labels that are predicted correctly.
+It is the ratio of the correctly predicted positive labels to the total number of actual positive labels.
+\[ Recall = \frac{True \; Positive}{True \; Positive \,+\, False \; Negative} \]
+
+\subsection*{F1-Score:}
+F1-Score combines both precision (P) and recall (R) by computing the harmonic mean. It is defined as follows:
+\[ F_{1}\text{--}Score = \frac{2}{P^{-1} \,+\, R^{-1}} = 2 \,.\, \frac{P\,.\,R}{P\,+\,R} \]
+
+\subsection*{Accuracy:}
+It is the ratio of the correctly predicted samples to the total number of samples.
+It is defined as follows:
+\[ Accuracy = \frac{\#\, Correctly \; predicted \; samples}{Total \; number \; of \; samples} \]
+
+\subsection*{Confidence Score:}
+It refers to the probability assigned to the target label by a model while making a prediction. Models often compute the probability of the target label via a softmax-normalization over all predicted labels.
+The softmax-normalization converts a vector of values into a vector of probabilities that sum to 1, as follows:
+\[ Confidence \; Score (target) = \frac{exp(target)}{\sum_{\,label \, \in \, all \;}{exp(label)}} \]
+where $exp$ stands for `exponential' and $exp(x)$ is the same as $e^x$.
+
+\subsection*{Attention Score:}
+In the context of neural networks, attention mechanism enhances the importance of input features for each output by assigning scores during the prediction.
+A high attention score for an input feature indicates that the feature is important for the prediction.
+Given a sequence of input feature vectors $x$ = ($x_1$, ..., $x_n$), suppose, the $n$ hidden state vectors are ($h_1$, ..., $h_n$). The attention score $\alpha_i$ of each $h_i$ is computed as follows:
+\[ Attention \; Score, \, \alpha_i = \frac{exp \, (h_{i}^{T} \,.\, \alpha)} {\sum_{j=1}^{n}{\, exp \, (h_{j}^{T} \,.\, \alpha)}}\]
+where $\alpha$ is the global attention vector initialized randomly and learned simultaneously during training.
+
+\subsection*{Prediction Rate:}
+The average number of predictions that a model is able to make per second.
+\[ Prediction \; Rate = \frac{Number \; of \; Predictions} {Total \; Seconds} \]
+
+\subsection*{BLEU Score:}
+BLEU, stands for BiLingual Evaluation Understudy, is the measure of how closely the machine translation is to a reference translation.
+Given two translations, candidate (machine-generated) and reference (ground-truth), it outputs a percentage between $0\sim100$ indicating the degree of match.
+A perfect match results in a score of 100, whereas a perfect mismatch results in a score of 0.
+The $BLEU$ score is computed as follows:
+\[ BLEU = BP \; . \; exp \, (\sum_{n=1}^{N}{\,\frac{1}{N}\,log(p_{n})}) \]
+Here, $p_n$ is the ratio of $n$ sub-sequences that are present in both candidate and reference translations, and the base of $log$ is the natural base $e$.
+$N$ is the maximum number of $N$-$grams$ to consider, therefore, it is called $BLEU$-$4$ when $N=4$.
+$BP$ is the brevity penalty to penalize short machine translations, and computed as follows:
+\[ \text{BP} =
+\begin{cases}
+    1 & \text{if } c > r \\
+    \exp \big(1-\frac{r}{c}\big) & \text{if } c \leq r
+\end{cases} \]
+where $r$ and $c$ are the length of the reference and candidate translation, respectively.
+
+\subsection*{Cosine Similarity:}
+It is the measure of similarity between two non-zero vectors.
+Given two non-zero vectors, A and B, the cosine similarity is computed as follows using a dot product (.) and magnitude (||) of vectors.
+\[ Cosine \; Similarity \, (A,B) = \frac{A\,.\,B} {||A||\,||B||} = \frac{\sum_{i=1}^{n}{A_{i}\,B_{i}}}{\sqrt{\sum_{i=1}^{n}{A_{i}^{2}}} \; \sqrt{\sum_{i=1}^{n}{B_{i}^{2}}}} \]
+where $n$ is the size of each vector, and $A_i$ and $B_i$ are the $i^{th}$ components of vector $A$ and $B$, respectively.
+
+\subsection*{kappa Coefficient:}
+It is the measure of agreement between the model's predicted labels and the actual ground-truth labels.
+The coefficient value is computed as follows:
+\[ kappa \; coefficient \, (k) = \frac{P_o \;-\; P_e} {1 \;-\; P_e} \]
+where $P_o$ is the total agreement probability and $P_e$ is the agreement probability which is due to chance.
+Suppose, there are $N$ samples of $k$ categories.
+If the model correctly predicts $c$ samples among $N$ samples, then $P_o = \frac{c}{N}$.
+If $n_{k1}$ is the number of samples that the model predicts as class $k$ and $n_{k2}$ is the number of samples whose actual class is $k$, then $P_e = \frac{1}{N} \; \sum_{k} {\, n_{k1} \, * \, n_{k2}}$.
+
+
+\subsection*{SAR:}
+SAR, stands for Signal-aware Recall, is a modified version of the traditional Recall.
+This metric is particularly used for the vulnerability detection task where the goal is to reduce the size of input while preserving the same vulnerability prediction by a model.
+While traditional Recall = TP / (TP + FN), SAR is defined as $\frac{TP’}{TP’ \;+\; FN’ \;+\; FN}$, where TP = TP’ + FN’.
+Here, TP is the number of true-positive samples for which a model correctly predicts the vulnerability and FN is the number of false-negative samples for which a model mispredicts the correct vulnerability.
+TP is then subdivided into TP’ and FN’.
+TP’ counts the number of true-positive samples for which the vulnerability of original input is present in reduced input.
+TN’ counts the number of true-positive samples for which the vulnerability of original input is absent in reduced input.
+
+\subsection*{Overlap:}
+The percentage of samples which maintain the same prediction across different models.
+\[ Overlap = \frac{\#\; Same \; prediction \; across \; different \; models} {Total \; number \; of \; samples} \]
+
+\subsection*{Robustness:}
+The percentage of samples in which the correctly predicted label by a model is not changed to an incorrect label after adversarial attacks on these samples.
+\[ Robustness = \frac{\#\, Correctly \; predicted \; label \; after \; adversarial \; attacks} {Total \; number \; of \; samples} \]
+
+\subsection*{Token Reduction:}
+The average percentage of tokens that can be removed from original input programs without altering the prediction by a model.
+\[ Reduction = \frac{Size \; of \; original \; program \; - \; Size \; of \; reduced \; program} {Size \; of \; original \; program} \]
+
+\subsection*{Common Token:}
+The average percentage of tokens that are common between the attention tokens (tokens that a model gives high attention during making a prediction) and the simplified tokens (tokens that a model must keep to maintain its correct prediction).
+\[ Common \; Token = \frac{|Attention \; Tokens \; \cap \; Simplified \; Tokens|} {|Simplified \; Tokens|} \]
+
+\subsection*{Key Features:}
+The average number of tokens (or statements) in reduced programs that a model needs to preserve its prediction.
+\[ Key \; Features = \frac{1}{n} \; \sum_{i=1}^{n} \frac{Number \; of \; reduced \; tokens_{\,i}} {Number \; of \; original \; tokens_{\,i}} \]
+
+
+\subsection*{Time Complexity:}
+The average time spent on reducing an input program w.r.t. the number of tokens (or statements) while preserving the same predictions by a model.
+\[ Time \; Complexity = \frac{1}{n} \; \sum_{i=1}^{n} \frac{Total \; time \; spent \; for \; reduction_{\,i}} {Number \; of \; reduced \; tokens_{\,i}} \]
+
