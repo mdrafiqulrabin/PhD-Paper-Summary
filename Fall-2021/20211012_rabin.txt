@@ -1,0 +1,18 @@
+Technical Talk: Typilus: Neural Type Hints
+Speaker: Miltos Allamanis
+Youtube Link: https://www.youtube.com/watch?v=iwS6Aykqks8
+
+3 things that seem most important:
+- Explain problem and significance of results (to motivate audiences)
+- Present talk in a logical order (to better understandable by audiences)
+- Maintain contact with the audiences (to keep them active)
+
+3 things that the speaker did well:
+- The speaker explained the problem and why it is difficult to solve with a clear example.
+- The speaker presented the technical idea very well and delivered the story in a perfect transition with enough details, briefly and slowly.
+- The speaker used relevant figures and simple visuals to demonstrate design and results, including some real-case examples and open problems.
+
+3 things that could have been better:
+- The speaker didn't mention why the problem is important and the significance of the results for audiences.
+- The speaker used a forward reference. While discussing result curves [at 9:40], the speaker suddenly mentioned that “developers annotation can be wrong” and said he will discuss a few cases later.
+- The speaker didn’t discuss any state-of-the-art. Before conclusion [at 14:10], the speaker only mentioned names of three concurrent papers without discussing what else has been, or not, done in these papers.
