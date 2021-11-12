@@ -1,0 +1,51 @@
+Exercise 1: Know your audience
+
+What would say:
+A high school student thinking about coming to UH: UH is one of the top-ranked universities of Texas and has been recognized
+as a Tier 1 public university for its high-quality research activity. You will get an outstanding education and research
+opportunities for a bright future. An alumni thinking about donating to COSC: COSC department has recently started two new
+research labs where students need powerful computing servers to start working on their research projects. It would be great
+if you can donate some Laptops and GPUs for these research labs. A new graduate student in COSC: Professor X will offer the
+Research Methods course next semester. If you take this course, it will help you to learn how research is done and how
+to improve research productivity.
+
+How would that change based on audience:
+I’m focusing on high-quality education and research activities to convince the high school student for joining UH.
+However, I’m highlighting the resource limitations of new research labs to encourage the alumni for some donations.
+And finally,  recommending a course that I found very helpful for research to a new graduate student.
+
+
+
+Exercise 2: Name your Audience & Purpose
+
+Purpose of the research:
+In recent years, deep neural models are excessively being developed for various code intelligence tasks in the software
+engineering field, such as detecting vulnerability in source code. While the performance of these models continues to improve,
+our understanding of what relevant features they learn for making predictions is largely unknown. The lack of transparency
+would hinder the trustworthiness to correct classification given by these models for safety-critical application. Therefore,
+in our research, we aim to understand how these code intelligence models perform by identifying their limitations,
+interpreting their predictions, and improving the transparency of learning.
+
+Identify the audience:
+The software engineering researchers who are working with code intelligence systems are our main audience. Several types
+of research have been done on learning how to represent source code as embedding, so researchers already have good knowledge
+on representation learning and developing models for source code. However, the researchers need to know that these models often
+learn noise or irrelevant features, and are biased to few tokens for achieving high prediction performance. The researchers
+still have limited knowledge on explaining the prediction of the black-box source code model, and are actively working on this
+area for finding methods for transparent learning.
+
+
+
+Exercise 3: How will you Develop?
+
+In my research paper, I mainly have to discuss the introduction, related works, methodology, result, and conclusion section. In
+those different areas, I might have to use different types of paragraphs. For example, in related works, I will discuss what has
+been done in the literature and how those related to my work. I will share the things we have in common and will contrast my work
+with state-of-the-art works. That means I will follow the "Development by comparison and contrast" type paragraph in the related
+works. On the other hand, in the methodology section, I will describe my design with enough details so that the reader can understand
+and reproduce my work. It does not need to be in chronological order as the main story is more important than the order of works.
+I will also use specific examples or illustrations to express my design more clearly. Therefore, in the methodology section, I will
+largely follow the "Development by detail" type paragraph. Similarly, in other sections, I might have to use different types of paragraphs.
+In summary, I will use a combination of different type paragraphs in different areas of my research paper, that is actually
+the "Development by combination" type paragraph.
+
