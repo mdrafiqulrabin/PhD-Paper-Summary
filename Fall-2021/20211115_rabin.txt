@@ -1,0 +1,37 @@
+Idea #1: Transitions
+
+I have used specific words and phrases as transitions in my writing to show relationships between sentences and paragraphs,
+and connect with different parts of the paper. For example, ​​in the abstract, I used “In recent” to indicate the state-of-the-art
+approaches, then used “However” to point out the problem of those approaches, and then used “In this paper” to highlight our
+approach with a summary of results. Similarly, in the related work, I used “also” to discuss more related works, then
+used “however” to specify the problems of those works, and then used “In this work” to contrast our work with previous works.
+Later, in the workflow, I used “given, using, then, final” terms to clearly connect and describe each step of our approach.
+Moreover, in the results, I used “Following, From, Furthermore, Compared to” terms to refer to tables, figures, and main findings.
+Apart from that, I used many directional (i.e. below, follow), generalize (i.e. in order to, as a result), summarize
+(i.e. around, average, summary), time (i.e. next, later, during), and some other types of transitions in different parts of the paper.
+
+
+
+Idea #2: Conciseness
+
+Concision: I checked each paragraph to make it concise but with enough details. For example, initially, I had some redundant statements
+in the introduction, design, and result section about the goal of the paper, the approach, and the findings. I have removed unnecessary
+explanations, redundant phrases, and nearly duplicate statements from those sections. I also made the format of the references section consistent.
+
+Precision: I tried to precisely present each section. For example, I modified the first paragraph of the introduction to directly describe
+the problem. I also used specific keywords like ‘important’ and ‘interest’ to clearly state why the work is interesting and important in the
+second paragraph of the introduction. I also listed each contribution and conducted experiments for them in the result section and described
+the key findings by showing figures and tables. Moreover, I mentioned the challenges and limitations of our work, and future plans.
+
+Revision: I revised the writing every time I updated some parts of the paper. For example, when I updated the figures or tables with new data,
+I updated the corresponding text in the result section, and also checked the abstract, introduction, and conclusion to refer to the updated results.
+
+
+
+Idea #3: Editing
+
+I have proofread my manuscripts several times. I started reading from the beginning and continued checking each section. I mainly read out slowly
+sentence-by-sentence and then edited if I found any inconsistency, grammatical issue, or spelling mistake. Moreover, I downloaded the pdf from overleaf
+and expanded it on the monitor screen for reading. I also checked whether the text and color in figures and tables are clearly readable. Furthermore,
+I used Grammarly for checking spelling and grammatical issues. Finally, I printed the paper for a final check.
+
