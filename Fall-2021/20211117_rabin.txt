@@ -1,0 +1,26 @@
+- Your prior experience writing a paper:
+
+Before I didn’t have good knowledge on writing Introduction and Related Works. Now I have enough knowledge to lead the writing of the Introduction section. Also, my writing for related works has improved significantly.
+
+
+
+- What 1-2 ideas/techniques helped you improve your writing:
+ 
+Introduction: The idea of directly stating the problem, and why it is important, interesting and hard is very useful to clearly demonstrate the goal of the paper in the introduction.
+
+Related Works: During writing the related works, pointing out the strength and weakness of previous works and contrasting our work with them.
+
+
+
+- What 1-2 ideas/techniques did not help as much as you would have liked:
+ 
+Describe Results: I still need to improve my skills on describing result sections. I feel like I am not good at selecting key research questions from my experiments and results.
+
+Diagram, Algorithm, Equation: Sometimes I have difficulties drawing workflow, algorithm, and equations.
+ 
+ 
+ 
+- Overall how do you rate your writing skills:
+ 
+I need to improve my writing, especially to draw diagrams and describe result sections, and choosing key terms and rich vocabulary to improve my writing. However, I have enough knowledge from this course and I will follow that to improve my writing.
+ 
