@@ -1,0 +1,35 @@
+Title: Natural Attack for Pre-trained Models of Code
+
+Authors: Zhou Yang, Jieke Shi, Junda He and David Lo
+
+Published in: ICSE 2022
+
+Keywords/CCS: Genetic Algorithm, Adversarial Attack, Pre-Trained Models
+
+Link: https://arxiv.org/abs/2201.08698
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Models of code have achieved success in many important software engineering tasks. However, recent studies show that models of code are vulnerable to 
+simple adversarial perturbations such as changing a variable name. However, perturbations are not always natural to human judgments, for example, 
+using an extremely long variable name to perturb the original variable. The existing approach mainly focused on operational program semantics and 
+ignore the important naturalness requirement.
+
+[2] Solution:
+
+In this paper, the authors focus on generating natural adversarial examples for variable renaming and fine-tuning models to improve robustness 
+with generated natural adversarial examples. Their approach (ALERT) selects important tokens from code snippets and substitutes them with higher 
+similarity natural names. To decide which token to replace in code-snippet, they introduce a metric called importance score (prediction score with 
+the original token - prediction score by replacing token with 'unk') for tokens and ranked the tokens based on the importance score. 
+And, to get natural substitutions for those tokens, they train masked language prediction models (CodeBERT and GraphCodeBERT) to produce a list of 
+potential substitute sub-tokens. Next, they apply Greedy-based attacks to search for optimal substitutes that can generate valuable adversarial examples. 
+When Greedy fails to generate an adversarial example, they then apply GA-based attacks for them. 
+
+[3] Evaluation:
+
+The authors experiment with Vulnerability Detection (CodeXGLUE), Clone Detection (BigCloneBench), and Authorship Attribution (Google Code Jam) tasks 
+(and datasets) for CodeBERT and GraphCodeBERT models. The results show that the generated examples are more natural than the state-of-the-art approach
+MHM (Zhang et al., AAAI 2020), and outperforms MHM by approximately 15% in terms of the attack success rate, which can also improve the robustness of 
+models by approximately 20% after adversarially fine-tuning.
