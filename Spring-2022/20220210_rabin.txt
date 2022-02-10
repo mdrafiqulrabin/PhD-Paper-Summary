@@ -1,0 +1,37 @@
+Title: Unveiling Project-Specific Bias in Neural Code Models
+
+Authors: Zhiming Li, Yanzhou Li, Tianlin Li, Mengnan Du, Bozhi Wu, Yushi Cao, Xiaofei Xie, Yi Li, Yang Liu
+
+Published in: arXiv 2022
+
+Keywords/CCS: N/A
+
+Link: https://arxiv.org/abs/2201.07381
+
+-------------x-------------x-------------x-------------
+
+[1] Problem:
+
+Developers often have various naming biases for variable/method names. Therefore, the existence of user-defined tokens in one project might 
+be absent or represent different meanings in other projects. Tokens that appear frequently within a project are called identically distributed
+(IID) but out-of-distribution (OOD) for another project. Models trained on intra-project IID datasets (split randomly by samples) may have good 
+performance but they fail to generalize to real inter-project OOD data (when evaluated on different projects). Existing bias mitigation baselines 
+manage to improve generalization on the OOD data, however, there is no guarantee that the debiased model would infer based on expected behavior of
+developers instead of falling back to using other unknown bias.
+
+[2] Solution:
+
+To interpret the project-specific bias, following the Tf-Idf concept, the authors propose a measurement (Cond-Idf) to quantify the frequently co-occur
+tokens for a label within projects. They show that models heavily rely on the project-specific ungeneralizable tokens for downstream prediction, thus, 
+have a significant performance drop while test on previously unseen projects. Therefor, in this paper, the authors explore why models have low 
+generalization ability on inter-project settings, and propose a novel regularization technique (Batch Partition Regularization - BPR) to generalize 
+the performance of models on inter-project OOD sets. In their approach, they compute logic closeness using cosine similarity among samples and then 
+sorted based on the vectorized similarity matrix. In this way, after batchifying, each mini-batch would consist of samples with the closest logic 
+relations. Finally, during training, within each mini-batch, they use cosine embedding loss to constrain the model into using similar representation 
+when embedding samples with the same label and similar syntactic or semantic evidence.
+
+[3] Evaluation:
+
+They evaluated their approach on pretrained CodeBert model for two tasks (type inference and vulnerability detection) with four bias mitigation baselines 
+(re-weighting, product-ofexpert, adversarial training, gradient reversal). The results show that BPR improves OOD generalization and adversarial robustness 
+while not sacrificing IID performance, inferring based on robust representation via regularization of its behavior using logic relations among samples.
